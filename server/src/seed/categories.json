@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "domain": "idea",
+  "categories": [
+    { "slug": "business", "name": "Business & Entrepreneurship", "icon": "briefcase", "color": "#7c83ff", "subcategories": [
+      { "slug": "business-validation", "name": "Geschäftsideen validieren" },
+      { "slug": "business-operations", "name": "Gründung & Betrieb" },
+      { "slug": "business-solopreneur", "name": "Solo-Selbstständigkeit" } ] },
+    { "slug": "finance", "name": "Finanzen & Investment", "icon": "landmark", "color": "#3fb98a", "subcategories": [
+      { "slug": "finance-budget", "name": "Budget & Haushalt" },
+      { "slug": "finance-portfolio", "name": "Portfolio & Vermögen" },
+      { "slug": "finance-tax", "name": "Steuern & Belege" } ] },
+    { "slug": "trading", "name": "Trading & Marktanalyse", "icon": "candlestick-chart", "color": "#e0a43c", "subcategories": [
+      { "slug": "trading-research", "name": "Marktrecherche" },
+      { "slug": "trading-risk", "name": "Risikomanagement" },
+      { "slug": "trading-journal", "name": "Trading-Journal & Backtesting" } ] },
+    { "slug": "productivity", "name": "Alltag & Produktivität", "icon": "sun", "color": "#f2b84b", "subcategories": [
+      { "slug": "productivity-planning", "name": "Planung & Fokus" },
+      { "slug": "productivity-household", "name": "Haushalt & Routinen" } ] },
+    { "slug": "ai-automation", "name": "KI & Automatisierung", "icon": "workflow", "color": "#8b93ff", "subcategories": [
+      { "slug": "ai-automation-pipelines", "name": "Automatisierte Pipelines" },
+      { "slug": "ai-automation-extraction", "name": "Extraktion & Klassifikation" } ] },
+    { "slug": "ai-agents", "name": "KI-Agenten & Multi-Agent-Systeme", "icon": "bot", "color": "#a78bfa", "subcategories": [
+      { "slug": "ai-agents-single", "name": "Spezialisierte Agenten" },
+      { "slug": "ai-agents-multi", "name": "Multi-Agent-Orchestrierung" } ] },
+    { "slug": "web-apps", "name": "Web-Apps & Software", "icon": "app-window", "color": "#4fb6e8", "subcategories": [
+      { "slug": "web-apps-tools", "name": "Werkzeuge & Utilities" },
+      { "slug": "web-apps-platforms", "name": "Plattformen" } ] },
+    { "slug": "desktop", "name": "Desktop-Anwendungen", "icon": "monitor", "color": "#6aa7ff", "subcategories": [
+      { "slug": "desktop-utilities", "name": "System-Utilities" },
+      { "slug": "desktop-creative", "name": "Kreativ-Werkzeuge" } ] },
+    { "slug": "browser-extensions", "name": "Browser-Erweiterungen", "icon": "puzzle", "color": "#55c2b8", "subcategories": [
+      { "slug": "browser-research", "name": "Recherche & Lesen" },
+      { "slug": "browser-workflow", "name": "Workflow & Formulare" } ] },
+    { "slug": "design", "name": "Design & Bildbearbeitung", "icon": "palette", "color": "#f07aa8", "subcategories": [
+      { "slug": "design-systems", "name": "Designsysteme" },
+      { "slug": "design-editing", "name": "Bildbearbeitung" } ] },
+    { "slug": "image-generation", "name": "Bildgenerierung", "icon": "image", "color": "#ec8bd0", "subcategories": [
+      { "slug": "image-generation-assets", "name": "Assets & Mockups" },
+      { "slug": "image-generation-workflow", "name": "Prompt- & Varianten-Workflows" } ] },
+    { "slug": "video-audio", "name": "Video & Audio", "icon": "clapperboard", "color": "#ff8f6b", "subcategories": [
+      { "slug": "video-editing", "name": "Schnitt & Untertitel" },
+      { "slug": "audio-podcast", "name": "Podcast & Audio" } ] },
+    { "slug": "social-content", "name": "Social Media & Content Creation", "icon": "megaphone", "color": "#ff9d5c", "subcategories": [
+      { "slug": "social-planning", "name": "Redaktionsplanung" },
+      { "slug": "social-repurpose", "name": "Content-Recycling" } ] },
+    { "slug": "marketing-sales", "name": "Marketing & Vertrieb", "icon": "target", "color": "#f5a35c", "subcategories": [
+      { "slug": "marketing-research", "name": "Markt- & Zielgruppenanalyse" },
+      { "slug": "sales-pipeline", "name": "Vertriebsprozesse" } ] },
+    { "slug": "ecommerce", "name": "E-Commerce", "icon": "shopping-bag", "color": "#e8b04a", "subcategories": [
+      { "slug": "ecommerce-catalog", "name": "Produktkatalog & Inhalte" },
+      { "slug": "ecommerce-operations", "name": "Bestellungen & Service" } ] },
+    { "slug": "learning", "name": "Lernen & Weiterbildung", "icon": "graduation-cap", "color": "#5cc98f", "subcategories": [
+      { "slug": "learning-languages", "name": "Sprachen" },
+      { "slug": "learning-skills", "name": "Fachwissen & Skills" } ] },
+    { "slug": "claude-workflows", "name": "Claude-Tutorials & Claude-Workflows", "icon": "sparkles", "color": "#d97757", "subcategories": [
+      { "slug": "claude-code-workflows", "name": "Claude Code" },
+      { "slug": "claude-mcp", "name": "MCP-Integrationen" },
+      { "slug": "claude-prompting", "name": "Prompt-Techniken" } ] },
+    { "slug": "communication", "name": "Kommunikation & E-Mail", "icon": "mail", "color": "#64b5f6", "subcategories": [
+      { "slug": "communication-email", "name": "E-Mail" },
+      { "slug": "communication-meetings", "name": "Meetings & Abstimmung" } ] },
+    { "slug": "documents", "name": "Dokumentenverwaltung", "icon": "file-text", "color": "#90a4c8", "subcategories": [
+      { "slug": "documents-archive", "name": "Archiv & Ablage" },
+      { "slug": "documents-forms", "name": "Formulare & Verträge" } ] },
+    { "slug": "knowledge", "name": "Datenbanken & Wissensmanagement", "icon": "database", "color": "#7fa8d6", "subcategories": [
+      { "slug": "knowledge-personal", "name": "Persönliches Wissen" },
+      { "slug": "knowledge-team", "name": "Team-Wissen" } ] },
+    { "slug": "security-infra", "name": "Sicherheit & Infrastruktur", "icon": "shield", "color": "#5fb3a1", "subcategories": [
+      { "slug": "security-monitoring", "name": "Monitoring & Alarme" },
+      { "slug": "security-hardening", "name": "Härtung & Datenschutz" } ] },
+    { "slug": "smart-home", "name": "Smart Home & IoT", "icon": "house-wifi", "color": "#4dd0c8", "subcategories": [
+      { "slug": "smart-home-energy", "name": "Energie & Klima" },
+      { "slug": "smart-home-sensors", "name": "Sensoren & Automationen" } ] },
+    { "slug": "travel", "name": "Reisen & Freizeit", "icon": "plane", "color": "#4fc3f7", "subcategories": [
+      { "slug": "travel-planning", "name": "Reiseplanung" },
+      { "slug": "travel-leisure", "name": "Freizeit & Hobbys" } ] },
+    { "slug": "health", "name": "Gesundheit & Lifestyle", "icon": "heart-pulse", "color": "#ef6f6c", "subcategories": [
+      { "slug": "health-fitness", "name": "Fitness & Bewegung" },
+      { "slug": "health-nutrition", "name": "Ernährung & Schlaf" } ] },
+    { "slug": "mobility", "name": "Automobil & Mobilität", "icon": "car", "color": "#9aa8bd", "subcategories": [
+      { "slug": "mobility-vehicle", "name": "Fahrzeug & Wartung" },
+      { "slug": "mobility-routes", "name": "Routen & Pendeln" } ] },
+    { "slug": "gaming", "name": "Gaming & Unterhaltung", "icon": "gamepad-2", "color": "#b388ff", "subcategories": [
+      { "slug": "gaming-tools", "name": "Spieler-Werkzeuge" },
+      { "slug": "gaming-creation", "name": "Eigene Spiele & Welten" } ] },
+    { "slug": "data-viz", "name": "Datenanalyse & Visualisierung", "icon": "chart-network", "color": "#4fb6e8", "subcategories": [
+      { "slug": "data-viz-dashboards", "name": "Dashboards" },
+      { "slug": "data-viz-analysis", "name": "Explorative Analyse" } ] },
+    { "slug": "company-org", "name": "Unternehmensorganisation", "icon": "building-2", "color": "#8fa3c0", "subcategories": [
+      { "slug": "company-processes", "name": "Prozesse & Abläufe" },
+      { "slug": "company-people", "name": "Team & Onboarding" } ] },
+    { "slug": "personal-admin", "name": "Persönliche Verwaltung", "icon": "folder-kanban", "color": "#a0aec0", "subcategories": [
+      { "slug": "personal-admin-contracts", "name": "Verträge & Fristen" },
+      { "slug": "personal-admin-household", "name": "Haushaltsverwaltung" } ] },
+    { "slug": "experimental", "name": "Kreative Innovationen & Experimente", "icon": "flask-conical", "color": "#c792ea", "subcategories": [
+      { "slug": "experimental-interfaces", "name": "Neue Interfaces" },
+      { "slug": "experimental-art", "name": "Generative Kunst" } ] },
+    { "slug": "dev-tools", "name": "Entwickler-Tools & DevOps", "icon": "terminal", "color": "#7dd3a8", "subcategories": [
+      { "slug": "dev-tools-quality", "name": "Codequalität & Tests" },
+      { "slug": "dev-tools-ops", "name": "Deployment & Betrieb" } ] },
+    { "slug": "sustainability", "name": "Nachhaltigkeit & Energie", "icon": "leaf", "color": "#6cc56c", "subcategories": [
+      { "slug": "sustainability-footprint", "name": "CO₂ & Verbrauch" },
+      { "slug": "sustainability-reuse", "name": "Reparieren & Wiederverwenden" } ] },
+    { "slug": "family-education", "name": "Familie & Kinder", "icon": "baby", "color": "#f4a6c0", "subcategories": [
+      { "slug": "family-organisation", "name": "Familienorganisation" },
+      { "slug": "family-learning", "name": "Lernen mit Kindern" } ] },
+    { "slug": "legal-compliance", "name": "Recht, Steuern & Compliance", "icon": "scale", "color": "#b0a479", "subcategories": [
+      { "slug": "legal-privacy", "name": "Datenschutz & DSGVO" },
+      { "slug": "legal-contracts", "name": "Verträge & Fristen" } ] },
+    { "slug": "music", "name": "Musik & Klang", "icon": "music", "color": "#e57399", "subcategories": [
+      { "slug": "music-practice", "name": "Üben & Lernen" },
+      { "slug": "music-production", "name": "Produktion" } ] },
+    { "slug": "accessibility", "name": "Barrierefreiheit & Inklusion", "icon": "accessibility", "color": "#5fa8d3", "subcategories": [
+      { "slug": "accessibility-web", "name": "Barrierefreies Web" },
+      { "slug": "accessibility-daily", "name": "Alltagshilfen" } ] }
+  ]
+}

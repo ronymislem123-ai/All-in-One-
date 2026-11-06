@@ -1,0 +1,15 @@
+node_modules/
+dist/
+data/
+backups/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
+e2e/.artifacts/
+coverage/
+.DS_Store

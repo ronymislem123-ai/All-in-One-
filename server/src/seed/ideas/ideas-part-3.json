@@ -1,0 +1,2956 @@
+{
+  "version": 1,
+  "ideas": [
+    {
+      "slug": "mobility-werkstattrechnung-dekoder",
+      "title": "Werkstattrechnung-Dekoder",
+      "summary": "Zerlegt Werkstattrechnungen in verständliche Positionen, gleicht sie mit dem Wartungsplan ab und formuliert Rückfragen an die Werkstatt.",
+      "description": "Du fotografierst eine Werkstattrechnung oder lädst sie als PDF hoch. Claude extrahiert jede Position (Teile, Arbeitswerte, Kleinmaterial), ordnet sie Kategorien wie Inspektion, Verschleiß oder Reparatur zu und erklärt Fachbegriffe in Alltagssprache. Ein Abgleich mit dem selbst hinterlegten Wartungsplan zeigt, welche Arbeiten planmäßig waren und welche zusätzlich anfielen; unklare Positionen werden als höfliche Rückfragen formuliert.",
+      "problem": "Werkstattrechnungen sind voller Abkürzungen und Arbeitswert-Angaben, die Laien kaum nachvollziehen können. Ob eine Position planmäßig, nötig oder doppelt berechnet ist, bleibt meist unklar.",
+      "goal": "Jede Werkstattrechnung in wenigen Minuten nachvollziehen und gezielt nachfragen können.",
+      "benefit": "Du verstehst, wofür du bezahlt hast, und gehst mit konkreten Fragen statt einem vagen Bauchgefühl ins Gespräch mit der Werkstatt. Nebenbei entsteht eine saubere Wartungshistorie.",
+      "audience": "Autobesitzer ohne technisches Fachwissen",
+      "category": "mobility",
+      "subcategory": "mobility-vehicle",
+      "features": [
+        "Extraktion von Rechnungspositionen aus Foto oder PDF",
+        "Erklärung von Fachbegriffen und Abkürzungen",
+        "Abgleich mit dem eigenen Wartungsplan (planmäßig vs. zusätzlich)",
+        "Markierung von Auffälligkeiten wie doppelten Positionen",
+        "Generator für sachliche Rückfragen an die Werkstatt",
+        "Export in eine Wartungshistorie (CSV)"
+      ],
+      "highlights": [
+        "Bewertet nicht pauschal Preise, sondern macht die Rechnung nachvollziehbar",
+        "Rückfragen statt Vorwürfe – deeskalierend formuliert"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Claude API (Vision)",
+        "SQLite",
+        "pdf.js"
+      ],
+      "prerequisites": [
+        "Claude-API-Schlüssel",
+        "Wartungsplan aus Fahrzeughandbuch oder Serviceheft (manuell erfasst)",
+        "Rechnungen als Foto oder PDF"
+      ],
+      "extensions": [
+        "Kostenstatistik pro Fahrzeug und Jahr",
+        "Erinnerungen an fällige Wartungen aus dem Plan",
+        "Vergleich mehrerer Kostenvoranschläge vor einer Reparatur"
+      ],
+      "risks": [
+        "Extraktion aus schlechten Fotos kann fehlerhaft sein – Ergebnisse müssen geprüft werden",
+        "Keine Aussage darüber, ob ein Preis angemessen ist; Stundensätze schwanken regional stark",
+        "Kein Ersatz für eine technische Begutachtung"
+      ],
+      "monetization": {
+        "assessment": "Als kleines Zusatzmodul für Fahrzeugverwaltungs-Apps denkbar; als eigenständiges Bezahlprodukt vermutlich schwer abzugrenzen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "auto",
+        "rechnung",
+        "wartung",
+        "ocr",
+        "transparenz"
+      ]
+    },
+    {
+      "slug": "mobility-fahrzeug-lebensakte",
+      "title": "Fahrzeug-Lebensakte mit OBD-Logger",
+      "summary": "Sammelt OBD-II-Daten, Wartungen, Belege und Prüftermine in einer Zeitachse und erzeugt daraus ein Dossier für Verkauf oder Werkstatt.",
+      "description": "Ein OBD-II-Adapter liefert über einen kleinen Logger (Smartphone oder Raspberry Pi) Kilometerstand, Batteriespannung und gespeicherte Fehlercodes. Diese Daten werden mit Rechnungen, Reifenwechseln, HU-Terminen und Fotos zu einer durchsuchbaren Lebensakte des Fahrzeugs verbunden. Claude erklärt Fehlercodes allgemeinverständlich mit Unsicherheitshinweis und erstellt auf Wunsch ein PDF-Dossier für Verkauf oder Werkstattbesuch.",
+      "problem": "Die Geschichte eines Autos ist über Serviceheft, Schuhkarton und Werkstatt-Systeme verstreut. Beim Verkauf oder bei wiederkehrenden Problemen fehlen Belege und Zusammenhänge.",
+      "goal": "Die gesamte Fahrzeughistorie lückenlos, belegbar und durchsuchbar an einem Ort halten.",
+      "benefit": "Wiederkehrende Fehler werden über die Zeit sichtbar, und beim Verkauf liegt eine nachvollziehbare Dokumentation vor. Fehlercodes sind keine kryptischen Zeichenketten mehr.",
+      "audience": "Technikinteressierte Autobesitzer, Halter älterer Fahrzeuge",
+      "category": "mobility",
+      "subcategory": "mobility-vehicle",
+      "features": [
+        "OBD-II-Logging von Fehlercodes, Kilometerstand und Batteriespannung",
+        "Zeitachse aus Wartungen, Belegen, Reifen und Prüfterminen",
+        "Allgemeinverständliche Erklärung von Fehlercodes mit Unsicherheitshinweis",
+        "Erinnerungen an HU, Ölwechsel und Reifenwechsel",
+        "PDF-Dossier mit Verweisen auf die Belege"
+      ],
+      "highlights": [
+        "Verknüpft Sensordaten und Papierbelege in einer gemeinsamen Zeitachse",
+        "Erkennt wiederkehrende Fehlercodes über Monate hinweg"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "Python",
+        "python-OBD",
+        "SQLite",
+        "FastAPI",
+        "Claude API",
+        "Raspberry Pi (optional)"
+      ],
+      "prerequisites": [
+        "OBD-II-Adapter (Bluetooth oder WLAN)",
+        "Fahrzeug mit OBD-II-Schnittstelle",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Mehrere Fahrzeuge und Fahrerprofile",
+        "Verbrauchs- und Ladeanalyse für E-Autos, soweit Daten verfügbar sind",
+        "Teilen der Akte per zeitlich begrenztem Link"
+      ],
+      "risks": [
+        "Herstellerspezifische Codes und Daten sind über Standard-OBD oft nicht zugänglich",
+        "Erklärungen zu Fehlercodes ersetzen keine Werkstattdiagnose",
+        "Bedienung während der Fahrt muss technisch ausgeschlossen werden (Ablenkung)"
+      ],
+      "monetization": {
+        "assessment": "Fahrzeugdokumentation ist ein umkämpftes Feld; als eigenes Werkzeug vor allem persönlich nützlich, ein Produkt wäre spekulativ.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "auto",
+        "obd2",
+        "wartung",
+        "dokumentation",
+        "hardware"
+      ]
+    },
+    {
+      "slug": "mobility-pendel-varianz-analyst",
+      "title": "Pendel-Varianz-Analyst",
+      "summary": "Wertet eigene Pendelfahrten aus und zeigt, zu welcher Abfahrtszeit die Ankunft am verlässlichsten ist – nicht nur am schnellsten.",
+      "description": "Aus exportierten GPS-Tracks oder manuell protokollierten Fahrten berechnet das Tool pro Abfahrtsfenster und Verkehrsmittel nicht nur die mittlere Dauer, sondern auch Streuung und 90-%-Perzentil. Eine Heatmap zeigt, wann Pendeln planbar ist und wann es zur Lotterie wird. Claude fasst die Ergebnisse wöchentlich in Klartext zusammen und weist ausdrücklich darauf hin, wenn die Datenbasis noch zu dünn ist.",
+      "problem": "Routenplaner zeigen typische Fahrzeiten, für Termine zählt aber die Verlässlichkeit. Wer mit Puffer plant, weiß selten, wie viel Puffer zu welcher Uhrzeit wirklich nötig ist.",
+      "goal": "Abfahrtszeiten nach Verlässlichkeit statt nach Durchschnittsdauer wählen.",
+      "benefit": "Du planst Puffer datenbasiert, vermeidest unnötig frühe Abfahrten und erkennst, welches Verkehrsmittel zu welcher Zeit am berechenbarsten ist.",
+      "audience": "Berufspendler, Hybrid-Arbeitende mit flexiblen Zeiten",
+      "category": "mobility",
+      "subcategory": "mobility-routes",
+      "features": [
+        "Import von GPX/GeoJSON-Tracks und manuellen Fahrtprotokollen",
+        "Automatische Erkennung der Stammstrecke und der Abfahrtsfenster",
+        "Perzentil- und Streuungsanalyse pro Uhrzeit und Wochentag",
+        "Heatmap der Verlässlichkeit",
+        "Wöchentliche Klartext-Zusammenfassung mit Hinweis auf Datenlücken"
+      ],
+      "highlights": [
+        "Optimiert auf Planbarkeit statt auf Geschwindigkeit",
+        "Sagt ehrlich, ab wann die Datenmenge aussagekräftig ist"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "pandas",
+        "DuckDB",
+        "Plotly",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Eigene Standort- oder Fahrtdaten (Export aus einer Tracking-App oder Handprotokoll)",
+        "Einige Wochen Daten für belastbare Aussagen"
+      ],
+      "extensions": [
+        "Wetter und Ferienkalender als Einflussfaktoren",
+        "Vergleich von Rad, ÖPNV und Auto auf derselben Strecke",
+        "Kalender-Integration mit empfohlenem Abfahrtszeitpunkt"
+      ],
+      "risks": [
+        "Standortdaten sind sensibel und sollten lokal bleiben",
+        "Kleine Stichproben erzeugen leicht Scheinmuster"
+      ],
+      "monetization": {
+        "assessment": "Primär ein persönliches Analysewerkzeug; ein Geschäftsmodell ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 3,
+        "feasibility": 4
+      },
+      "tags": [
+        "pendeln",
+        "statistik",
+        "gps",
+        "planung",
+        "verlässlichkeit"
+      ]
+    },
+    {
+      "slug": "mobility-plan-b-router",
+      "title": "Plan-B-Router für die Stammstrecke",
+      "summary": "Berechnet vorab Ausweichrouten für die tägliche Strecke und meldet bei Störungen sofort eine vorbereitete Alternative.",
+      "description": "Für die eigene Stammstrecke werden mit einem quelloffenen Routing-Server auf Basis offener GTFS-Fahrplandaten mehrere Ausweichvarianten vorberechnet, etwa Bahn plus Leihrad oder Bus über einen anderen Knoten. Wo Echtzeitdaten verfügbar sind, überwacht ein Job Verspätungen und Ausfälle und schickt eine Push-Nachricht mit der passenden Alternative und dem spätesten Umstiegszeitpunkt. Claude formuliert die Lage knapp und nennt Datenquelle samt Zeitstempel.",
+      "problem": "Bei Störungen im Nahverkehr bleibt kaum Zeit, Alternativen zu recherchieren. Allgemeine Apps kennen die eigenen Vorlieben und Zwangspunkte wie Kita-Abholung oder feste Termine nicht.",
+      "goal": "Im Störungsfall innerhalb von Sekunden eine durchdachte Alternative parat haben.",
+      "benefit": "Weniger Stress und verpasste Termine, weil die Entscheidung schon vorbereitet ist. Eigene Randbedingungen wie Abholzeiten fließen in die Planung ein.",
+      "audience": "ÖPNV-Pendler in Regionen mit offenen Fahrplandaten",
+      "category": "mobility",
+      "subcategory": "mobility-routes",
+      "features": [
+        "Vorberechnung mehrerer Ausweichrouten für feste Strecken",
+        "Berücksichtigung eigener Zwangspunkte und Zeitfenster",
+        "Überwachung von Echtzeitdaten, sofern verfügbar",
+        "Push-Benachrichtigung mit spätestem Umstiegszeitpunkt",
+        "Protokoll, welche Alternative in der Praxis funktioniert hat"
+      ],
+      "highlights": [
+        "Plant Alternativen, bevor die Störung eintritt",
+        "Lernt aus eigenem Feedback, welche Varianten wirklich taugen"
+      ],
+      "complexity": 5,
+      "effort": "l",
+      "technologies": [
+        "OpenTripPlanner",
+        "GTFS / GTFS-Realtime",
+        "TypeScript",
+        "PostgreSQL",
+        "Web Push",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Offene GTFS-Daten für die eigene Region",
+        "Server oder Homelab für den Routing-Dienst",
+        "Echtzeit-Feed (nicht überall vorhanden)"
+      ],
+      "extensions": [
+        "Einbindung von Leihrad-Verfügbarkeit über offene Schnittstellen",
+        "Gemeinsame Nutzung für Fahrgemeinschaften",
+        "Rückblick: Wie oft war Plan B nötig?"
+      ],
+      "risks": [
+        "Qualität und Verfügbarkeit von Echtzeitdaten schwanken regional stark",
+        "Der Routing-Server benötigt spürbar Speicher und laufende Pflege",
+        "Nutzungsbedingungen der Datenquellen müssen beachtet werden"
+      ],
+      "monetization": {
+        "assessment": "Technisch anspruchsvoll und von öffentlichen Daten abhängig; als persönliches Werkzeug sinnvoll, als Produkt schwer gegen etablierte Angebote abzugrenzen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 2
+      },
+      "tags": [
+        "öpnv",
+        "routing",
+        "gtfs",
+        "echtzeit",
+        "pendeln"
+      ]
+    },
+    {
+      "slug": "gaming-backlog-zeitfenster-matcher",
+      "title": "Backlog-Matcher nach Zeit und Energie",
+      "summary": "Schlägt aus der eigenen Spielesammlung passende Titel für das verfügbare Zeitfenster und die aktuelle Tagesform vor.",
+      "description": "Du pflegst deine Spielebibliothek einmalig per CSV oder Formular mit Angaben wie typischer Sessionlänge, Speicherpunkten und geistiger Anstrengung. Auf eine Eingabe wie „40 Minuten, eher müde, Controller“ schlägt das Tool drei Titel mit kurzer Begründung vor. Abgebrochene oder ignorierte Vorschläge fließen als Feedback in die nächsten Empfehlungen ein.",
+      "problem": "Große Spielesammlungen führen zu Entscheidungslähmung; am Ende wird gar nichts oder immer dasselbe gespielt. Genre-Filter helfen wenig, wenn eigentlich Zeit und Energie entscheiden.",
+      "goal": "In unter einer Minute ein Spiel finden, das zur aktuellen Situation passt.",
+      "benefit": "Weniger Grübeln, mehr tatsächliches Spielen, und der Backlog schrumpft nebenbei. Spiele mit langen Sessions landen nicht mehr in 20-Minuten-Pausen.",
+      "audience": "Spielende mit großem Backlog und wenig Freizeit",
+      "category": "gaming",
+      "subcategory": "gaming-tools",
+      "features": [
+        "Bibliotheks-Import per CSV oder Formular",
+        "Merkmale wie Sessionlänge, Speicherpunkte und Anstrengung",
+        "Vorschläge nach Zeitfenster, Energie und Eingabegerät",
+        "Kurze Begründung pro Vorschlag",
+        "Feedback-Schleife aus Annahme und Abbruch"
+      ],
+      "highlights": [
+        "Empfiehlt nach Situation statt nach Genre",
+        "Funktioniert komplett ohne Plattform-Konten"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "SQLite",
+        "Svelte",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Liste der eigenen Spiele",
+        "Claude-API-Schlüssel (optional – eine Regelbasis funktioniert auch ohne)"
+      ],
+      "extensions": [
+        "Import aus Plattform-Exporten, soweit diese angeboten werden",
+        "Koop-Modus für gemeinsame Abende",
+        "Statistik: Was wurde wirklich durchgespielt?"
+      ],
+      "risks": [
+        "Die Qualität hängt von der Sorgfalt der eigenen Angaben ab",
+        "Automatischer Import aus Plattformen ist oft nicht offiziell möglich"
+      ],
+      "monetization": {
+        "assessment": "Ein nettes Hobbyprojekt; ein bezahltes Produkt erscheint wenig realistisch und ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 3,
+        "feasibility": 5
+      },
+      "tags": [
+        "backlog",
+        "empfehlung",
+        "freizeit",
+        "spiele"
+      ]
+    },
+    {
+      "slug": "gaming-regelheft-schiedsrichter",
+      "title": "Regelheft-Schiedsrichter für Brettspiele",
+      "summary": "Beantwortet Regelfragen am Spieltisch ausschließlich mit wörtlichen Zitaten und Seitenzahlen aus dem eigenen Regelheft.",
+      "description": "Eigene Regelhefte (PDF oder Scan) werden lokal in Abschnitte zerlegt und indexiert. Bei einer Frage sucht das Tool passende Stellen und lässt Claude eine Antwort formulieren, die sich nur auf diese Zitate stützt und die Seite nennt. Deckt das Regelheft die Situation nicht ab, sagt es das ausdrücklich, statt eine Regel zu erfinden, und bietet an, eine Hausregel zu notieren.",
+      "problem": "Regeldiskussionen unterbrechen Spieleabende, und das Suchen im Heft dauert. Allgemeine Chatbots erfinden gern plausibel klingende, aber falsche Regeln.",
+      "goal": "Regelfragen in Sekunden belegbar klären.",
+      "benefit": "Schnellere und fairere Entscheidungen am Tisch, weil jede Antwort eine nachprüfbare Quelle hat. Hausregeln werden dokumentiert und beim nächsten Mal berücksichtigt.",
+      "audience": "Brettspiel- und Tabletop-Gruppen",
+      "category": "gaming",
+      "subcategory": "gaming-tools",
+      "features": [
+        "Import und Abschnittsindexierung eigener Regelhefte",
+        "Antworten nur mit Zitat und Seitenzahl",
+        "Ausdrücklicher Hinweis, wenn keine Regel passt",
+        "Hausregel-Notizbuch pro Spiel",
+        "Sprachfrage per Smartphone am Tisch"
+      ],
+      "highlights": [
+        "Zitatpflicht verhindert erfundene Regeln",
+        "Trennt sichtbar zwischen offizieller Regel und Hausregel"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "SQLite FTS5",
+        "Claude API",
+        "PWA"
+      ],
+      "prerequisites": [
+        "Eigene, rechtmäßig erworbene Regelhefte als PDF oder Scan",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Offizielle FAQ und Errata als zusätzliche Quelle",
+        "Mehrsprachige Regelhefte",
+        "Schnellreferenz-Karten aus häufig gestellten Fragen"
+      ],
+      "risks": [
+        "Regelhefte sind urheberrechtlich geschützt – nur privat mit eigenen Exemplaren nutzen",
+        "Scans mit komplexem Layout erschweren die Extraktion",
+        "Mehrdeutige Regeln bleiben mehrdeutig"
+      ],
+      "monetization": {
+        "assessment": "Ohne Lizenzen der Verlage nicht mit Regelinhalten vertreibbar; denkbar höchstens als Werkzeug, in das Nutzer eigene Dateien laden.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "brettspiele",
+        "regeln",
+        "zitate",
+        "rag",
+        "spieleabend"
+      ]
+    },
+    {
+      "slug": "gaming-kampagnen-gedaechtnis",
+      "title": "Kampagnen-Gedächtnis für Spielleitungen",
+      "summary": "Macht aus Sitzungsnotizen und Transkripten ein Kampagnen-Wiki mit NSCs, offenen Handlungsfäden und Widerspruchsprüfung.",
+      "description": "Nach jeder Pen-&-Paper-Sitzung lädt die Spielleitung Notizen oder ein Audio-Transkript hoch. Claude extrahiert Figuren, Orte, Gegenstände und Versprechen an die Gruppe, verknüpft sie mit bestehenden Einträgen und listet offene Handlungsfäden. Ein Konsistenz-Check meldet Widersprüche, etwa wenn ein verstorbener NSC wieder auftaucht, und verweist auf die jeweilige Sitzung.",
+      "problem": "Lange Kampagnen erzeugen Unmengen an Details, die Spielleitungen kaum im Kopf behalten. Vergessene Handlungsfäden und Widersprüche frustrieren die Gruppe.",
+      "goal": "Den Kampagnenstand jederzeit vollständig und widerspruchsfrei abrufbar machen.",
+      "benefit": "Bessere Vorbereitung in kürzerer Zeit und mehr Kontinuität in der Geschichte. Spielende können eine spoilerfreie Ansicht des Wikis nutzen.",
+      "audience": "Spielleitungen von Pen-&-Paper-Kampagnen",
+      "category": "gaming",
+      "subcategory": "gaming-creation",
+      "features": [
+        "Import von Notizen und Audio-Transkripten pro Sitzung",
+        "Automatische Extraktion von NSCs, Orten und Gegenständen",
+        "Liste offener Handlungsfäden und Versprechen",
+        "Widerspruchsprüfung mit Sitzungsverweis",
+        "Getrennte Ansichten für Spielleitung und Spielende",
+        "Export als Markdown-Wiki"
+      ],
+      "highlights": [
+        "Widerspruchserkennung über viele Sitzungen hinweg",
+        "Spoilerschutz durch Sichtbarkeitsstufen"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "PostgreSQL",
+        "Whisper (lokal)",
+        "Claude API",
+        "React"
+      ],
+      "prerequisites": [
+        "Sitzungsnotizen oder Aufnahmen mit Einverständnis aller Beteiligten",
+        "Claude-API-Schlüssel",
+        "Rechner für lokale Transkription (optional)"
+      ],
+      "extensions": [
+        "Beziehungsgraph zwischen Figuren",
+        "Vorbereitungsassistent für die nächste Sitzung",
+        "Zeitleiste der Spielwelt"
+      ],
+      "risks": [
+        "Aufnahmen erfordern das Einverständnis aller Anwesenden",
+        "Extraktion aus chaotischen Gesprächen ist fehleranfällig und braucht Korrekturen",
+        "API-Kosten steigen mit der Länge der Transkripte"
+      ],
+      "monetization": {
+        "assessment": "Es gibt eine aktive Community, die für Spielleiter-Werkzeuge zahlt; ob ein weiteres Werkzeug Fuß fasst, ist offen.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "pen-and-paper",
+        "worldbuilding",
+        "wiki",
+        "transkription",
+        "konsistenz"
+      ]
+    },
+    {
+      "slug": "gaming-dialog-pruefstand",
+      "title": "Dialog-Prüfstand für eigene Spiele",
+      "summary": "Analysiert Dialogdateien eines eigenen Spiels auf tote Enden und unerreichbare Knoten und lässt Test-Personas sie durchspielen.",
+      "description": "Das Tool liest Dialogskripte in Formaten wie Ink oder Yarn ein und baut daraus einen Graphen. Eine statische Analyse findet Sackgassen, nie erreichbare Knoten und Variablen, die gelesen, aber nie gesetzt werden. Zusätzlich spielt Claude mit unterschiedlichen Spielerpersönlichkeiten automatisiert durch die Dialoge und berichtet, wo Antworten unpassend wirken oder Figuren aus der Rolle fallen.",
+      "problem": "Verzweigte Dialoge wachsen schnell unübersichtlich, und manuelle Tests decken nur wenige Pfade ab. Fehler fallen oft erst den Spielenden auf.",
+      "goal": "Verzweigte Dialoge vor dem Release systematisch auf Logik- und Tonfehler prüfen.",
+      "benefit": "Weniger kaputte Pfade und konsistentere Figuren bei deutlich weniger manuellem Durchklicken. Der Graph macht die Struktur außerdem für Co-Autoren verständlich.",
+      "audience": "Indie-Entwickler von Narrative- und Rollenspielen",
+      "category": "gaming",
+      "subcategory": "gaming-creation",
+      "features": [
+        "Parser für Ink- und Yarn-Dialogdateien",
+        "Graph-Visualisierung der Dialogstruktur",
+        "Erkennung von Sackgassen und unerreichbaren Knoten",
+        "Variablenprüfung (gelesen, aber nie gesetzt)",
+        "Persona-Durchläufe mit Bericht zu Ton und Logik",
+        "CI-Modus für automatische Prüfung bei Änderungen"
+      ],
+      "highlights": [
+        "Kombiniert harte Graph-Analyse mit weicher Ton-Prüfung",
+        "Läuft als CI-Schritt direkt im Spielprojekt"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "inkjs",
+        "Cytoscape.js",
+        "Claude API",
+        "GitHub Actions"
+      ],
+      "prerequisites": [
+        "Eigenes Spielprojekt mit Dialogen in einem unterstützten Format",
+        "Claude-API-Schlüssel für die Persona-Durchläufe"
+      ],
+      "extensions": [
+        "Weitere Dialogformate über Plugins",
+        "Lokalisierungs-Check: fehlende Übersetzungen pro Knoten",
+        "Lesbarkeitsmetriken pro Figur"
+      ],
+      "risks": [
+        "Persona-Urteile sind subjektiv und nur als Hinweise zu verstehen",
+        "Jedes Dialogformat erfordert eigenen Parser-Aufwand"
+      ],
+      "monetization": {
+        "assessment": "Als Open-Source-Werkzeug mit optionalem Support oder als kleines Bezahl-Tool für Indie-Studios denkbar; die Zielgruppe ist überschaubar.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 5,
+        "usefulness": 3,
+        "feasibility": 4
+      },
+      "tags": [
+        "gamedev",
+        "dialog",
+        "narrative",
+        "testing",
+        "graph"
+      ]
+    },
+    {
+      "slug": "data-viz-csv-erstbefund",
+      "title": "CSV-Erstbefund",
+      "summary": "Profiliert eine CSV-Datei lokal und lässt Claude nur auf Basis der Statistiken einen ersten Befund samt offener Fragen schreiben.",
+      "description": "Ein Kommandozeilenwerkzeug berechnet lokal Spaltentypen, Fehlwerte, Duplikate, Ausreißer, Wertebereiche und gemischte Datumsformate. An Claude gehen ausschließlich diese aggregierten Kennzahlen, nicht die Rohdaten. Heraus kommt ein Markdown-Befund mit Auffälligkeiten, vermuteten Datenqualitätsproblemen und konkreten Fragen an die Person, die die Daten geliefert hat.",
+      "problem": "Die ersten Stunden mit einem neuen Datensatz gehen für mühsames Sichten drauf. Gleichzeitig ist es heikel, Rohdaten an externe Dienste zu schicken.",
+      "goal": "In unter einer Minute einen datensparsamen Überblick über einen unbekannten Datensatz erhalten.",
+      "benefit": "Datenqualitätsprobleme fallen auf, bevor Analysen darauf aufbauen. Die Rückfragen an Datenlieferanten sind gleich mitformuliert.",
+      "audience": "Analysten, Entwickler und Controller mit gelegentlichen Datenexporten",
+      "category": "data-viz",
+      "subcategory": "data-viz-analysis",
+      "features": [
+        "Lokales Profiling von Typen, Fehlwerten und Duplikaten",
+        "Erkennung gemischter Datums- und Zahlenformate (z. B. Dezimalkomma)",
+        "Ausreißer-Hinweise mit robusten Verfahren",
+        "Befund als Markdown mit Rückfragen",
+        "Modus ganz ohne API-Aufruf"
+      ],
+      "highlights": [
+        "Nur Aggregate verlassen den Rechner",
+        "Erkennt typisch deutsche Formatfallen wie Dezimalkomma und TT.MM.JJJJ"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "Polars",
+        "DuckDB",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "CSV-Dateien",
+        "Claude-API-Schlüssel (optional)"
+      ],
+      "extensions": [
+        "Unterstützung für Excel und Parquet",
+        "Vergleich zweier Lieferungen desselben Exports (Schema-Drift)",
+        "Automatisch erzeugte Validierungsregeln"
+      ],
+      "risks": [
+        "Auch Aggregate wie Minimum und Maximum können sensible Werte verraten – das muss konfigurierbar sein",
+        "Ausreißererkennung ohne Fachkontext liefert Fehlalarme"
+      ],
+      "monetization": {
+        "assessment": "Als Open-Source-CLI sinnvoll; ein direkter Verkauf erscheint schwierig, da es viele Profiling-Bibliotheken gibt.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "csv",
+        "datenqualität",
+        "profiling",
+        "cli",
+        "datenschutz"
+      ]
+    },
+    {
+      "slug": "data-viz-hypothesen-logbuch",
+      "title": "Hypothesen-Logbuch für Analysen",
+      "summary": "Protokolliert in Notebooks, wie viele Filter- und Testvarianten ausprobiert wurden, bevor ein Ergebnis berichtet wird.",
+      "description": "Eine Notebook-Erweiterung fragt zu Beginn nach einer kurz formulierten Hypothese und protokolliert dann statistische Tests, Filteränderungen und Variablenauswahl. Beim Export eines Ergebnisses zeigt ein Begleitblatt, wie viele Varianten getestet und welche verworfen wurden. Claude fasst den Analysepfad als nachvollziehbaren Methodenabschnitt zusammen und weist auf das Risiko von Mehrfachtests hin.",
+      "problem": "Bei explorativen Analysen werden oft viele Varianten probiert und nur die schönste berichtet. Das erzeugt Scheinbefunde, ohne dass jemand bewusst täuscht.",
+      "goal": "Explorative Analysen ehrlich und nachvollziehbar dokumentieren.",
+      "benefit": "Ergebnisse lassen sich besser einordnen, weil der Weg dorthin sichtbar ist. Der Methodenteil für Berichte entsteht fast nebenbei.",
+      "audience": "Datenanalysten, Studierende, Forschende",
+      "category": "data-viz",
+      "subcategory": "data-viz-analysis",
+      "features": [
+        "Hypothesen-Eingabe vor der Analyse",
+        "Protokoll von Tests, Filtern und Variablenwahl",
+        "Zähler für ausprobierte Varianten",
+        "Begleitblatt beim Export eines Ergebnisses",
+        "Methodenabschnitt-Entwurf durch Claude"
+      ],
+      "highlights": [
+        "Macht den Analyseweg sichtbar statt nur das Endergebnis",
+        "Fördert ehrliche Statistik ohne erhobenen Zeigefinger"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "JupyterLab-Extension",
+        "SQLite",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "JupyterLab-Umgebung",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Export als Präregistrierungs-Vorlage",
+        "Team-Ansicht für Reviews",
+        "Integration in Quarto-Berichte"
+      ],
+      "risks": [
+        "Das Protokoll lässt sich umgehen, wenn außerhalb des Notebooks gerechnet wird",
+        "Alle Analyseschritte zu erfassen, gelingt technisch nur näherungsweise"
+      ],
+      "monetization": {
+        "assessment": "Eher ein Open-Source-Projekt mit Wirkung in Lehre und Forschung; ein Geschäftsmodell ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 5,
+        "usefulness": 3,
+        "feasibility": 3
+      },
+      "tags": [
+        "statistik",
+        "notebook",
+        "reproduzierbarkeit",
+        "methodik"
+      ]
+    },
+    {
+      "slug": "data-viz-kennzahlen-steckbriefe",
+      "title": "Kennzahlen-Steckbriefe",
+      "summary": "Jede Kennzahl eines Dashboards bekommt einen Steckbrief mit Formel, Quelle, Verantwortlichen und bekannten Fallstricken.",
+      "description": "Ein kleines Katalogsystem erfasst Kennzahlen mit Definition, Formel oder SQL, Datenquelle, Aktualisierungsrhythmus und Verantwortlichen. Dashboard-Kacheln verlinken per Info-Symbol direkt auf den Steckbrief. Claude prüft Definitionen auf Mehrdeutigkeiten, etwa ob „aktive Kunden“ zeitlich klar abgegrenzt ist, und findet Kennzahlen mit gleichem Namen, aber unterschiedlicher Formel.",
+      "problem": "In vielen Teams bedeutet dieselbe Kennzahl je nach Dashboard etwas anderes. Diskussionen drehen sich dann um Definitionen statt um Entscheidungen.",
+      "goal": "Für jede wichtige Kennzahl eine verbindliche, leicht auffindbare Definition schaffen.",
+      "benefit": "Weniger Missverständnisse in Meetings und ein schnelleres Onboarding. Widersprüchliche Definitionen werden aktiv aufgedeckt.",
+      "audience": "Kleine Teams und Unternehmen mit mehreren Dashboards",
+      "category": "data-viz",
+      "subcategory": "data-viz-dashboards",
+      "features": [
+        "Steckbrief-Katalog mit Formel, Quelle und Verantwortlichen",
+        "Einbettbares Info-Symbol für Dashboard-Kacheln",
+        "Mehrdeutigkeitsprüfung von Definitionen",
+        "Erkennung gleichnamiger Kennzahlen mit abweichender Formel",
+        "Änderungshistorie pro Kennzahl"
+      ],
+      "highlights": [
+        "Definitionen werden aktiv auf Mehrdeutigkeit geprüft",
+        "Unabhängig vom eingesetzten Dashboard-Werkzeug"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "PostgreSQL",
+        "SQL-Parser",
+        "Web Components",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Liste der genutzten Kennzahlen und Abfragen",
+        "Zugriff auf Dashboard-Konfigurationen oder deren Exporte"
+      ],
+      "extensions": [
+        "Automatischer Abgleich mit SQL-Definitionen im Data Warehouse",
+        "Benachrichtigung der Nutzer bei Formeländerungen",
+        "Glossar-Export für Berichte"
+      ],
+      "risks": [
+        "Der Nutzen hängt davon ab, dass die Steckbriefe gepflegt werden",
+        "Die organisatorische Einigung auf Definitionen kann kein Tool ersetzen"
+      ],
+      "monetization": {
+        "assessment": "Unternehmen geben Geld für Data-Governance aus; ein schlankes Angebot für kleine Teams ist plausibel, der Vertrieb aber aufwendig.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "kpi",
+        "dashboard",
+        "data-governance",
+        "dokumentation"
+      ]
+    },
+    {
+      "slug": "data-viz-belegter-projektpuls",
+      "title": "Belegter Projektpuls für OMEGA",
+      "summary": "Wöchentlicher Bericht über die eigenen OMEGA-Projekte, in dem jede Aussage auf die zugrunde liegende Abfrage verlinkt.",
+      "description": "Ein Dashboard wertet die Projektdaten aus OMEGA Infinity aus: Durchlaufzeiten, liegengebliebene Ideen, Verteilung der Arbeit über Kategorien und Abbruchquoten. Einmal pro Woche schreibt Claude einen kurzen Lagebericht, in dem jede Aussage mit der SQL-Abfrage und dem Diagramm verknüpft ist, aus dem sie stammt. Aussagen ohne Datenbeleg werden technisch verworfen.",
+      "problem": "Narrative KI-Berichte klingen überzeugend, lassen sich aber selten überprüfen. Reine Dashboards dagegen werden kaum angeschaut.",
+      "goal": "Einen lesbaren Wochenbericht erhalten, dessen Aussagen vollständig auf Daten zurückführbar sind.",
+      "benefit": "Du siehst, wohin deine Zeit wirklich fließt und welche Projekte stagnieren, und kannst jede Aussage mit einem Klick prüfen. Vertrauen entsteht durch Nachprüfbarkeit statt durch Formulierungskunst.",
+      "audience": "Nutzerinnen und Nutzer von OMEGA Infinity, später kleine Teams",
+      "category": "data-viz",
+      "subcategory": "data-viz-dashboards",
+      "features": [
+        "Kennzahlen zu Durchlaufzeit, Stagnation und Fokusverteilung",
+        "Bibliothek geprüfter SQL-Abfragen als einzige Faktenquelle",
+        "Wöchentlicher Bericht mit Beleglink pro Aussage",
+        "Automatisches Verwerfen von Aussagen ohne Datenbeleg",
+        "Archiv früherer Berichte zum Vergleich"
+      ],
+      "highlights": [
+        "Jede Aussage ist per Klick bis zur Abfrage nachvollziehbar",
+        "Nutzt die eigenen OMEGA-Daten statt fremder Benchmarks"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "SQLite",
+        "Claude API (Tool Use)",
+        "Apache ECharts",
+        "Node.js"
+      ],
+      "prerequisites": [
+        "OMEGA-Infinity-Datenbank mit einigen Wochen Projektdaten",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Vergleich mit selbst gesetzten Quartalszielen",
+        "Versand als PDF oder E-Mail",
+        "Hinweise bei plötzlichen Veränderungen"
+      ],
+      "risks": [
+        "Auch belegte Zahlen können bei schlechter Datenpflege in die Irre führen",
+        "Die strikte Belegpflicht macht Berichte manchmal knapper als gewünscht"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenfunktion von OMEGA Infinity gedacht; eine Vermarktung ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "dashboard",
+        "bericht",
+        "nachvollziehbarkeit",
+        "projekte",
+        "omega"
+      ]
+    },
+    {
+      "slug": "company-org-prozess-destillierer",
+      "title": "Prozess-Destillierer aus Kommunikationsverläufen",
+      "summary": "Erkennt in exportierten E-Mail- und Chatverläufen wiederkehrende, ungeschriebene Abläufe und entwirft daraus SOPs mit Diagramm.",
+      "description": "In einem Export ausgewählter Kanäle oder Postfächer sucht Claude nach wiederkehrenden Mustern wie Freigaben, Übergaben und Rückfragen, zum Beispiel wie Rechnungen tatsächlich freigegeben werden. Daraus entsteht der Entwurf einer Standardarbeitsanweisung mit Rollen, Schritten und einem Mermaid-Ablaufdiagramm. Jeder Schritt verweist auf Beispielnachrichten, damit das Team den Entwurf prüfen und korrigieren kann.",
+      "problem": "Viele Abläufe in kleinen Firmen existieren nur in Köpfen und Chatverläufen. Bei Ausfällen oder Wachstum fehlt dann die Dokumentation.",
+      "goal": "Gelebte, aber undokumentierte Prozesse sichtbar und beschreibbar machen.",
+      "benefit": "SOP-Entwürfe entstehen aus der Realität statt aus Wunschvorstellungen. Engpässe und Umwege werden im Diagramm sichtbar.",
+      "audience": "Kleine Unternehmen und Teams ohne Prozessdokumentation",
+      "category": "company-org",
+      "subcategory": "company-processes",
+      "features": [
+        "Import von E-Mail- und Chat-Exporten ausgewählter Kanäle",
+        "Mustererkennung für Freigaben, Übergaben und Rückfragen",
+        "SOP-Entwurf mit Rollen und Schritten",
+        "Mermaid-Ablaufdiagramm",
+        "Belegstellen pro Prozessschritt",
+        "Pseudonymisierung vor der Analyse"
+      ],
+      "highlights": [
+        "Dokumentiert den Ist-Prozess, nicht den Soll-Prozess",
+        "Jeder Schritt ist mit echten Beispielen belegt"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "Microsoft Presidio",
+        "SQLite",
+        "Mermaid",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Exporte der relevanten Kommunikation",
+        "Einverständnis der Beteiligten bzw. Abstimmung mit Datenschutz und ggf. Betriebsrat"
+      ],
+      "extensions": [
+        "Abgleich der SOP mit späteren Verläufen (Prozessabweichungen)",
+        "Export in ein Wiki",
+        "Durchlaufzeit pro Prozessschritt"
+      ],
+      "risks": [
+        "Die Auswertung von Mitarbeiterkommunikation ist arbeits- und datenschutzrechtlich sensibel",
+        "Seltene Sonderfälle werden leicht übersehen",
+        "Darf nicht zur Leistungsüberwachung missbraucht werden"
+      ],
+      "monetization": {
+        "assessment": "Prozessdokumentation ist ein bekannter Bedarf kleiner Firmen; als werkzeuggestützte Dienstleistung plausibel, der Datenschutzaufwand ist jedoch hoch.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "prozesse",
+        "sop",
+        "dokumentation",
+        "mermaid",
+        "kmu"
+      ]
+    },
+    {
+      "slug": "company-org-raci-konfliktfinder",
+      "title": "RACI-Konfliktfinder",
+      "summary": "Prüft eine Verantwortungsmatrix auf doppelte Hauptverantwortung, verwaiste Aufgaben und überlastete Personen.",
+      "description": "Du lädst eine RACI-Matrix als CSV oder Tabelle hoch. Ein Regelwerk prüft, ob jede Aufgabe genau eine hauptverantwortliche Person (Accountable) hat, ob Aufgaben ohne Durchführende existieren und wie sich die Rollen auf Personen verteilen. Claude formuliert die Befunde verständlich und schlägt Korrekturen vor, die du übernehmen oder verwerfen kannst.",
+      "problem": "Verantwortungsmatrizen werden einmal erstellt und dann nie wieder geprüft. Doppelte Zuständigkeiten und Lücken fallen erst auf, wenn etwas schiefgeht.",
+      "goal": "Zuständigkeiten in wenigen Minuten auf logische Fehler prüfen.",
+      "benefit": "Klare Verantwortlichkeiten und weniger „Ich dachte, du machst das“-Momente. Überlastete Schlüsselpersonen werden früh sichtbar.",
+      "audience": "Teamleitungen, Projektmanager, Gründerteams",
+      "category": "company-org",
+      "subcategory": "company-processes",
+      "features": [
+        "Import aus CSV oder Tabellenkalkulation",
+        "Regelprüfung: genau ein A pro Aufgabe",
+        "Erkennung verwaister Aufgaben",
+        "Rollenverteilung pro Person als Diagramm",
+        "Korrekturvorschläge zum Übernehmen"
+      ],
+      "highlights": [
+        "Deterministische Regeln – Claude nur für Erklärung und Vorschläge",
+        "In einem Nachmittag umsetzbar"
+      ],
+      "complexity": 1,
+      "effort": "xs",
+      "technologies": [
+        "TypeScript",
+        "Papa Parse",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "RACI-Matrix als Tabelle"
+      ],
+      "extensions": [
+        "Unterstützung für RASCI und andere Varianten",
+        "Abgleich mit der tatsächlichen Ticket-Zuweisung",
+        "Vergleich zweier Matrix-Versionen"
+      ],
+      "risks": [
+        "Formale Korrektheit sagt nichts darüber aus, ob die Rollenverteilung sinnvoll ist"
+      ],
+      "monetization": {
+        "assessment": "Zu klein für ein eigenes Produkt; als kostenloses Werkzeug oder Baustein einer größeren Lösung sinnvoll.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 2,
+        "usefulness": 3,
+        "feasibility": 5
+      },
+      "tags": [
+        "raci",
+        "verantwortung",
+        "team",
+        "organisation"
+      ]
+    },
+    {
+      "slug": "company-org-onboarding-lueckenradar",
+      "title": "Onboarding-Lückenradar",
+      "summary": "Ein interner Assistent beantwortet Fragen neuer Mitarbeitender aus der Doku und sammelt alles Unbeantwortbare als Doku-Backlog.",
+      "description": "Neue Teammitglieder stellen ihre Fragen an einen Assistenten, der ausschließlich aus freigegebener interner Dokumentation antwortet und die Quelle nennt. Fragen, die die Doku nicht beantwortet, werden thematisch gebündelt, einem Themen-Owner zugeordnet und als Backlog sichtbar gemacht. So wird jedes Onboarding zur systematischen Inventur der Wissenslücken.",
+      "problem": "Neue Mitarbeitende stellen immer wieder dieselben Fragen, deren Antworten nirgends stehen. Erfahrene Kolleginnen und Kollegen werden dadurch ständig unterbrochen.",
+      "goal": "Dokumentationslücken mit jedem Onboarding systematisch schließen.",
+      "benefit": "Neue Leute finden schneller Antworten, und das Team sieht datenbasiert, welche Doku fehlt. Mit der Zeit sinken die Unterbrechungen spürbar.",
+      "audience": "Wachsende Teams und KMU mit regelmäßigen Neueinstellungen",
+      "category": "company-org",
+      "subcategory": "company-people",
+      "features": [
+        "Antworten nur aus freigegebener Doku mit Quellenangabe",
+        "Erfassung und Bündelung unbeantworteter Fragen",
+        "Zuordnung von Lücken an Themen-Owner",
+        "Doku-Backlog mit Häufigkeit pro Thema",
+        "Anonymer Fragemodus für heikle Themen"
+      ],
+      "highlights": [
+        "Die gesammelten Lücken sind das eigentliche Produkt",
+        "Der anonyme Modus senkt die Hürde für vermeintlich dumme Fragen"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "PostgreSQL mit pgvector",
+        "Claude API",
+        "MCP",
+        "Chat-Bot-Schnittstelle (Slack oder Teams)"
+      ],
+      "prerequisites": [
+        "Bestehende interne Dokumentation (Wiki, Markdown, PDFs)",
+        "Claude-API-Schlüssel",
+        "Abstimmung zu Datenschutz und Mitbestimmung"
+      ],
+      "extensions": [
+        "Doku-Entwürfe für häufige Lücken",
+        "Rollenspezifische Onboarding-Pfade",
+        "Erkennung veralteter Doku-Abschnitte"
+      ],
+      "risks": [
+        "Falsche Antworten aus veralteter Doku können Schaden anrichten",
+        "Die Protokollierung von Fragen kann als Überwachung empfunden werden",
+        "Ohne Owner, die Lücken tatsächlich schließen, verpufft der Nutzen"
+      ],
+      "monetization": {
+        "assessment": "Interne Wissensassistenten sind ein umkämpfter Markt; der Fokus auf Lückenerkennung wäre ein Ansatz, die Erfolgsaussichten sind aber offen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 5,
+        "feasibility": 3
+      },
+      "tags": [
+        "onboarding",
+        "wissensmanagement",
+        "dokumentation",
+        "team"
+      ]
+    },
+    {
+      "slug": "company-org-abwesenheits-uebergabe",
+      "title": "Abwesenheits-Übergabe-Generator",
+      "summary": "Erstellt vor Urlaub oder Elternzeit aus offenen Tickets, Terminen und Threads ein strukturiertes Übergabedokument.",
+      "description": "Kurz vor der Abwesenheit sammelt das Tool offene Aufgaben aus dem Ticketsystem, anstehende Termine und als wichtig markierte Threads. Claude erstellt daraus ein Übergabedokument mit Status, nächsten Schritten, Ansprechpersonen und einer Liste „Wen frage ich wofür“. Die abwesende Person prüft und ergänzt den Entwurf, bevor er geteilt wird.",
+      "problem": "Übergaben vor dem Urlaub werden unter Zeitdruck geschrieben und sind lückenhaft. Die Vertretung muss sich mühsam einlesen oder ruft doch im Urlaub an.",
+      "goal": "In etwa 20 Minuten eine vollständige und verständliche Übergabe erstellen.",
+      "benefit": "Ein ruhigerer Urlaub für die abwesende Person und weniger Suchaufwand für die Vertretung. Das Dokument dient nach der Rückkehr zugleich als Checkliste.",
+      "audience": "Wissensarbeitende in Teams mit Vertretungsregelungen",
+      "category": "company-org",
+      "subcategory": "company-people",
+      "features": [
+        "Sammeln offener Tickets und Termine im Abwesenheitszeitraum",
+        "Auswahl relevanter Threads per Markierung",
+        "Übergabedokument mit Status und nächsten Schritten",
+        "Ansprechpersonen-Liste „Wen frage ich wofür“",
+        "Rückkehr-Checkliste aus denselben Quellen"
+      ],
+      "highlights": [
+        "Erzeugt Übergabe und Rückkehr-Checkliste in einem Schritt",
+        "Ein Mensch prüft vor dem Teilen – kein automatischer Versand"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "MCP-Server für Ticket- und Kalendersystem",
+        "Markdown",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Zugriff auf Ticketsystem und Kalender per API oder Export",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Team-Übersicht aller Abwesenheiten mit Vertretungen",
+        "Automatische Erinnerung eine Woche vor dem Urlaub",
+        "Rückkehr-Zusammenfassung: Was ist in der Zwischenzeit passiert?"
+      ],
+      "risks": [
+        "Vertrauliche Inhalte aus Threads könnten unbeabsichtigt im Dokument landen",
+        "Die Qualität hängt von gepflegten Tickets ab"
+      ],
+      "monetization": {
+        "assessment": "Eher eine Funktion innerhalb bestehender Werkzeuge als ein eigenständiges Produkt; keine Vermarktung vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "übergabe",
+        "urlaub",
+        "vertretung",
+        "team"
+      ]
+    },
+    {
+      "slug": "personal-admin-vertrags-inventur",
+      "title": "Vertrags-Inventur mit Fristenkalender",
+      "summary": "Liest Verträge aus Foto oder PDF, extrahiert Laufzeiten und Kündigungsfristen und erzeugt Kalendererinnerungen vor jedem Stichtag.",
+      "description": "Verträge für Strom, Mobilfunk, Versicherungen oder Abos werden fotografiert oder als PDF hochgeladen. Claude extrahiert Vertragsbeginn, Mindestlaufzeit, Kündigungsfrist und Preisanpassungsklauseln, jeweils mit Zitat der Fundstelle. Nach deiner Bestätigung erzeugt das Tool einen ICS-Kalender mit Erinnerungen einige Wochen vor dem letzten möglichen Kündigungstag.",
+      "problem": "Kündigungsfristen werden verpasst, weil niemand die Vertragsdaten zentral im Blick hat. Die relevanten Angaben stehen versteckt im Kleingedruckten.",
+      "goal": "Für jeden laufenden Vertrag rechtzeitig wissen, wann eine Kündigung oder ein Wechsel möglich ist.",
+      "benefit": "Du verpasst keine Wechselfenster mehr und hast alle Verträge auf einer Seite. Die Zitate machen jede extrahierte Angabe überprüfbar.",
+      "audience": "Privatpersonen und Haushalte",
+      "category": "personal-admin",
+      "subcategory": "personal-admin-contracts",
+      "features": [
+        "Extraktion von Laufzeit, Frist und Preisklauseln mit Zitat",
+        "Bestätigungsschritt vor dem Speichern",
+        "ICS-Export mit Vorlauf-Erinnerungen",
+        "Übersicht aller Verträge mit monatlichen Kosten",
+        "Hinweis bei unklaren oder fehlenden Angaben"
+      ],
+      "highlights": [
+        "Jede Angabe mit Fundstelle im Originaldokument",
+        "Kalenderexport statt einer weiteren App mit eigenen Benachrichtigungen"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Claude API (Vision)",
+        "SQLite",
+        "iCalendar (ICS)"
+      ],
+      "prerequisites": [
+        "Verträge als Foto oder PDF",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Entwurf eines Kündigungsschreibens als Vorlage",
+        "Hinweis auf mögliche Sonderkündigungsrechte bei Preiserhöhungen",
+        "Gemeinsame Ansicht für Haushaltsverträge"
+      ],
+      "risks": [
+        "Keine Rechtsberatung – Fristen müssen am Vertrag selbst geprüft werden, gesetzliche Regeln können vom Vertragstext abweichen",
+        "Extraktionsfehler bei schlecht lesbaren Dokumenten sind möglich",
+        "Verträge enthalten persönliche Daten und sollten verschlüsselt gespeichert werden"
+      ],
+      "monetization": {
+        "assessment": "Vertragsverwaltung ist ein besetzter Markt, oft über Vermittlungsprovisionen finanziert; ein unabhängiges, provisionsfreies Werkzeug wäre eine Nische mit offenem Ausgang.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 2,
+        "usefulness": 5,
+        "feasibility": 5
+      },
+      "tags": [
+        "verträge",
+        "fristen",
+        "kalender",
+        "haushalt",
+        "ocr"
+      ]
+    },
+    {
+      "slug": "personal-admin-preisanstieg-detektor",
+      "title": "Detektor für schleichende Preiserhöhungen",
+      "summary": "Vergleicht Rechnungen eines Vertrags über die Zeit und zeigt verdeckte Preiserhöhungen, auslaufende Rabatte und neue Gebühren.",
+      "description": "Monatliche oder jährliche Rechnungen (PDF-Anhänge aus dem Postfach oder manuell abgelegt) werden geparst und pro Vertrag als Zeitreihe gespeichert. Das Tool erkennt Sprünge im Grundpreis, auslaufende Neukundenrabatte und neu auftauchende Gebührenpositionen. Claude erklärt jede Veränderung mit Verweis auf die betroffenen Rechnungen und notiert, was zu prüfen wäre.",
+      "problem": "Preiserhöhungen kommen oft in kleinen Schritten oder versteckt in neuen Positionen. Ohne Vergleich über mehrere Rechnungen fallen sie nicht auf.",
+      "goal": "Kostenveränderungen bei laufenden Verträgen automatisch und belegt erkennen.",
+      "benefit": "Du bemerkst Preisänderungen zeitnah und kannst rechtzeitig reagieren. Die Zeitreihen zeigen außerdem, welche Verträge langfristig am stärksten teurer werden.",
+      "audience": "Haushalte mit vielen Abos und Versorgungsverträgen",
+      "category": "personal-admin",
+      "subcategory": "personal-admin-contracts",
+      "features": [
+        "Zerlegung von Rechnungs-PDFs in Positionen",
+        "Zeitreihe pro Vertrag und Position",
+        "Erkennung von Preissprüngen und neuen Gebühren",
+        "Erklärungen mit Verweis auf konkrete Rechnungen",
+        "Monatliche Übersicht der Veränderungen"
+      ],
+      "highlights": [
+        "Vergleicht Rechnungen über Jahre statt einzeln",
+        "Findet neue Positionen, nicht nur höhere Beträge"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "pdfplumber",
+        "SQLite",
+        "IMAP (optional)",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Rechnungen als PDF über mehrere Abrechnungsperioden",
+        "Optional Postfachzugang per IMAP"
+      ],
+      "extensions": [
+        "Verknüpfung mit der Vertrags-Inventur",
+        "Inflationsbereinigte Darstellung",
+        "Jahresrückblick der Fixkostenentwicklung"
+      ],
+      "risks": [
+        "Rechnungsformate ändern sich und brechen Parser",
+        "Postfachzugriff erfordert sorgfältige Absicherung der Zugangsdaten",
+        "Erkannte Veränderungen sind Hinweise, keine rechtliche Bewertung"
+      ],
+      "monetization": {
+        "assessment": "Als persönliches Werkzeug nützlich; ein Produkt müsste sehr viele Rechnungsformate abdecken und wäre entsprechend aufwendig.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "rechnungen",
+        "preise",
+        "abos",
+        "zeitreihe"
+      ]
+    },
+    {
+      "slug": "personal-admin-notfallordner",
+      "title": "Digitaler Notfallordner für Angehörige",
+      "summary": "Strukturierter, verschlüsselter Notfallordner mit Vollständigkeitscheck und druckbarem Handbuch für Vertrauenspersonen.",
+      "description": "Der Notfallordner führt durch alle wichtigen Bereiche: Versicherungen, Konten, Vollmachten, Verträge, digitale Konten, Haustiere und Kontakte. Inhalte werden lokal verschlüsselt gespeichert; Passwörter selbst werden nicht abgelegt, sondern nur Hinweise, wo sie zu finden sind. Ein Vollständigkeitscheck zeigt Lücken, und Claude hilft, aus den Einträgen ein verständliches Handbuch für Angehörige zu formulieren, ohne dass sensible Werte übertragen werden.",
+      "problem": "Im Krankheits- oder Todesfall wissen Angehörige oft nicht, welche Verträge, Konten und Vollmachten existieren. Die Suche kostet in einer ohnehin belastenden Situation viel Kraft.",
+      "goal": "Alle wichtigen Informationen für den Ernstfall vollständig, sicher und verständlich hinterlegen.",
+      "benefit": "Vertrauenspersonen finden im Notfall schnell, was sie brauchen. Der Vollständigkeitscheck macht ein unangenehmes Thema zu einer überschaubaren Aufgabe.",
+      "audience": "Erwachsene jeden Alters, besonders Familien und ältere Menschen",
+      "category": "personal-admin",
+      "subcategory": "personal-admin-household",
+      "features": [
+        "Geführte Erfassung nach Lebensbereichen",
+        "Lokale Verschlüsselung aller Inhalte",
+        "Vollständigkeitscheck mit Fortschrittsanzeige",
+        "Druckbares Handbuch für Vertrauenspersonen",
+        "Jährliche Erinnerung zur Aktualisierung",
+        "Ablageorte statt Passwörtern"
+      ],
+      "highlights": [
+        "Speichert bewusst keine Passwörter, nur Fundorte",
+        "Erzeugt ein verständliches Papierhandbuch für den Ernstfall"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "Tauri",
+        "libsodium",
+        "SQLCipher",
+        "Claude API (nur Formulierungshilfe)"
+      ],
+      "prerequisites": [
+        "Zeit für die Ersterfassung",
+        "Sicherer Aufbewahrungsort für Schlüssel und Ausdruck"
+      ],
+      "extensions": [
+        "Freigabe einzelner Bereiche an verschiedene Vertrauenspersonen",
+        "Checkliste für digitale Konten und Abos",
+        "Erinnerung an ablaufende Ausweisdokumente"
+      ],
+      "risks": [
+        "Sicherheitslücken hätten gravierende Folgen – Kryptografie nur mit bewährten Bibliotheken umsetzen",
+        "Vollmachten und Verfügungen brauchen eine rechtsgültige Form; das Tool ersetzt keine Rechtsberatung",
+        "Bei Verlust des Schlüssels sind die Daten unwiederbringlich"
+      ],
+      "monetization": {
+        "assessment": "Für Vorsorgethemen besteht grundsätzlich Zahlungsbereitschaft, aber die Vertrauensanforderungen sind hoch; ein Produkt wäre nur mit unabhängiger Sicherheitsprüfung seriös.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 3
+      },
+      "tags": [
+        "vorsorge",
+        "notfall",
+        "verschlüsselung",
+        "familie",
+        "dokumente"
+      ]
+    },
+    {
+      "slug": "personal-admin-hausrat-videoinventar",
+      "title": "Hausrat-Inventar per Video-Rundgang",
+      "summary": "Erstellt aus einem Video-Rundgang durch die Wohnung eine Inventarliste, die mit Kaufbelegen verknüpft werden kann.",
+      "description": "Du filmst die Wohnung Raum für Raum. Das Tool extrahiert Einzelbilder, Claude erkennt darauf Gegenstände und erstellt pro Raum eine Inventarliste mit Bildausschnitt. Werte trägst du selbst ein oder übernimmst sie aus verknüpften Kaufbelegen; das Ergebnis lässt sich als PDF für einen Versicherungsfall exportieren.",
+      "problem": "Nach Einbruch, Wasserschaden oder Brand fällt es schwer, den Hausrat aus dem Gedächtnis aufzulisten. Ohne Nachweise wird die Schadensregulierung mühsam.",
+      "goal": "Mit geringem Aufwand eine belegte Hausratsliste anlegen und aktuell halten.",
+      "benefit": "Im Schadensfall liegt eine strukturierte Liste mit Fotos und Belegen vor. Nebenbei siehst du grob, ob die Versicherungssumme zum Bestand passt.",
+      "audience": "Mieter und Eigentümer mit Hausratversicherung",
+      "category": "personal-admin",
+      "subcategory": "personal-admin-household",
+      "features": [
+        "Einzelbild-Extraktion aus Video-Rundgängen",
+        "Objekterkennung pro Raum mit Bildausschnitt",
+        "Manuelle Wertangabe oder Übernahme aus Belegen",
+        "Verknüpfung von Kaufbelegen und Garantien",
+        "PDF-Export für den Versicherungsfall"
+      ],
+      "highlights": [
+        "Ein Video ersetzt stundenlanges Abtippen",
+        "Werte stammen vom Menschen oder aus Belegen – keine erfundenen Schätzpreise"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "FFmpeg",
+        "Claude API (Vision)",
+        "SQLite",
+        "WeasyPrint"
+      ],
+      "prerequisites": [
+        "Smartphone-Video der Wohnung",
+        "Claude-API-Schlüssel",
+        "Optional digitalisierte Kaufbelege"
+      ],
+      "extensions": [
+        "Erinnerung an auslaufende Garantien",
+        "Jährlicher Vergleichs-Rundgang mit Differenzliste",
+        "Umzugsmodus mit Kistenzuordnung"
+      ],
+      "risks": [
+        "Videos der Wohnung sind sehr privat – nur Einzelbilder übertragen und verschlüsselt ablegen",
+        "Gegenstände in Schränken und Schubladen werden nicht erfasst",
+        "Ob Versicherer die Liste als Nachweis akzeptieren, ist nicht garantiert"
+      ],
+      "monetization": {
+        "assessment": "Als Zusatzleistung im Versicherungsumfeld denkbar; als eigenes Produkt fraglich, weil der Nutzen nur im seltenen Schadensfall spürbar wird.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "hausrat",
+        "versicherung",
+        "inventar",
+        "vision",
+        "video"
+      ]
+    },
+    {
+      "slug": "experimental-papier-wochenkarte",
+      "title": "Papier-Wochenkarte mit Rückkanal",
+      "summary": "Druckt die Wochenplanung als Karte mit Ankreuzfeldern; ein Handyfoto der ausgefüllten Karte aktualisiert den Status in OMEGA.",
+      "description": "Aus OMEGA wird jede Woche eine A5-Karte mit Aufgaben, Ankreuzfeldern und einem QR-Code zur Identifikation erzeugt. Nach dem Abhaken und Bekritzeln wird die Karte fotografiert: Eine Markierungserkennung liest die Kästchen, Claude interpretiert handschriftliche Randnotizen. Vor der Übernahme zeigt eine Vorschau alle erkannten Änderungen zur Bestätigung.",
+      "problem": "Digitale Planung bedeutet ständiges Starren auf Bildschirme, Papier verliert dagegen den Anschluss an das System. Viele Menschen denken mit Stift besser.",
+      "goal": "Papier als vollwertige Ein- und Ausgabe für die eigene Projektverwaltung nutzen.",
+      "benefit": "Du arbeitest den Tag über bildschirmfrei und verlierst trotzdem keine Information. Handschriftliche Ideen landen strukturiert im System.",
+      "audience": "Menschen, die gern auf Papier planen, aber digital organisiert sind",
+      "category": "experimental",
+      "subcategory": "experimental-interfaces",
+      "features": [
+        "Wöchentliche PDF-Karte mit Ankreuzfeldern und QR-Code",
+        "Markierungserkennung für Kästchen",
+        "Interpretation handschriftlicher Randnotizen",
+        "Änderungsvorschau vor der Übernahme",
+        "Mehrere Kartenlayouts (Woche, Tag, Projekt)"
+      ],
+      "highlights": [
+        "Papier wird zur echten Schnittstelle statt zum bloßen Ausdruck",
+        "Der Bestätigungsschritt verhindert stille Fehlinterpretationen"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "OpenCV",
+        "Claude API (Vision)",
+        "PDFKit",
+        "QR-Codes"
+      ],
+      "prerequisites": [
+        "Drucker",
+        "Smartphone-Kamera",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "E-Ink-Display als papierähnliche Variante",
+        "Sprachnotiz als dritter Eingabekanal",
+        "Monatsrückblick als gedrucktes Heft"
+      ],
+      "risks": [
+        "Handschrift wird nicht immer korrekt erkannt",
+        "Schatten, Knicke und schräge Fotos erschweren die Erkennung"
+      ],
+      "monetization": {
+        "assessment": "Ein reizvolles Nischenkonzept; eine Vermarktung ist nicht vorgesehen, als Open-Source-Experiment aber gut teilbar.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 5,
+        "usefulness": 3,
+        "feasibility": 4
+      },
+      "tags": [
+        "papier",
+        "interface",
+        "handschrift",
+        "vision",
+        "planung"
+      ]
+    },
+    {
+      "slug": "experimental-zoom-zeitachse",
+      "title": "Zoombare Zeitachse als Hauptansicht",
+      "summary": "Ein Interface, in dem Projekte als Ströme auf einer stufenlos zoombaren Zeitachse von Jahren bis Stunden erscheinen.",
+      "description": "Statt Listen und Boards zeigt die Oberfläche alle Projekte als farbige Ströme auf einer Zeitachse, die sich stufenlos von Jahren bis Stunden zoomen lässt. Je nach Zoomstufe erscheinen Meilensteine, Aufgaben oder einzelne Arbeitssitzungen; Claude erzeugt für jede Stufe passende Zusammenfassungen, etwa „Was ist in diesem Quartal passiert?“. Das Projekt ist bewusst als Experiment angelegt, ob räumlich-zeitliche Navigation mehr Überblick bietet als klassische Listen.",
+      "problem": "Listen und Kanban-Boards zeigen nur den Moment, nicht die Entwicklung über die Zeit. Zusammenhänge zwischen Projekten und Lebensphasen bleiben unsichtbar.",
+      "goal": "Prüfen, ob eine zoombare Zeitachse als primäre Navigation den Überblick verbessert.",
+      "benefit": "Muster wie parallele Überlastungsphasen oder lange Pausen werden auf einen Blick sichtbar. Rückblicke werden visuell statt textlastig.",
+      "audience": "Visuell denkende Nutzer von OMEGA Infinity, Interface-Experimentierfreudige",
+      "category": "experimental",
+      "subcategory": "experimental-interfaces",
+      "features": [
+        "Stufenloses Zoomen von Jahren bis Stunden",
+        "Projekte als Ströme, deren Breite die Aktivität zeigt",
+        "Detailstufen je nach Zoom (Meilensteine, Aufgaben, Sitzungen)",
+        "Zusammenfassungen pro Zeitfenster durch Claude",
+        "Tastatur- und Touch-Navigation"
+      ],
+      "highlights": [
+        "Semantisches Zoomen statt bloßem Vergrößern",
+        "Zusammenfassungen passen sich der Zoomstufe an"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "PixiJS (WebGL)",
+        "D3.js",
+        "SQLite",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Projektdaten mit Zeitstempeln über einen längeren Zeitraum",
+        "Claude-API-Schlüssel für die Zusammenfassungen"
+      ],
+      "extensions": [
+        "Überlagerung mit Kalenderdaten",
+        "Vergleich zweier Zeiträume nebeneinander",
+        "Barrierefreie Alternativansicht als strukturierte Liste"
+      ],
+      "risks": [
+        "Performance bei vielen Datenpunkten ist anspruchsvoll",
+        "Visuelle Interfaces sind schwer barrierefrei umzusetzen",
+        "Der Nutzen ist ungewiss – es bleibt ein Experiment"
+      ],
+      "monetization": {
+        "assessment": "Als Experiment gedacht; eine Vermarktung ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 3,
+        "feasibility": 3
+      },
+      "tags": [
+        "zeitachse",
+        "visualisierung",
+        "interface",
+        "zoom",
+        "experiment"
+      ]
+    },
+    {
+      "slug": "experimental-commit-kunst",
+      "title": "Commit-Historie als generative Kunst",
+      "summary": "Verwandelt die Git-Historie eines Projekts in ein reproduzierbares, plottertaugliches Bild aus Linien und Formen.",
+      "description": "Ein Skript liest die Git-Historie eines Repositories und bildet Commits, Dateien und Änderungsumfang auf visuelle Parameter ab: Zeit wird zu Radius, geänderte Zeilen zu Strichstärke, Verzeichnisse zu Farben. Das Ergebnis ist ein SVG, das sich am Bildschirm, als Poster oder mit einem Stiftplotter ausgeben lässt. Mit Claude Code lassen sich neue Abbildungsregeln als kleine Stilmodule schnell ausprobieren.",
+      "problem": "Die Geschichte eines Softwareprojekts steckt in Logs, die niemand gern liest. Meilensteine wie ein Release oder ein Projektabschluss haben selten ein greifbares Erinnerungsstück.",
+      "goal": "Aus einer Projekthistorie ein einzigartiges, reproduzierbares Bild erzeugen.",
+      "benefit": "Ein persönliches Erinnerungsstück für Projektabschlüsse, Jubiläen oder als Team-Geschenk. Nebenbei werden Aktivitätsmuster sichtbar.",
+      "audience": "Entwickler, Open-Source-Teams, Creative Coder",
+      "category": "experimental",
+      "subcategory": "experimental-art",
+      "features": [
+        "Einlesen der Git-Historie inklusive Änderungsumfang",
+        "Austauschbare Stilmodule für Abbildungsregeln",
+        "Deterministische Ausgabe über Seed und Commit-Hash",
+        "SVG-Export mit plottertauglichen Pfaden",
+        "Browser-Vorschau mit Parameterreglern"
+      ],
+      "highlights": [
+        "Jedes Bild ist aus einem Commit-Hash exakt reproduzierbar",
+        "Echte Vektorpfade für Stiftplotter statt nur Pixelgrafik"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "isomorphic-git",
+        "SVG",
+        "p5.js",
+        "Claude Code"
+      ],
+      "prerequisites": [
+        "Git-Repository mit Historie",
+        "Optional ein Stiftplotter"
+      ],
+      "extensions": [
+        "Animation der Projektentwicklung als Video",
+        "Vergleichsbild mehrerer Repositories",
+        "Druck als Poster oder auf Leinwand"
+      ],
+      "risks": [
+        "Bei privaten Repositories könnten Datei- oder Personennamen ins Bild gelangen",
+        "Ästhetische Qualität erfordert viel Ausprobieren"
+      ],
+      "monetization": {
+        "assessment": "Personalisierte Poster zu Projektjubiläen sind denkbar, die Nachfrage ist aber ungewiss.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 2,
+        "feasibility": 5
+      },
+      "tags": [
+        "generative-art",
+        "git",
+        "svg",
+        "plotter",
+        "creative-coding"
+      ]
+    },
+    {
+      "slug": "experimental-plotter-labor",
+      "title": "Generatives Plotter-Labor mit Variantenarchiv",
+      "summary": "Werkbank für generative Kunst: Skizzen versionieren, Parameterräume erkunden, Varianten vergleichen und plottergerecht ausgeben.",
+      "description": "Jede generative Skizze wird mit Code-Stand, Seed und Parametern archiviert, sodass jedes Ergebnis exakt reproduzierbar bleibt. Ein Parameter-Explorer rendert Raster vieler Varianten, aus denen Favoriten markiert werden. Claude Code hilft, aus einer Beschreibung neue Skizzenvarianten als Code zu entwerfen, und eine Pipeline optimiert Pfade, Stiftwechsel und Papierformat für den Plotter.",
+      "problem": "Beim generativen Arbeiten gehen gute Varianten verloren, weil Seeds und Parameter nicht dokumentiert werden. Die Ausgabe auf dem Plotter erfordert zudem viel manuelle Nacharbeit.",
+      "goal": "Einen reproduzierbaren Arbeitsablauf von der Idee bis zum geplotteten Blatt schaffen.",
+      "benefit": "Keine verlorenen Lieblingsvarianten mehr und deutlich weniger Zeit für Pfadoptimierung. Das Archiv wird zum persönlichen Werkkatalog.",
+      "audience": "Creative Coder und Plotter-Künstlerinnen",
+      "category": "experimental",
+      "subcategory": "experimental-art",
+      "features": [
+        "Versionsarchiv mit Code-Stand, Seed und Parametern",
+        "Parameter-Explorer mit Variantenraster",
+        "Favoriten und Notizen pro Variante",
+        "Pfadoptimierung und Planung von Stiftwechseln",
+        "Skizzenentwürfe per Claude Code aus einer Textbeschreibung"
+      ],
+      "highlights": [
+        "Jedes Blatt ist bis auf den Code-Stand zurückverfolgbar",
+        "Verbindet Exploration und physische Ausgabe in einem Werkzeug"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "p5.js",
+        "vpype",
+        "SQLite",
+        "Electron",
+        "Claude Code"
+      ],
+      "prerequisites": [
+        "Erfahrung mit generativem Code",
+        "Stiftplotter für die physische Ausgabe"
+      ],
+      "extensions": [
+        "Editionsverwaltung mit Nummerierung signierter Blätter",
+        "Galerie-Export als statische Website",
+        "Ausgabeformate für Laser-Cutter oder Stickmaschinen"
+      ],
+      "risks": [
+        "Die Ansteuerung unterscheidet sich stark zwischen Plottermodellen",
+        "Die Zielgruppe ist klein und anspruchsvoll"
+      ],
+      "monetization": {
+        "assessment": "Eher die eigene Kunst als das Werkzeug wäre verkäuflich; das Werkzeug passt besser als Open Source. Einnahmen sind ungewiss.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 3,
+        "feasibility": 3
+      },
+      "tags": [
+        "generative-art",
+        "plotter",
+        "versionierung",
+        "creative-coding"
+      ]
+    },
+    {
+      "slug": "dev-tools-flaky-test-forensik",
+      "title": "Flaky-Test-Forensik",
+      "summary": "Führt instabile Tests unter variierten Bedingungen wiederholt aus und ordnet Fehlschläge wahrscheinlichen Ursachen zu.",
+      "description": "Das Tool startet verdächtige Tests vielfach mit veränderter Reihenfolge, Zeitzone, Systemzeit, Parallelität und Zufalls-Seed. Aus den Ergebnissen berechnet es, welche Variable die Fehlerquote am stärksten beeinflusst. Claude ordnet das Muster typischen Ursachen wie Zeitabhängigkeit, geteiltem Zustand oder Netzwerkzugriffen zu und schlägt eine konkrete Untersuchung vor – ausdrücklich als Hypothese.",
+      "problem": "Flaky Tests untergraben das Vertrauen in die CI und werden oft nur stummgeschaltet. Die Ursachensuche ist mühsam, weil Fehler selten und scheinbar zufällig auftreten.",
+      "goal": "Die Ursache instabiler Tests systematisch statt durch Raten eingrenzen.",
+      "benefit": "Schnellere Behebung statt dauerhaftem Ignorieren und wieder eine vertrauenswürdige CI. Die Experimente sind reproduzierbar dokumentiert.",
+      "audience": "Entwicklungsteams mit wachsender Testsuite",
+      "category": "dev-tools",
+      "subcategory": "dev-tools-quality",
+      "features": [
+        "Wiederholte Ausführung mit variierten Bedingungen",
+        "Statistische Auswertung pro Einflussvariable",
+        "Ursachenhypothesen mit Begründung",
+        "Reproduktionsrezept für den Fehlerfall",
+        "Adapter für Vitest, Jest und pytest"
+      ],
+      "highlights": [
+        "Systematisches Experiment statt bloßem Wiederholen",
+        "Liefert ein konkretes Reproduktionsrezept"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "Vitest/Jest-Reporter",
+        "pytest-Plugin",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Testsuite mit bekannten instabilen Tests",
+        "Rechenzeit für viele Durchläufe"
+      ],
+      "extensions": [
+        "Quarantäne-Label mit Ablaufdatum",
+        "Auswertung historischer CI-Läufe",
+        "PR-Kommentar mit Befund"
+      ],
+      "risks": [
+        "Viele Durchläufe kosten Zeit und CI-Ressourcen",
+        "Manche Ursachen (Infrastruktur, Hardware) lassen sich lokal nicht nachstellen"
+      ],
+      "monetization": {
+        "assessment": "Für CI-Stabilität wird bezahlt; ein Open-Core-Ansatz ist plausibel, der Markt für Testwerkzeuge ist aber dicht besetzt.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "testing",
+        "flaky-tests",
+        "ci",
+        "debugging"
+      ]
+    },
+    {
+      "slug": "dev-tools-regressionstest-waechter",
+      "title": "Regressionstest-Wächter für Bugfixes",
+      "summary": "Prüft bei jedem Bugfix-PR, ob ein Test den Fehler abdeckt, und entwirft bei Bedarf einen passenden Regressionstest.",
+      "description": "Ein CI-Schritt erkennt PRs, die ein Bug-Issue schließen, und prüft, ob dabei Tests hinzugefügt oder geändert wurden, die den betroffenen Code berühren. Fehlt das, erstellt Claude Code aus Issue-Beschreibung und Diff einen Testentwurf als Vorschlag im PR. Der Test wird gegen den Stand vor dem Fix ausgeführt, um zu belegen, dass er den Fehler tatsächlich gefangen hätte.",
+      "problem": "Bugs werden behoben, ohne dass ein Test ihr Wiederauftreten verhindert. Monate später taucht derselbe Fehler erneut auf.",
+      "goal": "Jeden behobenen Fehler dauerhaft durch einen Test absichern.",
+      "benefit": "Weniger wiederkehrende Bugs und eine Testsuite, die gezielt an echten Fehlern wächst. Die Gegenprobe gegen den alten Stand verhindert wertlose Alibi-Tests.",
+      "audience": "Entwicklungsteams und Solo-Entwickler mit CI",
+      "category": "dev-tools",
+      "subcategory": "dev-tools-quality",
+      "features": [
+        "Erkennung von Bugfix-PRs über Issue-Verknüpfung",
+        "Prüfung, ob Tests den geänderten Code berühren",
+        "Testentwurf per Claude Code als PR-Vorschlag",
+        "Gegenprobe: Der Test muss vor dem Fix fehlschlagen",
+        "Statistik zum Anteil abgesicherter Bugfixes"
+      ],
+      "highlights": [
+        "Gegenprobe gegen den Stand vor dem Fix",
+        "Lässt die Testsuite entlang echter Fehler wachsen"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "GitHub Actions",
+        "Claude Code (headless)",
+        "c8 / coverage.py"
+      ],
+      "prerequisites": [
+        "Repository mit CI und Testsuite",
+        "Konvention zur Verknüpfung von Issues und PRs",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Unterstützung weiterer Git-Plattformen",
+        "Mutation-Testing für den neuen Test",
+        "Wöchentlicher Bericht über ungesicherte Fixes"
+      ],
+      "risks": [
+        "Generierte Tests können fragil oder zu eng gefasst sein",
+        "Die Gegenprobe ist bei Konfigurations- oder Infrastrukturfehlern schwierig",
+        "API-Kosten pro PR"
+      ],
+      "monetization": {
+        "assessment": "Als App für Teams denkbar; ob Teams dafür zahlen, ist offen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "regression",
+        "testing",
+        "ci",
+        "pull-request",
+        "claude-code"
+      ]
+    },
+    {
+      "slug": "dev-tools-env-drift-inventur",
+      "title": "Umgebungsvariablen-Drift-Inventur",
+      "summary": "Findet alle im Code gelesenen Umgebungsvariablen und vergleicht sie mit .env.example, Doku und Deployment-Konfiguration.",
+      "description": "Ein kleines CLI durchsucht ein Repository statisch nach Zugriffen auf Umgebungsvariablen in gängigen Sprachen. Das Ergebnis wird mit .env.example, README, Docker- und CI-Konfigurationen abgeglichen: fehlende, verwaiste und undokumentierte Variablen werden aufgelistet. Optional schlägt Claude für undokumentierte Variablen eine Beschreibung aus dem Nutzungskontext vor.",
+      "problem": "Neue Umgebungsvariablen werden im Code eingeführt, aber nicht dokumentiert oder im Deployment vergessen. Das führt zu schwer erklärbaren Fehlern in Produktion.",
+      "goal": "Konfigurationsdrift zwischen Code, Doku und Deployment automatisch erkennen.",
+      "benefit": "Weniger Überraschungen beim Deployment und schnelleres Onboarding, weil .env.example vollständig ist. Als CI-Schritt verhindert es neue Drift.",
+      "audience": "Entwickler und kleine DevOps-Teams",
+      "category": "dev-tools",
+      "subcategory": "dev-tools-ops",
+      "features": [
+        "Statische Erkennung von Env-Zugriffen in mehreren Sprachen",
+        "Abgleich mit .env.example, Compose- und CI-Dateien",
+        "Bericht über fehlende, verwaiste und undokumentierte Variablen",
+        "Beschreibungsvorschläge aus dem Nutzungskontext",
+        "CI-Modus mit Exit-Code"
+      ],
+      "highlights": [
+        "Liest niemals Werte, nur Variablennamen",
+        "Klein genug für ein Wochenende, nützlich in fast jedem Repo"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "tree-sitter",
+        "YAML-Parser",
+        "Claude API (optional)"
+      ],
+      "prerequisites": [
+        "Repository mit Konfiguration über Umgebungsvariablen"
+      ],
+      "extensions": [
+        "Abgleich mit Secret-Managern über deren CLI",
+        "Typ- und Formatprüfung (URL, Zahl, Boolean)",
+        "Erzeugung eines Konfigurationsschemas"
+      ],
+      "risks": [
+        "Dynamisch zusammengesetzte Variablennamen werden nicht erkannt",
+        "Es muss sichergestellt sein, dass keine Secret-Werte in Berichte gelangen"
+      ],
+      "monetization": {
+        "assessment": "Typisches Open-Source-Werkzeug; eine Vermarktung ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "konfiguration",
+        "env",
+        "devops",
+        "cli",
+        "drift"
+      ]
+    },
+    {
+      "slug": "dev-tools-incident-zeitleiste",
+      "title": "Incident-Zeitleisten-Rekonstruktor",
+      "summary": "Führt Logs, Deploys, Commits und Chatnachrichten eines Störungszeitraums zu einer belegten Zeitleiste und einem Postmortem-Entwurf zusammen.",
+      "description": "Nach einer Störung gibst du das Zeitfenster an; das Tool sammelt über Adapter Deploy-Ereignisse, Commits, Alarme, ausgewählte Logzeilen und Nachrichten aus dem Incident-Kanal. Alles wird auf eine gemeinsame Zeitachse normalisiert, inklusive Zeitzonenkorrektur. Claude erstellt daraus einen schuldfreien Postmortem-Entwurf, in dem jede Zeitangabe auf ihre Quelle verweist und Lücken in der Beobachtbarkeit benannt werden.",
+      "problem": "Postmortems werden aus dem Gedächtnis geschrieben und sind lückenhaft oder ungenau. Die Daten liegen verstreut in vielen Systemen mit unterschiedlichen Zeitformaten.",
+      "goal": "Postmortems schnell, präzise und quellenbasiert erstellen.",
+      "benefit": "Bessere Lerneffekte aus Störungen bei deutlich weniger Rekonstruktionsaufwand. Fehlende Monitoring-Signale werden als konkrete Verbesserungen sichtbar.",
+      "audience": "DevOps-, SRE- und Plattformteams, auch kleine Betreiber eigener Server",
+      "category": "dev-tools",
+      "subcategory": "dev-tools-ops",
+      "features": [
+        "Adapter für Deploy-Historie, Git, Alarme, Logs und Chat",
+        "Normalisierung auf eine Zeitachse mit Zeitzonenkorrektur",
+        "Interaktive Zeitleiste mit Filter nach Quelle",
+        "Postmortem-Entwurf mit Quellverweisen",
+        "Liste erkannter Beobachtbarkeitslücken"
+      ],
+      "highlights": [
+        "Jede Zeitangabe im Bericht ist quellenbelegt",
+        "Benennt fehlende Signale, statt sie zu überspielen"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "PostgreSQL",
+        "OpenTelemetry",
+        "MCP",
+        "React",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Zugriff auf Logs, Deploy-Historie und Chat-Export",
+        "Halbwegs konsistente Zeitstempel in den Quellen",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Mustererkennung über mehrere Incidents hinweg",
+        "Tracking der Maßnahmen aus Postmortems",
+        "Export in gängige Wiki-Formate"
+      ],
+      "risks": [
+        "Logs können personenbezogene Daten oder Secrets enthalten und müssen vorab gefiltert werden",
+        "Die Pflege vieler Adapter ist aufwendig",
+        "Schuldfreie Formulierung ist ein Ziel, kein Automatismus"
+      ],
+      "monetization": {
+        "assessment": "Incident-Management ist ein zahlungsbereiter Markt mit etablierten Anbietern; eine Nische für kleine Teams ist plausibel, aber schwer zu erschließen.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 3
+      },
+      "tags": [
+        "incident",
+        "postmortem",
+        "observability",
+        "sre",
+        "zeitleiste"
+      ]
+    },
+    {
+      "slug": "sustainability-kassenbon-co2-schaetzer",
+      "title": "Kassenbon-CO₂-Schätzer mit Unsicherheitsband",
+      "summary": "Ordnet Einkäufe vom Kassenbon Produktkategorien zu und schätzt den Fußabdruck – stets mit ehrlicher Spannbreite statt Scheingenauigkeit.",
+      "description": "Kassenbons werden fotografiert; Claude erkennt die oft kryptisch abgekürzten Artikel und ordnet sie Produktkategorien zu, die du bestätigst. Für jede Kategorie sind Emissionsfaktoren aus offen dokumentierten Quellen mit Spannbreite hinterlegt. Die Auswertung zeigt Monatsverläufe und die Kategorien mit dem größten Hebel, immer mit Unsicherheitsband und Quellenangabe.",
+      "problem": "Der eigene Konsum-Fußabdruck ist schwer greifbar, und viele Rechner geben exakte Zahlen vor, die es so nicht gibt. Kassenbon-Abkürzungen machen eine automatische Auswertung mühsam.",
+      "goal": "Ein ehrliches Gefühl für die Größenordnung des eigenen Lebensmittel-Fußabdrucks und die größten Hebel bekommen.",
+      "benefit": "Du erkennst, welche Kategorien tatsächlich ins Gewicht fallen, statt dich an Kleinigkeiten abzuarbeiten. Die Spannbreiten schützen vor falscher Präzision.",
+      "audience": "Klimabewusste Haushalte",
+      "category": "sustainability",
+      "subcategory": "sustainability-footprint",
+      "features": [
+        "Bon-Erkennung mit Normalisierung abgekürzter Artikel",
+        "Kategoriezuordnung mit Bestätigung",
+        "Emissionsfaktoren mit Spannbreite und Quelle",
+        "Monatsverlauf und Hebel-Ranking",
+        "Lernende Zuordnung wiederkehrender Artikel"
+      ],
+      "highlights": [
+        "Zeigt grundsätzlich Spannbreiten statt Scheingenauigkeit",
+        "Jeder Faktor ist mit seiner Quelle verknüpft"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "Claude API (Vision)",
+        "SQLite",
+        "Plotly"
+      ],
+      "prerequisites": [
+        "Kassenbons auf Papier oder digital",
+        "Offen lizenzierte Emissionsfaktor-Daten",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Import digitaler Kassenbons, sofern verfügbar",
+        "Vergleich mit selbst gesetzten Zielen",
+        "Verknüpfung mit dem Haushaltsbuch"
+      ],
+      "risks": [
+        "Emissionsfaktoren sind grobe Durchschnittswerte mit großer Unsicherheit",
+        "Lizenzbedingungen der Faktor-Datenbanken müssen geprüft werden",
+        "Bon-Abkürzungen sind händlerspezifisch und fehleranfällig"
+      ],
+      "monetization": {
+        "assessment": "Die Zahlungsbereitschaft für private CO₂-Rechner gilt als gering; eher als Bildungs- oder Open-Source-Projekt sinnvoll.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 3,
+        "feasibility": 4
+      },
+      "tags": [
+        "co2",
+        "konsum",
+        "kassenbon",
+        "schätzung",
+        "lebensmittel"
+      ]
+    },
+    {
+      "slug": "sustainability-ci-energiebericht",
+      "title": "CI-Pipeline-Energiebericht",
+      "summary": "Schätzt Rechenzeit, Energie und CO₂ der eigenen CI-Pipelines und zeigt, welche Jobs am häufigsten unnötig laufen.",
+      "description": "Das Tool liest die Laufhistorie der CI-Pipelines über die API der Plattform aus und summiert Rechenminuten pro Job, Branch und Auslöser. Mit offen dokumentierten Annahmen zu Leistungsaufnahme und Strommix entsteht eine grobe Energie- und CO₂-Schätzung, klar als solche gekennzeichnet. Wichtiger als die absolute Zahl ist die Liste der Einsparhebel: Jobs ohne Cache, Läufe ohne relevante Codeänderung oder doppelt ausgelöste Pipelines.",
+      "problem": "CI-Pipelines laufen oft verschwenderisch, etwa ohne Caching oder bei jeder Doku-Änderung. Das kostet Zeit, Geld und Energie, fällt aber niemandem auf.",
+      "goal": "Verschwendung in CI-Pipelines sichtbar machen und gezielt reduzieren.",
+      "benefit": "Schnellere Pipelines, geringere CI-Kosten und ein kleinerer Fußabdruck. Die Einsparhebel sind direkt umsetzbar.",
+      "audience": "Entwicklungsteams und Open-Source-Maintainer",
+      "category": "sustainability",
+      "subcategory": "sustainability-footprint",
+      "features": [
+        "Auslesen der CI-Laufhistorie per Plattform-API",
+        "Rechenminuten pro Job, Branch und Auslöser",
+        "Grobe Energie- und CO₂-Schätzung mit offengelegten Annahmen",
+        "Erkennung von Läufen ohne relevante Änderungen",
+        "Konkrete Optimierungsvorschläge pro Workflow"
+      ],
+      "highlights": [
+        "Fokus auf Hebel statt auf eine einzelne CO₂-Zahl",
+        "Alle Annahmen sind einsehbar und änderbar"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "GitHub REST API",
+        "DuckDB",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "CI-Plattform mit API-Zugriff auf die Laufhistorie",
+        "API-Token mit Leserechten"
+      ],
+      "extensions": [
+        "PR-Vorschläge für Pfadfilter und Caching",
+        "Vorher-nachher-Vergleich nach Optimierungen",
+        "Unterstützung weiterer CI-Plattformen"
+      ],
+      "risks": [
+        "Energiewerte sind Schätzungen auf Basis unsicherer Annahmen über die Hardware",
+        "API-Ratenlimits bei großen Historien"
+      ],
+      "monetization": {
+        "assessment": "Zeit- und Kostenersparnis überzeugen eher als CO₂-Zahlen; als kleines Team-Werkzeug denkbar, wahrscheinlicher aber als Open Source.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 3,
+        "feasibility": 5
+      },
+      "tags": [
+        "green-it",
+        "ci",
+        "energie",
+        "devops",
+        "effizienz"
+      ]
+    },
+    {
+      "slug": "sustainability-reparatur-pfadfinder",
+      "title": "Reparatur-Pfadfinder",
+      "summary": "Führt mit Fragen und Fotos durch eine strukturierte Fehlersuche an Alltagsgeräten – mit klaren Sicherheitsgrenzen und Verweis auf Fachleute.",
+      "description": "Du beschreibst das defekte Gerät und lädst Fotos hoch, etwa vom Typenschild und der Fehlstelle. Claude baut daraus einen Diagnosebaum mit einfachen Prüfschritten sowie Suchbegriffen für Ersatzteile und Anleitungen; Arbeiten an Netzspannung, Gasgeräten oder großen Akkus werden grundsätzlich ausgeschlossen und an Fachleute verwiesen. Jeder Fall wird dokumentiert, sodass ein Repair-Café oder eine Werkstatt den bisherigen Stand nachvollziehen kann.",
+      "problem": "Viele Geräte werden entsorgt, obwohl der Defekt einfach zu beheben wäre. Gleichzeitig fehlt Laien die Einschätzung, was sie gefahrlos selbst prüfen können.",
+      "goal": "Mehr Geräte sicher reparieren, statt sie wegzuwerfen.",
+      "benefit": "Du findest heraus, ob sich eine Reparatur lohnen könnte und was du selbst prüfen kannst. Die Dokumentation spart Zeit, wenn doch Fachleute übernehmen.",
+      "audience": "Haushalte sowie Gäste und Helfende in Repair-Cafés",
+      "category": "sustainability",
+      "subcategory": "sustainability-reuse",
+      "features": [
+        "Geführte Fehlersuche mit Fragen und Fotos",
+        "Typenschild-Erkennung für Modellangaben",
+        "Sicherheitsfilter für gefährliche Arbeiten",
+        "Suchbegriffe für Ersatzteile und Anleitungen",
+        "Falldokumentation zum Weitergeben",
+        "Manuell gepflegte Liste von Reparaturangeboten in der Nähe"
+      ],
+      "highlights": [
+        "Harte Sicherheitsgrenzen statt Alles-ist-machbar-Mentalität",
+        "Übergabefähige Dokumentation für Fachleute"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Claude API (Vision)",
+        "SQLite",
+        "PWA"
+      ],
+      "prerequisites": [
+        "Claude-API-Schlüssel",
+        "Smartphone-Kamera"
+      ],
+      "extensions": [
+        "Gemeinsame Fallsammlung für ein Repair-Café",
+        "Statistik häufiger Defekte pro Gerätetyp",
+        "Ersatzteil-Merkliste"
+      ],
+      "risks": [
+        "Falsche Hinweise könnten zu Schäden oder Verletzungen führen – die Sicherheitsgrenzen sind zentral",
+        "Geräteinformationen sind oft unvollständig oder herstellerspezifisch",
+        "Keine Gewähr für den Reparaturerfolg"
+      ],
+      "monetization": {
+        "assessment": "Kooperationen mit Repair-Initiativen sind eher gemeinnützig; ein kommerzielles Modell ist unsicher.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "reparatur",
+        "kreislaufwirtschaft",
+        "diagnose",
+        "sicherheit"
+      ]
+    },
+    {
+      "slug": "sustainability-nachbarschafts-leihregal",
+      "title": "Digitales Leihregal für Haus und Nachbarschaft",
+      "summary": "Inventar selten genutzter Dinge in Hausgemeinschaft oder Nachbarschaft mit QR-Aufklebern, Ausleihprotokoll und Nutzungsstatistik.",
+      "description": "Teilnehmende tragen Dinge ein, die sie verleihen würden, etwa Bohrmaschine, Leiter oder Raclette-Set, und kleben einen QR-Code darauf. Ausleihe und Rückgabe werden per Scan protokolliert, Erinnerungen gehen automatisch raus. Claude hilft beim Einstellen per Foto (Beschreibung, Kategorie, Zustand) und beantwortet Fragen wie „Hat jemand etwas zum Fliesenschneiden?“ anhand des Inventars.",
+      "problem": "In jedem Haushalt liegen Werkzeuge und Geräte, die nur wenige Male im Jahr genutzt werden. Trotzdem kauft jeder sie neu, weil Leihen umständlich ist.",
+      "goal": "Teilen in der Nachbarschaft so einfach machen, dass es zur Gewohnheit wird.",
+      "benefit": "Weniger Neukäufe, weniger Platzbedarf und mehr Kontakt in der Nachbarschaft. Die Statistik zeigt, wie oft Dinge tatsächlich geteilt werden.",
+      "audience": "Hausgemeinschaften, Nachbarschaftsinitiativen, Wohnprojekte",
+      "category": "sustainability",
+      "subcategory": "sustainability-reuse",
+      "features": [
+        "Inventar mit Fotos und automatisch vorgeschlagener Beschreibung",
+        "QR-Aufkleber für Ausleihe und Rückgabe per Scan",
+        "Erinnerungen an Rückgaben",
+        "Suche in natürlicher Sprache",
+        "Nutzungsstatistik pro Gegenstand",
+        "Einfache Gruppenregeln pro Gemeinschaft"
+      ],
+      "highlights": [
+        "Ein QR-Scan macht Ausleihen so einfach wie Mitnehmen",
+        "Bewusst lokal und klein statt anonymer Plattform"
+      ],
+      "complexity": 3,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "PostgreSQL",
+        "PWA",
+        "Claude API (Vision)",
+        "QR-Code-Bibliothek"
+      ],
+      "prerequisites": [
+        "Eine Gruppe, die zum Teilen bereit ist",
+        "Server oder günstiges Hosting",
+        "Drucker für QR-Aufkleber"
+      ],
+      "extensions": [
+        "Pflege- und Reparaturhinweise pro Gegenstand",
+        "Gemeinschaftlich angeschaffte Dinge mit Kostenaufteilung",
+        "Verbund mehrerer Häuser"
+      ],
+      "risks": [
+        "Haftungsfragen bei Schäden müssen in der Gruppe vorab geklärt werden",
+        "Personenbezogene Daten der Teilnehmenden erfordern eine DSGVO-konforme Umsetzung",
+        "Der Erfolg hängt vom sozialen Engagement ab, nicht von der Technik"
+      ],
+      "monetization": {
+        "assessment": "Leihplattformen tun sich wirtschaftlich schwer; sinnvoller als gemeinnütziges oder genossenschaftliches Projekt, eine Vermarktung ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "teilen",
+        "nachbarschaft",
+        "qr-code",
+        "kreislaufwirtschaft",
+        "gemeinschaft"
+      ]
+    },
+    {
+      "slug": "family-education-elternbrief-extraktor",
+      "title": "Elternbrief-Extraktor",
+      "summary": "Macht aus fotografierten Elternbriefen und Kita-Aushängen Termine, Mitbringlisten, Fristen und verteilbare Aufgaben.",
+      "description": "Elternbriefe, Aushänge und Schul-E-Mails werden fotografiert oder weitergeleitet. Claude extrahiert Termine, Mitbringlisten, Unterschriftsfristen und Geldbeträge und zeigt sie mit Zitat zur Bestätigung an. Bestätigte Einträge landen im Familienkalender und als Aufgaben, die einem Elternteil zugewiesen werden können.",
+      "problem": "Wichtige Infos aus Kita und Schule kommen auf Papier, per App und per E-Mail und gehen im Alltag unter. Vergessene Unterschriften oder Mitbringsel sorgen für Stress.",
+      "goal": "Keine Frist und keinen Termin aus Schule oder Kita mehr verpassen.",
+      "benefit": "Weniger Last-Minute-Hektik und eine faire Verteilung der Aufgaben zwischen den Eltern. Das Original bleibt verlinkt, falls Details nachgelesen werden müssen.",
+      "audience": "Eltern von Kita- und Schulkindern",
+      "category": "family-education",
+      "subcategory": "family-organisation",
+      "features": [
+        "Foto- und E-Mail-Eingang für Elternbriefe",
+        "Extraktion von Terminen, Fristen, Mitbringlisten und Beträgen",
+        "Bestätigung mit Originalzitat",
+        "Export in den Familienkalender (ICS/CalDAV)",
+        "Aufgabenzuweisung an ein Elternteil",
+        "Verknüpfung zum Originaldokument"
+      ],
+      "highlights": [
+        "Erfasst auch implizite Aufgaben wie Unterschriften und Geld",
+        "Verteilt Aufgaben aktiv, statt nur zu erinnern"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Claude API (Vision)",
+        "CalDAV",
+        "SQLite"
+      ],
+      "prerequisites": [
+        "Claude-API-Schlüssel",
+        "Gemeinsamer Familienkalender"
+      ],
+      "extensions": [
+        "Sammelansicht pro Kind und Schuljahr",
+        "Automatische Erkennung wiederkehrender Termine",
+        "Weiterleitung an Großeltern oder Betreuungspersonen"
+      ],
+      "risks": [
+        "Briefe enthalten Daten über Kinder – sparsam und sicher speichern",
+        "Falsch erkannte Daten müssen vor der Übernahme geprüft werden"
+      ],
+      "monetization": {
+        "assessment": "Ein echtes Alltagsproblem, aber Familien-Apps sind schwer zu monetarisieren; als Funktion einer Familienorganisations-App denkbar, als eigenes Produkt spekulativ.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 5
+      },
+      "tags": [
+        "schule",
+        "kita",
+        "termine",
+        "eltern",
+        "ocr"
+      ]
+    },
+    {
+      "slug": "family-education-mental-load-bilanz",
+      "title": "Mental-Load-Bilanz für Familien",
+      "summary": "Macht sichtbar, wer in der Familie Aufgaben nicht nur erledigt, sondern auch bemerkt, plant und organisiert.",
+      "description": "Familienaufgaben werden in drei Phasen erfasst: Bemerken, Planen und Erledigen. Wer einen nötigen Arzttermin bemerkt, ihn organisiert und am Ende hingeht, hält das jeweils mit einem Tipp fest; die Auswertung zeigt die Verteilung pro Phase. Claude bereitet einmal im Monat eine neutrale Gesprächsgrundlage vor, ohne zu bewerten oder Schuld zuzuweisen.",
+      "problem": "Unsichtbare Organisationsarbeit wird in Haushaltsplänen meist nicht erfasst. Das führt zu Ungleichgewicht und Konflikten, die schwer zu benennen sind.",
+      "goal": "Die gesamte Familienarbeit einschließlich der Planung sichtbar machen, um fair darüber sprechen zu können.",
+      "benefit": "Gespräche über Arbeitsteilung werden konkreter und weniger emotional. Die Daten helfen, Zuständigkeiten bewusst neu zu verteilen.",
+      "audience": "Paare und Familien mit Kindern",
+      "category": "family-education",
+      "subcategory": "family-organisation",
+      "features": [
+        "Erfassung von Aufgaben in den Phasen Bemerken, Planen, Erledigen",
+        "Schnelleingabe per Widget oder Sprachbefehl",
+        "Verteilungsansicht pro Phase und Person",
+        "Monatliche neutrale Gesprächsgrundlage",
+        "Vereinbarte Zuständigkeiten als Ziel hinterlegen"
+      ],
+      "highlights": [
+        "Erfasst Denkarbeit, nicht nur Ausführung",
+        "Bewusst wertfreie Auswertung"
+      ],
+      "complexity": 2,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "React Native",
+        "SQLite",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Bereitschaft beider Partner zur Nutzung",
+        "Smartphones"
+      ],
+      "extensions": [
+        "Vorlagen typischer unsichtbarer Aufgaben",
+        "Einbindung älterer Kinder",
+        "Verknüpfung mit dem Familienkalender"
+      ],
+      "risks": [
+        "Kann bestehende Konflikte verschärfen, wenn die Daten als Beweismittel genutzt werden",
+        "Der Erfassungsaufwand führt schnell zum Abbruch",
+        "Selbstauskünfte sind zwangsläufig subjektiv"
+      ],
+      "monetization": {
+        "assessment": "Das Thema ist präsent, die Zahlungsbereitschaft unklar; denkbar als Werkzeug im Kontext von Familien- oder Paarberatung.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "familie",
+        "mental-load",
+        "fairness",
+        "haushalt"
+      ]
+    },
+    {
+      "slug": "family-education-sokratischer-hausaufgaben-begleiter",
+      "title": "Sokratischer Hausaufgaben-Begleiter",
+      "summary": "Hilft Kindern bei Hausaufgaben ausschließlich mit Rückfragen und Hinweisen statt fertigen Lösungen; Eltern sehen, wo es hakt.",
+      "description": "Das Kind fotografiert eine Aufgabe oder tippt seine Frage ein; der Begleiter antwortet nie mit der Lösung, sondern mit altersgerechten Rückfragen, Teilschritten und Beispielen an ähnlichen Aufgaben. Eine Elternansicht zeigt zusammengefasst, bei welchen Themen das Kind wiederholt hängen bleibt. Leitplanken begrenzen Themen, Tonalität und Nutzungszeit, und die Nutzung ist auf elterliche Begleitung ausgelegt.",
+      "problem": "Eltern können nicht jedes Fach erklären, und KI-Werkzeuge liefern Kindern oft einfach die Lösung. Lernen findet dann nicht statt.",
+      "goal": "Kinder beim selbstständigen Denken unterstützen, statt ihnen die Arbeit abzunehmen.",
+      "benefit": "Kinder entwickeln eigene Lösungswege, und Eltern wissen, wo gezielte Unterstützung oder ein Gespräch mit der Lehrkraft sinnvoll ist.",
+      "audience": "Familien mit Kindern im Grundschul- und Unterstufenalter",
+      "category": "family-education",
+      "subcategory": "family-learning",
+      "features": [
+        "Sokratischer Dialog ohne Lösungsausgabe",
+        "Foto-Erkennung von Aufgaben",
+        "Konfigurierbare Altersstufen und Fächer",
+        "Elternansicht mit Themen, die wiederholt Schwierigkeiten machen",
+        "Leitplanken für Themen, Ton und Nutzungszeit",
+        "Lokale Speicherung der Verläufe"
+      ],
+      "highlights": [
+        "Gibt bewusst keine fertigen Lösungen aus",
+        "Der Elternbericht zeigt Muster statt einzelne Sätze – Begleitung statt Überwachung"
+      ],
+      "complexity": 4,
+      "effort": "xl",
+      "technologies": [
+        "TypeScript",
+        "React Native",
+        "Claude API (Vision)",
+        "SQLite",
+        "Eigene Guardrail-Schicht"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang unter Beachtung der Nutzungsrichtlinien des Anbieters für Angebote, die Minderjährige nutzen",
+        "Elterliche Einwilligung und Begleitung"
+      ],
+      "extensions": [
+        "Abgleich mit den Lehrplanthemen der Klassenstufe",
+        "Übungsaufgaben zu Schwachstellen",
+        "Mehrsprachigkeit für mehrsprachige Familien"
+      ],
+      "risks": [
+        "Angebote für Kinder unterliegen erhöhten Datenschutz- und Schutzanforderungen",
+        "Auch Rückfragen und Hinweise können fachlich falsch sein",
+        "Kinder könnten versuchen, die Leitplanken zu umgehen"
+      ],
+      "monetization": {
+        "assessment": "Lernhilfen sind ein großer, aber regulierter und vertrauenssensibler Markt; ohne pädagogische Begleitung und Datenschutzprüfung nicht seriös vermarktbar.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 2
+      },
+      "tags": [
+        "hausaufgaben",
+        "lernen",
+        "kinder",
+        "sokratisch",
+        "eltern"
+      ]
+    },
+    {
+      "slug": "family-education-wortschatz-vorlesegeschichten",
+      "title": "Wortschatz-Vorlesegeschichten",
+      "summary": "Erzeugt Vorlesegeschichten, die gezielt neue Wörter einbauen – zum Vorlesen durch Eltern, ganz ohne Bildschirm für das Kind.",
+      "description": "Eltern wählen Alter und Interessen des Kindes sowie drei bis fünf Zielwörter, etwa aus einem Themenfeld wie Wetter oder Gefühle. Claude schreibt eine kurze Geschichte, in der die Wörter natürlich und mit erklärendem Kontext vorkommen, und liefert ein paar spielerische Fragen für das Gespräch danach. Die Geschichten werden als druckbares Heft ausgegeben, und eine Wortliste plant Wiederholungen in späteren Geschichten.",
+      "problem": "Wortschatz wächst vor allem durch Vorlesen und Gespräche, doch passende Geschichten zu bestimmten Wörtern oder Themen sind schwer zu finden. Viele Lern-Apps setzen zudem auf Bildschirmzeit.",
+      "goal": "Gezielten Wortschatzaufbau in das gemeinsame Vorleseritual einbetten.",
+      "benefit": "Kinder lernen neue Wörter im Kontext einer Geschichte, und Eltern haben eine einfache Methode ohne zusätzliche Bildschirmzeit für das Kind. Mehrsprachige Familien können Zielwörter in beiden Sprachen nutzen.",
+      "audience": "Eltern von Kindern im Alter von etwa drei bis acht Jahren",
+      "category": "family-education",
+      "subcategory": "family-learning",
+      "features": [
+        "Auswahl von Alter, Interessen und Zielwörtern",
+        "Geschichten mit natürlich eingebetteten Zielwörtern",
+        "Gesprächsfragen für nach dem Vorlesen",
+        "Druckbares Heft als PDF",
+        "Wortliste mit Wiederholungsplanung"
+      ],
+      "highlights": [
+        "Bildschirmfrei für das Kind",
+        "Verbindet Vorleseritual mit gezielter Wiederholung"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Claude API",
+        "PDF-Generierung",
+        "SQLite"
+      ],
+      "prerequisites": [
+        "Claude-API-Schlüssel",
+        "Drucker oder Tablet für die Eltern"
+      ],
+      "extensions": [
+        "Zweisprachige Geschichten",
+        "Ausmalbilder-Vorlagen zum gemeinsamen Malen",
+        "Serien mit wiederkehrenden Figuren"
+      ],
+      "risks": [
+        "Generierte Geschichten sollten von Eltern vorab gelesen werden",
+        "Die sprachliche Qualität schwankt; kein Ersatz für gute Kinderliteratur"
+      ],
+      "monetization": {
+        "assessment": "Personalisierte Kindergeschichten werden bereits angeboten; der Wortschatz-Fokus könnte eine Nische sein, die Erfolgsaussichten sind offen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "vorlesen",
+        "wortschatz",
+        "kinder",
+        "sprache",
+        "offline"
+      ]
+    },
+    {
+      "slug": "legal-compliance-verarbeitungsverzeichnis-aus-code",
+      "title": "Verarbeitungsverzeichnis-Entwurf aus dem Code",
+      "summary": "Scannt ein Software-Repository nach personenbezogenen Daten und Drittdiensten und erstellt einen Entwurf für das Verarbeitungsverzeichnis.",
+      "description": "Claude Code analysiert Datenbankschemata, Formulare, API-Routen, eingebundene SDKs und Logging-Aufrufe eines Projekts. Daraus entsteht eine Liste der verarbeiteten Datenkategorien, Speicherorte und Empfänger sowie ein strukturierter Entwurf für das Verzeichnis von Verarbeitungstätigkeiten nach Art. 30 DSGVO. Jede Angabe verweist auf die Codestelle; Zwecke und Rechtsgrundlagen werden als offene Fragen markiert, weil sie sich nicht aus Code ableiten lassen.",
+      "problem": "Entwickelnde wissen am besten, welche Daten eine Anwendung verarbeitet, doch die Datenschutzdokumentation entsteht separat und veraltet schnell. Drittanbieter-SDKs werden dabei leicht übersehen.",
+      "goal": "Datenschutzdokumentation aus dem tatsächlichen Code ableiten und aktuell halten.",
+      "benefit": "Datenschutzverantwortliche erhalten eine belastbare technische Grundlage statt Schätzungen. Codeänderungen liefern Hinweise auf nötige Doku-Updates.",
+      "audience": "Entwicklungsteams, Solo-Gründer, Datenschutzbeauftragte in Softwarefirmen",
+      "category": "legal-compliance",
+      "subcategory": "legal-privacy",
+      "features": [
+        "Erkennung personenbezogener Felder in Schemata und Formularen",
+        "Inventar von Drittanbieter-SDKs und externen Endpunkten",
+        "Analyse von Logging-Aufrufen auf personenbezogene Daten",
+        "Verzeichnis-Entwurf mit Codeverweisen",
+        "Liste offener Fragen zu Zweck und Rechtsgrundlage",
+        "Diff-Bericht bei Codeänderungen"
+      ],
+      "highlights": [
+        "Jede Angabe ist mit einer Codestelle belegt",
+        "Trennt klar zwischen technischem Befund und rechtlicher Bewertung"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Claude Code",
+        "tree-sitter",
+        "TypeScript",
+        "Markdown/CSV-Export"
+      ],
+      "prerequisites": [
+        "Zugriff auf das Repository",
+        "Fachkundige Person für Datenschutz zur Prüfung"
+      ],
+      "extensions": [
+        "CI-Check, der bei neuen personenbezogenen Feldern warnt",
+        "Vorlage für ein Löschkonzept",
+        "Abgleich mit bestehenden Auftragsverarbeitungsverträgen"
+      ],
+      "risks": [
+        "Keine Rechtsberatung – der Entwurf muss von fachkundigen Personen geprüft werden",
+        "Dynamisch erzeugte Datenflüsse werden nicht vollständig erkannt",
+        "Gefahr falscher Sicherheit, wenn der Entwurf ungeprüft übernommen wird"
+      ],
+      "monetization": {
+        "assessment": "Für Compliance-Werkzeuge in Softwarefirmen gibt es einen Markt; als Entwickler-Tool oder Beratungsbaustein plausibel, Haftungsfragen müssen bedacht werden.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "dsgvo",
+        "datenschutz",
+        "code-analyse",
+        "compliance",
+        "dokumentation"
+      ]
+    },
+    {
+      "slug": "legal-compliance-tracker-vor-einwilligung",
+      "title": "Tracker-vor-Einwilligung-Prüfer",
+      "summary": "Lädt die eigene Website automatisiert ohne Zustimmung und protokolliert, welche Drittanfragen und Cookies trotzdem entstehen.",
+      "description": "Ein Playwright-Skript ruft definierte Seiten der eigenen Website in drei Szenarien auf: ohne Interaktion mit dem Consent-Banner, nach Ablehnung und nach Zustimmung. Protokolliert werden Anfragen an Drittdomains, gesetzte Cookies und Zugriffe auf den lokalen Speicher. Claude fasst die Unterschiede zusammen und markiert Auffälligkeiten, die vor einer Einwilligung nicht auftreten sollten, zur Prüfung durch eine fachkundige Person.",
+      "problem": "Viele Websites laden Tracker oder Schriftarten von Drittanbietern, bevor eine Einwilligung vorliegt – oft ohne Wissen der Betreiber. Manuelle Prüfung im Browser ist mühsam und schwer reproduzierbar.",
+      "goal": "Reproduzierbar prüfen, ob die eigene Website vor einer Einwilligung Daten an Dritte überträgt.",
+      "benefit": "Du erkennst Probleme selbst, bevor es andere tun, und kannst nach jedem Deploy erneut prüfen. Der Bericht erleichtert das Gespräch mit Agentur oder Datenschutzbeauftragten.",
+      "audience": "Website-Betreiber, Agenturen, Freelancer",
+      "category": "legal-compliance",
+      "subcategory": "legal-privacy",
+      "features": [
+        "Drei Szenarien: ohne Interaktion, Ablehnung, Zustimmung",
+        "Protokoll aller Drittanfragen, Cookies und Speicherzugriffe",
+        "Vergleichsbericht zwischen den Szenarien",
+        "Zusammenfassung mit markierten Auffälligkeiten",
+        "CI-Modus für eine Prüfung nach jedem Deploy"
+      ],
+      "highlights": [
+        "Prüft das tatsächliche Netzwerkverhalten statt der deklarierten Cookie-Liste",
+        "Reproduzierbar und automatisierbar"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Playwright",
+        "TypeScript",
+        "HTML-Bericht",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Eigene Website oder Auftrag des Betreibers",
+        "Liste der zu prüfenden Seiten"
+      ],
+      "extensions": [
+        "Abgleich mit offenen Listen bekannter Tracker-Domains",
+        "Screenshots des Banners zur Dokumentation",
+        "Überwachung mehrerer Websites"
+      ],
+      "risks": [
+        "Kein Rechtsgutachten – die Befunde müssen rechtlich bewertet werden",
+        "Nur für eigene oder beauftragte Websites einsetzen",
+        "Dynamische Inhalte können zwischen Läufen variieren"
+      ],
+      "monetization": {
+        "assessment": "Als Dienstleistung für Agenturen oder kleine Unternehmen plausibel; es gibt allerdings etablierte Scanner-Angebote.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 5
+      },
+      "tags": [
+        "consent",
+        "tracking",
+        "dsgvo",
+        "playwright",
+        "website"
+      ]
+    },
+    {
+      "slug": "legal-compliance-klausel-abgleich",
+      "title": "Klausel-Abgleich gegen die eigene Vertragsvorlage",
+      "summary": "Vergleicht eingehende Verträge mit der eigenen Mustervorlage und markiert fehlende, abweichende und ungewöhnliche Klauseln.",
+      "description": "Du hinterlegst eine eigene, idealerweise juristisch geprüfte Mustervorlage, etwa für Freelancer- oder Kundenverträge. Ein eingehender Vertrag wird in Klauseln zerlegt und inhaltlich den Klauseln der Vorlage zugeordnet; fehlende, abweichende und zusätzliche Klauseln werden farbig markiert. Claude formuliert zu jeder Abweichung neutrale Fragen, die mit der Gegenseite oder einer Anwältin bzw. einem Anwalt geklärt werden sollten.",
+      "problem": "Verträge von Kunden oder Auftraggebern weichen oft in Details von dem ab, was man selbst für üblich hält. Lange Dokumente vollständig zu vergleichen ist zeitraubend und fehleranfällig.",
+      "goal": "Abweichungen eingehender Verträge von der eigenen Vorlage schnell und vollständig erkennen.",
+      "benefit": "Du gehst vorbereitet in Verhandlungen oder Beratungsgespräche und übersiehst weniger. Bezahlte Beratungszeit fließt gezielt in die wirklich offenen Punkte.",
+      "audience": "Freelancer, Selbstständige, kleine Agenturen",
+      "category": "legal-compliance",
+      "subcategory": "legal-contracts",
+      "features": [
+        "Klauselzerlegung von PDF- und Word-Verträgen",
+        "Inhaltliche Zuordnung zu Vorlagenklauseln",
+        "Markierung fehlender, abweichender und zusätzlicher Klauseln",
+        "Neutrale Rückfragen pro Abweichung",
+        "Bericht als PDF zur Weitergabe"
+      ],
+      "highlights": [
+        "Vergleicht inhaltlich, nicht nur Wort für Wort",
+        "Formuliert Fragen statt rechtlicher Bewertungen"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "python-docx",
+        "pdfplumber",
+        "Embeddings",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Eigene Vertragsvorlage, idealerweise juristisch geprüft",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Klauselbibliothek mit akzeptierten Varianten",
+        "Verhandlungshistorie pro Kunde",
+        "Übernahme vertraglicher Fristen in den Kalender"
+      ],
+      "risks": [
+        "Keine Rechtsberatung – die rechtliche Bewertung bleibt Fachleuten vorbehalten",
+        "Subtile, aber wichtige Formulierungsunterschiede können übersehen werden",
+        "Vertragsinhalte sind vertraulich; die Datenverarbeitung muss geklärt sein"
+      ],
+      "monetization": {
+        "assessment": "Vertragsanalyse ist ein aktiver Markt mit etablierten Anbietern und rechtlichen Grenzen; als einfaches Werkzeug für Freelancer denkbar, der Erfolg ist ungewiss.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "verträge",
+        "freelancer",
+        "vergleich",
+        "klauseln"
+      ]
+    },
+    {
+      "slug": "legal-compliance-fristenzentrale",
+      "title": "Compliance-Fristenzentrale für Selbstständige",
+      "summary": "Verwaltet steuerliche, vertragliche und datenschutzrechtliche Fristen sowie Aufbewahrungs- und Löschpflichten samt Nachweisen an einem Ort.",
+      "description": "Die Zentrale kombiniert wiederkehrende Fristen wie Steuervoranmeldungen, Versicherungsnachweise oder Vertragsverlängerungen mit Aufbewahrungs- und Löschfristen für Dokumente. Die Fristregeln sind als pflegbare Konfiguration hinterlegt und nicht fest codiert, da sich gesetzliche Vorgaben ändern. Zu jeder erledigten Frist wird ein Nachweis abgelegt; Claude schlägt aus neuen Dokumenten passende Fristen vor, die erst nach Bestätigung aktiv werden.",
+      "problem": "Selbstständige jonglieren mit Fristen aus vielen Rechtsbereichen, ohne Rechtsabteilung oder Assistenz. Zudem wissen viele nicht, wann sie Dokumente löschen dürfen oder müssen.",
+      "goal": "Alle wiederkehrenden Pflichten mit Fristen, Nachweisen und Löschzeitpunkten an einem Ort steuern.",
+      "benefit": "Weniger verpasste Fristen und ein nachvollziehbarer Nachweis, was wann erledigt wurde. Löschfristen werden aktiv angezeigt, statt Daten endlos zu horten.",
+      "audience": "Solo-Selbstständige und Kleinstunternehmen",
+      "category": "legal-compliance",
+      "subcategory": "legal-contracts",
+      "features": [
+        "Fristenkalender mit wiederkehrenden Regeln",
+        "Pflegbare Regelkonfiguration statt fest codierter Fristen",
+        "Nachweisablage pro erledigter Frist",
+        "Aufbewahrungs- und Löschfristen pro Dokumenttyp",
+        "Fristvorschläge aus neuen Dokumenten mit Bestätigung",
+        "Export für die Steuerberatung"
+      ],
+      "highlights": [
+        "Verbindet Erinnerung, Nachweis und Löschpflicht",
+        "Regeln sind transparent und anpassbar"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "PostgreSQL",
+        "iCalendar",
+        "S3-kompatibler Speicher",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Eigene Liste relevanter Pflichten, abgestimmt mit der Steuerberatung",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "Lesezugang für die Steuerberatung",
+        "Fachlich geprüfte Regelvorlagen nach Rechtsform",
+        "Mehrbenutzerbetrieb für kleine Teams"
+      ],
+      "risks": [
+        "Keine Rechts- oder Steuerberatung – Fristregeln müssen fachlich geprüft und aktuell gehalten werden",
+        "Erfüllt nicht automatisch die Anforderungen an revisionssichere Archivierung",
+        "Fehlerhafte Regeln können zu verpassten Fristen führen"
+      ],
+      "monetization": {
+        "assessment": "Selbstständige zahlen grundsätzlich für Entlastung bei Bürokratie, der Markt hat aber Anbieter mit Buchhaltungsintegration; als Nischenprodukt plausibel, mit erheblichem Pflegeaufwand für die Regeln.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 3
+      },
+      "tags": [
+        "fristen",
+        "selbstständig",
+        "steuern",
+        "aufbewahrung",
+        "compliance"
+      ]
+    },
+    {
+      "slug": "music-tempoleiter-uebeprotokoll",
+      "title": "Übe-Protokoll mit Tempoleiter",
+      "summary": "Protokolliert pro Passage das sauber gespielte Tempo, steigert es schrittweise und erkennt Plateaus mit passenden Übevorschlägen.",
+      "description": "Stücke werden in Passagen zerlegt; für jede Passage trägst du ein, bei welchem Tempo sie zuletzt sauber klappte. Das integrierte Metronom schlägt das nächste Zieltempo vor und plant Wiederholungen nach dem Prinzip des verteilten Übens. Stagniert eine Passage über mehrere Einheiten, schlägt Claude bewährte Übevarianten wie Rhythmusvariationen, rückwärts Verketten oder Hände getrennt üben vor.",
+      "problem": "Beim Üben wird oft das ganze Stück durchgespielt, statt gezielt an schwierigen Stellen zu arbeiten. Fortschritt bleibt unsichtbar, und Plateaus führen zu Frust.",
+      "goal": "Gezielter und messbarer üben, Passage für Passage.",
+      "benefit": "Du siehst deinen Fortschritt in Zahlen und weißt in jeder Übeeinheit, was als Nächstes dran ist. Plateaus werden mit konkreten Methoden statt mit stumpfer Wiederholung angegangen.",
+      "audience": "Instrumentalisten aller Niveaus, besonders erwachsene Wiedereinsteiger",
+      "category": "music",
+      "subcategory": "music-practice",
+      "features": [
+        "Stücke in Passagen mit Taktangaben zerlegen",
+        "Metronom mit Zieltempo pro Passage",
+        "Tempoverlauf als Diagramm",
+        "Plateau-Erkennung",
+        "Übevarianten-Vorschläge bei Stagnation",
+        "Übeplan nach dem Prinzip verteilten Übens"
+      ],
+      "highlights": [
+        "Fortschritt pro Passage statt pro Stück",
+        "Reagiert auf Plateaus mit konkreten Methoden"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Web Audio API",
+        "IndexedDB",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Instrument und Noten",
+        "Optional Claude-API-Schlüssel für Übevorschläge"
+      ],
+      "extensions": [
+        "Tempo-Erkennung über das Mikrofon",
+        "Ansicht für Lehrkräfte",
+        "Verknüpfung mit Aufnahmen pro Passage"
+      ],
+      "risks": [
+        "Die Selbsteinschätzung von „sauber“ ist subjektiv",
+        "Ersetzt keinen Unterricht bei technischen Problemen"
+      ],
+      "monetization": {
+        "assessment": "Übe-Apps gibt es viele; ein spezialisierter Ansatz könnte eine Nische finden, die Vermarktung steht aber nicht im Vordergrund.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "üben",
+        "metronom",
+        "tempo",
+        "instrument",
+        "fortschritt"
+      ]
+    },
+    {
+      "slug": "music-timing-spiegel",
+      "title": "Timing-Spiegel für eigene Aufnahmen",
+      "summary": "Analysiert eigene Aufnahmen gegen Klick oder Raster und zeigt, an welchen Taktpositionen du systematisch eilst oder schleppst.",
+      "description": "Du nimmst eine Übung zum Metronom auf; eine Onset-Erkennung bestimmt die Anschlagzeitpunkte und vergleicht sie mit dem erwarteten Raster. Eine Heatmap zeigt mittlere Abweichung und Streuung pro Zählzeit, etwa ein typisches Eilen auf der Vier oder ein Schleppen nach Lagenwechseln. Claude übersetzt die Messwerte in verständliche Beobachtungen und passende Übungen, ohne musikalisch gewollte Abweichungen pauschal als Fehler zu werten.",
+      "problem": "Eigene Timing-Schwächen hört man beim Spielen kaum, und das Gehör allein ist bei kleinen Abweichungen unzuverlässig. Lehrkräfte sind nicht bei jeder Übeeinheit dabei.",
+      "goal": "Systematische Timing-Muster objektiv sichtbar machen.",
+      "benefit": "Du übst gezielt die Stellen, an denen dein Timing tatsächlich wackelt. Fortschritte lassen sich über Wochen vergleichen.",
+      "audience": "Schlagzeuger, Gitarristinnen, Pianisten und andere Instrumentalisten",
+      "category": "music",
+      "subcategory": "music-practice",
+      "features": [
+        "Aufnahme mit Klick oder Import von Audiodateien",
+        "Onset-Erkennung und Rastervergleich",
+        "Heatmap der Abweichung pro Zählzeit",
+        "Verlauf über mehrere Übeeinheiten",
+        "Klartext-Auswertung mit Übungsvorschlägen"
+      ],
+      "highlights": [
+        "Zeigt Muster pro Zählzeit statt einer einzigen Gesamtnote",
+        "Unterscheidet zwischen Streuung und systematischer Tendenz"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "librosa",
+        "NumPy",
+        "Plotly",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Mikrofon oder Audio-Interface",
+        "Aufnahmen mit klar erkennbaren Anschlägen"
+      ],
+      "extensions": [
+        "Echtzeit-Feedback während des Spielens",
+        "Unterstützung für Swing- und Shuffle-Raster",
+        "MIDI-Eingang für E-Drums und Keyboards"
+      ],
+      "risks": [
+        "Onset-Erkennung ist bei Hall, Legato und mehrstimmigem Spiel ungenau",
+        "Mikro-Timing ist teilweise musikalisch gewollt"
+      ],
+      "monetization": {
+        "assessment": "Als Werkzeug für Musikschulen oder Lehrkräfte denkbar; die Nachfrage ist nicht belegt.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "timing",
+        "rhythmus",
+        "audioanalyse",
+        "üben",
+        "feedback"
+      ]
+    },
+    {
+      "slug": "music-projekt-archaeologe",
+      "title": "Projekt-Archäologe für DAW-Skizzen",
+      "summary": "Indexiert alte DAW-Projektordner und Bounces nach Tempo, Tonart und Klangcharakter und macht vergessene Ideen wieder auffindbar.",
+      "description": "Das Tool durchsucht Projektordner und Bounce-Dateien, liest Metadaten wie Datum und Dateinamen und analysiert Audiodateien auf Tempo, Tonart und Klangcharakter. Daraus entsteht ein durchsuchbarer Katalog mit kurzen Hörschnipseln. Anfragen wie „unfertige Ideen in d-Moll um 90 BPM aus dem letzten Jahr“ übersetzt Claude in Filter, und eine Wiederentdeckungsfunktion schlägt regelmäßig eine vergessene Skizze vor.",
+      "problem": "Musikproduzierende sammeln über Jahre Hunderte unfertiger Skizzen mit Namen wie „neu_final_2“. Gute Ideen geraten in Vergessenheit, weil niemand sie wiederfindet.",
+      "goal": "Das eigene Archiv musikalischer Ideen durchsuchbar und wiederverwendbar machen.",
+      "benefit": "Alte Ideen werden zur Inspirationsquelle statt zur Datenleiche. Passende Skizzen für ein laufendes Projekt sind in Sekunden gefunden.",
+      "audience": "Hobby- und Profi-Musikproduzierende",
+      "category": "music",
+      "subcategory": "music-production",
+      "features": [
+        "Crawler für Projektordner und Bounce-Dateien",
+        "Tempo- und Tonarterkennung",
+        "Hörschnipsel und Wellenform-Vorschau",
+        "Suchanfragen in natürlicher Sprache",
+        "Wiederentdeckungsfunktion für vergessene Skizzen",
+        "Eigene Tags und Notizen"
+      ],
+      "highlights": [
+        "Erschließt das eigene Archiv nach musikalischen Eigenschaften",
+        "Aktive Wiederentdeckung statt nur passiver Suche"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "Python",
+        "Essentia",
+        "SQLite",
+        "Tauri",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Archiv mit Projekten und möglichst Bounces",
+        "Rechenzeit für die Erstanalyse"
+      ],
+      "extensions": [
+        "Auslesen von Projektdateien, soweit deren Formate offen dokumentiert sind",
+        "Ähnlichkeitssuche nach Klang",
+        "Export einer Ideen-Playlist"
+      ],
+      "risks": [
+        "Projektdateiformate vieler DAWs sind proprietär und nicht dokumentiert",
+        "Tonart- und Tempoerkennung ist bei kurzen Skizzen ungenau",
+        "Große Archive benötigen viel Speicher und Analysezeit"
+      ],
+      "monetization": {
+        "assessment": "Produzierende zahlen für Werkzeuge, die kreative Arbeit erleichtern; ein Nischenprodukt ist plausibel, es gibt aber Konkurrenz durch Sample-Manager.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "musikproduktion",
+        "daw",
+        "archiv",
+        "audioanalyse",
+        "inspiration"
+      ]
+    },
+    {
+      "slug": "music-mix-referenz-protokoll",
+      "title": "Mix-Referenz-Protokoll",
+      "summary": "Misst Lautheit, Spektralbalance und Stereobreite eines Mixes im Vergleich zu Referenztracks und leitet konkrete Prüffragen ab.",
+      "description": "Du lädst deinen Mix-Bounce und ein bis drei selbst gewählte Referenztracks. Das Tool misst integrierte Lautheit, Dynamik, Spektralverteilung in Frequenzbändern und Stereobreite und stellt die Unterschiede grafisch gegenüber. Claude formuliert daraus keine Pauschalrezepte, sondern Prüffragen wie „Ist der Bereich um 200–300 Hz bewusst so präsent?“, und jede Mix-Version wird im Verlauf dokumentiert.",
+      "problem": "Beim Mischen gewöhnt sich das Gehör schnell an Fehler, und Abhörsituationen zu Hause sind oft unzuverlässig. Der Vergleich mit Referenzen erfolgt meist nur nach Gefühl.",
+      "goal": "Den eigenen Mix objektiv mit Referenzen vergleichen und gezielt überprüfen.",
+      "benefit": "Du erkennst Ungleichgewichte, die das Gehör überspielt, und hast einen dokumentierten Verlauf deiner Mix-Versionen. Die Prüffragen lassen dir die künstlerische Entscheidung.",
+      "audience": "Home-Studio-Produzierende, Bands mit Eigenproduktion",
+      "category": "music",
+      "subcategory": "music-production",
+      "features": [
+        "Messung von Lautheit (LUFS), Dynamik und Stereobreite",
+        "Spektralvergleich in Frequenzbändern",
+        "Grafische Gegenüberstellung mit Referenzen",
+        "Prüffragen statt Pauschaltipps",
+        "Versionsverlauf der Mix-Stände"
+      ],
+      "highlights": [
+        "Liefert Fragen statt Rezepte",
+        "Dokumentiert die Entwicklung über alle Mix-Versionen"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "pyloudnorm",
+        "librosa",
+        "FastAPI",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Mix-Bounces in guter Qualität",
+        "Rechtmäßig erworbene Referenztracks"
+      ],
+      "extensions": [
+        "Genre-Profile aus mehreren Referenzen",
+        "Checkliste vor dem Mastering bzw. der Veröffentlichung",
+        "Analyse einzelner Stems"
+      ],
+      "risks": [
+        "Messwerte ersetzen kein geschultes Gehör",
+        "Referenztracks nur lokal analysieren, nicht hochladen oder weitergeben (Urheberrecht)"
+      ],
+      "monetization": {
+        "assessment": "Analyse-Plugins und -Dienste existieren bereits; ein Werkzeug mit Fokus auf Lernfragen ist denkbar, aber eher als persönliches Projekt.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "mixing",
+        "referenz",
+        "lautheit",
+        "audioanalyse",
+        "homestudio"
+      ]
+    },
+    {
+      "slug": "accessibility-alt-text-kontextpruefer",
+      "title": "Alt-Text-Prüfer mit Kontextvorschlägen",
+      "summary": "Findet fehlende oder nichtssagende Alt-Texte auf der eigenen Website und schlägt kontextbezogene Formulierungen zur Freigabe vor.",
+      "description": "Ein Crawler besucht die eigenen Seiten und sammelt alle Bilder mit Alt-Text, Dateinamen und umgebendem Text. Regeln markieren fehlende, generische oder dateinamenartige Alt-Texte; Claude schlägt unter Einbezug des Seitenkontexts eine Beschreibung vor oder empfiehlt, das Bild als dekorativ zu kennzeichnen. In einer Freigabe-Oberfläche wird jeder Vorschlag angenommen, bearbeitet oder verworfen, bevor ein Patch oder CMS-Import entsteht.",
+      "problem": "Viele Websites haben Bilder ohne oder mit unbrauchbaren Alt-Texten wie „Bild1“. Gute Alt-Texte hängen vom Kontext ab und kosten bei vielen Bildern viel Zeit.",
+      "goal": "Die Alt-Texte der eigenen Website effizient auf ein brauchbares Niveau bringen.",
+      "benefit": "Screenreader-Nutzende erhalten sinnvolle Bildinformationen, und die Redaktion spart Zeit. Der Mensch behält die Entscheidung über jede Formulierung.",
+      "audience": "Website-Betreiber, Redaktionen, Webagenturen",
+      "category": "accessibility",
+      "subcategory": "accessibility-web",
+      "features": [
+        "Crawler für Bilder mit Alt-Text und Kontext",
+        "Regelprüfung auf fehlende und generische Alt-Texte",
+        "Kontextbezogene Vorschläge per Claude (Vision)",
+        "Empfehlung für dekorative Bilder",
+        "Freigabe-Oberfläche und Export als Patch oder CSV"
+      ],
+      "highlights": [
+        "Berücksichtigt den umgebenden Text statt nur das Bild",
+        "Erkennt auch, wann ein leeres Alt-Attribut richtig ist"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Playwright",
+        "TypeScript",
+        "SQLite",
+        "Claude API (Vision)"
+      ],
+      "prerequisites": [
+        "Eigene Website oder Auftrag des Betreibers",
+        "Claude-API-Schlüssel"
+      ],
+      "extensions": [
+        "CMS-Plugins für die direkte Übernahme",
+        "Prüfung von Bildern in PDFs",
+        "Ausführliche Beschreibungen für Diagramme"
+      ],
+      "risks": [
+        "Vorschläge können Bildinhalte falsch deuten und müssen geprüft werden",
+        "Alt-Texte sind nur ein kleiner Teil der Barrierefreiheit",
+        "API-Kosten bei sehr vielen Bildern"
+      ],
+      "monetization": {
+        "assessment": "Durch gestiegene gesetzliche Anforderungen an digitale Barrierefreiheit gibt es Nachfrage nach Werkzeugen und Dienstleistungen; als Agentur-Werkzeug plausibel.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 5
+      },
+      "tags": [
+        "alt-text",
+        "screenreader",
+        "wcag",
+        "website",
+        "vision"
+      ]
+    },
+    {
+      "slug": "accessibility-tastatur-pruefstand",
+      "title": "Tastatur-Navigations-Prüfstand",
+      "summary": "Navigiert Seiten automatisiert per Tab-Taste, zeichnet die Fokusreihenfolge auf und findet Fokusfallen und unsichtbare Fokuszustände.",
+      "description": "Ein Playwright-Skript tabbt durch definierte Seiten und Abläufe wie Login oder Checkout und zeichnet für jedes fokussierte Element Position, zugänglichen Namen und sichtbaren Fokusindikator auf. Ergebnis sind ein Overlay mit nummerierter Fokusreihenfolge, ein kurzes Video und eine Liste von Auffälligkeiten: Fokusfallen, unerreichbare interaktive Elemente, fehlende Fokusmarkierung oder unlogische Sprünge. Als CI-Schritt erkennt der Prüfstand Verschlechterungen zwischen Versionen.",
+      "problem": "Tastaturbedienbarkeit wird selten getestet, ist aber für viele Menschen mit motorischen Einschränkungen und für Screenreader-Nutzende unverzichtbar. Manuelle Tests sind zeitaufwendig und werden nach Änderungen selten wiederholt.",
+      "goal": "Tastaturbedienbarkeit automatisiert und regressionssicher prüfen.",
+      "benefit": "Probleme fallen bei der Entwicklung auf statt erst bei Betroffenen. Das Fokus-Overlay macht Fehler auch für Nicht-Fachleute verständlich.",
+      "audience": "Frontend-Teams, QA, Barrierefreiheitsbeauftragte",
+      "category": "accessibility",
+      "subcategory": "accessibility-web",
+      "features": [
+        "Automatisches Tabben durch Seiten und Abläufe",
+        "Overlay mit nummerierter Fokusreihenfolge",
+        "Erkennung von Fokusfallen und unerreichbaren Elementen",
+        "Prüfung sichtbarer Fokusindikatoren per Bildvergleich",
+        "Videoaufzeichnung des Durchlaufs",
+        "Regressionsvergleich in der CI"
+      ],
+      "highlights": [
+        "Macht die Fokusreihenfolge visuell nachvollziehbar",
+        "Regressionsschutz statt einmaliger Prüfung"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Playwright",
+        "TypeScript",
+        "pixelmatch",
+        "GitHub Actions",
+        "Claude API (Berichtstexte)"
+      ],
+      "prerequisites": [
+        "Testumgebung der Website",
+        "Definierte Abläufe für die Prüfung"
+      ],
+      "extensions": [
+        "Prüfung von Skip-Links und Tastenkürzeln",
+        "Kombination mit automatisierten Regelprüfungen wie axe-core",
+        "Abgleich mit dem Accessibility-Tree"
+      ],
+      "risks": [
+        "Automatisierte Tests decken nur einen Teil der WCAG-Kriterien ab und ersetzen keine Tests mit Betroffenen",
+        "Kein Nachweis gesetzlicher Konformität",
+        "Komplexe Widgets erzeugen Fehlalarme"
+      ],
+      "monetization": {
+        "assessment": "Barrierefreiheitsprüfungen sind gefragt; als Open-Source-Werkzeug in Kombination mit Beratung plausibel.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 5,
+        "feasibility": 4
+      },
+      "tags": [
+        "tastatur",
+        "fokus",
+        "wcag",
+        "playwright",
+        "testing"
+      ]
+    },
+    {
+      "slug": "accessibility-behoerdenbrief-vereinfacher",
+      "title": "Behördenbrief-Vereinfacher",
+      "summary": "Fasst Behördenbriefe in einfacher Sprache zusammen: Worum geht es, was ist zu tun, bis wann – mit Verweis auf die Originalstelle.",
+      "description": "Ein Brief wird fotografiert oder als PDF geöffnet. Claude erstellt eine Zusammenfassung in einfacher Sprache mit drei festen Abschnitten: Worum geht es, was ist zu tun, bis wann. Jede Aussage ist mit der Originalstelle verknüpft, Fristen werden hervorgehoben und lassen sich in den Kalender übernehmen, und eine Vorlesefunktion liest die Zusammenfassung vor.",
+      "problem": "Behördenbriefe sind für viele Menschen schwer verständlich, etwa bei Leseschwierigkeiten, kognitiven Einschränkungen oder geringen Deutschkenntnissen. Missverständnisse können zu verpassten Fristen führen.",
+      "goal": "Den Kern eines Behördenbriefs verständlich und überprüfbar zugänglich machen.",
+      "benefit": "Betroffene verstehen schneller, was zu tun ist, und können gezielter Hilfe suchen. Unterstützende Personen erhalten eine strukturierte Grundlage.",
+      "audience": "Menschen mit Leseschwierigkeiten oder geringen Deutschkenntnissen, Betreuende und Beratungsstellen",
+      "category": "accessibility",
+      "subcategory": "accessibility-daily",
+      "features": [
+        "Foto- und PDF-Eingang",
+        "Zusammenfassung in einfacher Sprache mit festen Abschnitten",
+        "Verknüpfung jeder Aussage mit der Originalstelle",
+        "Fristenerkennung und Kalenderexport",
+        "Vorlesefunktion",
+        "Optionale Zusammenfassung in weiteren Sprachen"
+      ],
+      "highlights": [
+        "Feste Struktur: Worum geht es, was ist zu tun, bis wann",
+        "Jede Aussage ist am Original überprüfbar"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Claude API (Vision)",
+        "Web Speech API",
+        "PWA"
+      ],
+      "prerequisites": [
+        "Claude-API-Schlüssel",
+        "Smartphone mit Kamera"
+      ],
+      "extensions": [
+        "Antwortentwürfe für einfache Rückfragen",
+        "Glossar häufiger Amtsbegriffe",
+        "Weitergabe an eine Vertrauensperson"
+      ],
+      "risks": [
+        "Keine Rechtsberatung – bei wichtigen Entscheidungen Beratungsstellen hinzuziehen",
+        "Vereinfachung kann Nuancen verlieren oder Fehler enthalten; das Ergebnis ist vereinfachte Sprache, keine geprüfte Leichte Sprache",
+        "Briefe enthalten sensible personenbezogene Daten"
+      ],
+      "monetization": {
+        "assessment": "Eher für soziale Träger, Beratungsstellen oder Kommunen relevant; als gefördertes oder gemeinnütziges Projekt denkbar.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 4
+      },
+      "tags": [
+        "einfache-sprache",
+        "behörden",
+        "inklusion",
+        "vorlesen",
+        "fristen"
+      ]
+    },
+    {
+      "slug": "accessibility-bildkarten-routinen",
+      "title": "Bildkarten-Routinen für den Alltag",
+      "summary": "Zerlegt Alltagsaufgaben in bebilderte Einzelschritte mit Timer und Bestätigung – gepflegt von Betreuenden, bedient von Betroffenen.",
+      "description": "Betreuende oder Angehörige legen Routinen wie Morgenablauf, Wäsche waschen oder Busfahrt an; Claude hilft, eine Aufgabe in kleine, eindeutige Schritte in einfacher Sprache zu zerlegen. Jeder Schritt erhält ein Piktogramm oder ein eigenes Foto, optional einen Timer und eine Sprachausgabe. Die Nutzeransicht ist reizarm, groß bedienbar und offline nutzbar; Betreuende sehen auf Wunsch, welche Schritte häufig Schwierigkeiten machen.",
+      "problem": "Menschen mit kognitiven Beeinträchtigungen, Autismus oder nach einer Hirnverletzung profitieren von visuellen Abläufen, doch das Erstellen und Anpassen von Bildkarten auf Papier ist aufwendig. Bestehende Lösungen sind oft starr oder teuer.",
+      "goal": "Mehr Selbstständigkeit im Alltag durch leicht anpassbare, visuelle Schritt-für-Schritt-Routinen.",
+      "benefit": "Betroffene erledigen Aufgaben selbstständiger, und Betreuende sparen Zeit beim Erstellen und Anpassen. Eigene Fotos machen Abläufe besonders gut wiedererkennbar.",
+      "audience": "Menschen mit kognitiven Beeinträchtigungen, ihre Angehörigen und Betreuungseinrichtungen",
+      "category": "accessibility",
+      "subcategory": "accessibility-daily",
+      "features": [
+        "Routinen-Editor für Betreuende",
+        "Schrittzerlegung in einfacher Sprache mit Claude",
+        "Piktogramme oder eigene Fotos pro Schritt",
+        "Timer und Sprachausgabe",
+        "Reizarme, offlinefähige Nutzeransicht",
+        "Optionale Auswertung schwieriger Schritte"
+      ],
+      "highlights": [
+        "Trennung von Pflegeansicht und reizarmer Nutzeransicht",
+        "Eigene Fotos statt nur generischer Symbole"
+      ],
+      "complexity": 3,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "React Native",
+        "SQLite",
+        "Text-to-Speech",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Tablet oder Smartphone",
+        "Piktogramm-Sammlung mit passender Lizenz oder eigene Fotos",
+        "Einbindung von Betroffenen und Fachkräften in die Gestaltung"
+      ],
+      "extensions": [
+        "Erinnerungen zu festen Tageszeiten",
+        "Austausch von Routinen zwischen Einrichtungen",
+        "Motivationselemente nach individueller Absprache"
+      ],
+      "risks": [
+        "Viele frei verfügbare Piktogramm-Sammlungen erlauben nur nicht-kommerzielle Nutzung",
+        "Auswertungen berühren sensible Gesundheits- und Verhaltensdaten",
+        "Ohne Beteiligung der Zielgruppe drohen Fehlentwicklungen"
+      ],
+      "monetization": {
+        "assessment": "Eine Finanzierung über Einrichtungen oder Förderprogramme ist denkbar; eine Erstattung als Hilfsmittel ist ungewiss und mit hohen Anforderungen verbunden.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 4
+      },
+      "tags": [
+        "inklusion",
+        "routinen",
+        "piktogramme",
+        "selbstständigkeit",
+        "einfache-sprache"
+      ]
+    }
+  ]
+}
