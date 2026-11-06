@@ -89,7 +89,7 @@
   --divider: rgba(255, 255, 255, 0.05);
   --text: #e9ebf3;
   --text-muted: #a2a8ba;
-  --text-subtle: #737a8e;
+  --text-subtle: #8a91a5; /* ≥ 5:1 on every dark surface (WCAG AA) */
   --text-inverse: #0b0c12;
   --accent: #8d95ff;
   --accent-hover: #a3a9ff;
@@ -134,7 +134,7 @@
   --divider: rgba(20, 24, 45, 0.06);
   --text: #141726;
   --text-muted: #4b5266;
-  --text-subtle: #6f768b;
+  --text-subtle: #5f667a; /* ≥ 4.9:1 on every light surface */
   --text-inverse: #ffffff;
   --accent: #5157db;
   --accent-hover: #444ac8;
@@ -142,10 +142,10 @@
   --accent-soft: rgba(81, 87, 219, 0.1);
   --accent-softer: rgba(81, 87, 219, 0.05);
   --accent-contrast: #ffffff;
-  --ion: #0f8f85;
-  --ion-soft: rgba(15, 143, 133, 0.1);
-  --ok: #1a8a5a;
-  --ok-soft: rgba(26, 138, 90, 0.1);
+  --ion: #0b766e;
+  --ion-soft: rgba(11, 118, 110, 0.1);
+  --ok: #157a4f;
+  --ok-soft: rgba(21, 122, 79, 0.1);
   --warn: #9a6b00;
   --warn-soft: rgba(184, 132, 0, 0.12);
   --crit: #c93535;

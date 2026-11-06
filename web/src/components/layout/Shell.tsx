@@ -140,7 +140,7 @@ export function Shell() {
     <div className="shell" data-collapsed={collapsed}>
       <a className="skip-link" href="#main">Zum Inhalt springen</a>
       <aside className="sidebar" aria-label="Seitenleiste">
-        <NavLink to="/" className="brand" aria-label="OMEGA Infinity – Dashboard">
+        <NavLink to="/" className="brand" title="Zum Dashboard">
           <Logo />
           <span className="brand-text"><span className="brand-name">OMEGA</span><span className="brand-sub">INFINITY · DIGITAL OS</span></span>
         </NavLink>
@@ -155,7 +155,7 @@ export function Shell() {
       <div className="main-col">
         <header className="topbar">
           <button className="btn ghost icon mobile-only" onClick={() => setMoreOpen(true)} aria-label="Navigation öffnen"><MenuIcon /></button>
-          <button className="search-trigger" onClick={() => setPaletteOpen(true)} aria-label="Suchen und Befehle (Strg+K)">
+          <button className="search-trigger" onClick={() => setPaletteOpen(true)} aria-keyshortcuts="Control+K Meta+K /">
             <Search size={16} aria-hidden />
             <span className="truncate">Suchen<span className="search-text-long"> – Projekte, Ideen, Apps, Dateien, Befehle …</span></span>
             <kbd className="desktop-only">⌘K</kbd>

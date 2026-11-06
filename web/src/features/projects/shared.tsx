@@ -22,7 +22,7 @@ export function useCategories() {
 export function CategorySelect({ id, value, onChange, allowEmpty = true, label = 'Keine Kategorie' }: { id?: string; value: string | null | undefined; onChange: (v: string | null) => void; allowEmpty?: boolean; label?: string }) {
   const cats = useCategories();
   return (
-    <select id={id} className="select" value={value ?? ''} onChange={(e) => onChange(e.target.value || null)}>
+    <select id={id} aria-label={id ? undefined : 'Kategorie'} className="select" value={value ?? ''} onChange={(e) => onChange(e.target.value || null)}>
       {allowEmpty && <option value="">{label}</option>}
       {cats.data?.map((c) => (
         <optgroup key={c.id} label={c.name}>
@@ -76,8 +76,8 @@ export function NodeFormDialog({ open, onClose, node, tags, parentId, defaultKin
       qc.invalidateQueries({ queryKey: ['node'] });
       qc.invalidateQueries({ queryKey: ['dashboard'] });
       toast({ kind: 'success', title: node ? 'Gespeichert' : 'Angelegt', body: d.node.name });
-      onSaved?.(d.node.id);
       onClose();
+      onSaved?.(d.node.id); // after onClose: closing may rewrite the URL (search params)
     },
     onError: (e: ApiError) => setErr(e.status === 409 ? e.message : `${e.message}${Array.isArray(e.details) ? ': ' + (e.details as { path: string; message: string }[]).map((d) => `${d.path} ${d.message}`).join(', ') : ''}`),
   });
