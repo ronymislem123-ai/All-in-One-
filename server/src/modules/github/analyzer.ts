@@ -31,9 +31,9 @@ export function languageOf(path: string): string | null {
   return LANG_BY_EXT[ext] ?? null;
 }
 
-export type Role = 'frontend' | 'backend' | 'api' | 'database' | 'tests' | 'config' | 'docs' | 'scripts' | 'assets' | 'other';
+export type Role = 'frontend' | 'backend' | 'api' | 'database' | 'shared' | 'tests' | 'config' | 'docs' | 'scripts' | 'assets' | 'other';
 export const ROLE_LABELS: Record<Role, string> = {
-  frontend: 'Frontend', backend: 'Backend', api: 'API / Schnittstellen', database: 'Datenbank', tests: 'Tests',
+  frontend: 'Frontend', backend: 'Backend', api: 'API / Schnittstellen', database: 'Datenbank', shared: 'Gemeinsamer Code', tests: 'Tests',
   config: 'Konfiguration', docs: 'Dokumentation', scripts: 'Skripte & Werkzeuge', assets: 'Assets', other: 'Sonstiges',
 };
 
@@ -47,6 +47,7 @@ export function classifyRole(path: string): Role {
   if (/(^|\/)(\.github|\.vscode|\.devcontainer)(\/|$)/.test(p) || /^(package\.json|tsconfig.*\.json|vite\.config\.[a-z]+|vitest\.config\.[a-z]+|playwright\.config\.[a-z]+|\.eslintrc.*|\.prettierrc.*|dockerfile|docker-compose\.ya?ml|makefile|pyproject\.toml|go\.mod|cargo\.toml|\.gitignore|\.editorconfig|.*\.config\.[cm]?[jt]s)$/.test(base)) return 'config';
   if (/(^|\/)(scripts?|bin|tools)(\/|$)/.test(p) || /\.(sh|bash)$/.test(p)) return 'scripts';
   if (/(^|\/)(routes?|api|controllers?|handlers?|endpoints?|webhooks?)(\/|$)/.test(p)) return 'api';
+  if (/(^|\/)(shared|common|types|contracts|protocol)(\/|$)/.test(p)) return 'shared';
   if (/\.(png|jpe?g|gif|svg|webp|ico|woff2?|ttf|otf|mp3|mp4|webm)$/.test(p) || /(^|\/)(assets|public|static)(\/|$)/.test(p)) return 'assets';
   if (/(^|\/)(web|client|frontend|ui|components?|pages|views|layouts?|styles?|hooks|features)(\/|$)/.test(p) || /\.(tsx|jsx|vue|svelte|css|scss|less|html)$/.test(p)) return 'frontend';
   if (/(^|\/)(server|backend|services?|core|lib|modules|domain|jobs|workers?|mcp|cmd|internal|pkg)(\/|$)/.test(p) || /\.(py|go|rs|java|kt|rb|php|cs)$/.test(p)) return 'backend';

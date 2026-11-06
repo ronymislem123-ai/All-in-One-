@@ -102,7 +102,7 @@ img { max-width: 100%; display: block; }
 .breadcrumbs a:hover { color: var(--text); }
 
 .mobile-nav { display: none; }
-.mobile-only { display: none; }
+@media (min-width: 901px) { .mobile-only { display: none !important; } }
 
 @media (max-width: 900px) {
   .shell, .shell[data-collapsed='true'] { grid-template-columns: minmax(0, 1fr); }
@@ -110,7 +110,6 @@ img { max-width: 100%; display: block; }
   .topbar { padding: 0 var(--sp-4); }
   .content { padding: var(--sp-4) var(--sp-4) calc(84px + env(safe-area-inset-bottom)); }
   .desktop-only { display: none !important; }
-  .mobile-only { display: initial; }
   .mobile-nav {
     display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-nav);
     padding: var(--sp-1) var(--sp-2) calc(var(--sp-1) + env(safe-area-inset-bottom)); background: var(--surface-glass);
@@ -137,7 +136,8 @@ img { max-width: 100%; display: block; }
 .grid-3 { display: grid; gap: var(--sp-4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .grid-4 { display: grid; gap: var(--sp-4); grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .split { display: grid; gap: var(--sp-6); grid-template-columns: minmax(0, 1fr) 360px; align-items: start; }
-@media (max-width: 1200px) { .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .split { grid-template-columns: minmax(0, 1fr); } }
+.split.list-detail { grid-template-columns: minmax(0, 360px) minmax(0, 1fr); }
+@media (max-width: 1200px) { .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .split, .split.list-detail { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 900px) { .grid-3 { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 640px) { .grid-2, .grid-4 { grid-template-columns: minmax(0, 1fr); } .grid-cards { grid-template-columns: minmax(0, 1fr); } }
 .muted { color: var(--text-muted); }
@@ -294,7 +294,7 @@ button.list-item { width: 100%; border: 0; background: none; text-align: left; c
 /* progress */
 .progress { position: relative; height: 6px; border-radius: var(--r-full); background: var(--surface-3); overflow: hidden; }
 .progress > span { position: absolute; inset: 0 auto 0 0; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--ion)); transition: width var(--dur-4) var(--ease-out); }
-.ring { --size: 46px; width: var(--size); height: var(--size); }
+.ring { flex: none; }
 .ring circle { transition: stroke-dashoffset var(--dur-4) var(--ease-out); }
 
 /* ── Dialog / drawer / overlays ───────────────────────────────────────── */

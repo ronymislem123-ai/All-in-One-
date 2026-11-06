@@ -9,7 +9,7 @@ import { listEvents, listRuns } from '../modules/sync-log';
 import { exportData, importExport, importFile } from '../modules/transfer';
 import { ensureRepository, confirmLink, generateLinkSuggestions, listLinkSuggestions, rejectLink, requireRepo, serializeRepo, unlink } from '../modules/github/repos';
 import { analyzeRepository, discoverRepositories, rateLimit as ghRate, syncAll, syncRepository } from '../modules/github/sync';
-import { architecture, fileContent, pathDetail, repoGraph, repoOverview, treeChildren } from '../modules/github/explorer';
+import { architecture, fileContent, findPaths, pathDetail, repoGraph, repoOverview, treeChildren } from '../modules/github/explorer';
 import { handleWebhook } from '../modules/github/webhook';
 import { askAboutCode } from '../modules/github/code-ai';
 import { githubSettings, githubToken, githubWebhookSecret, secretInfo, setSecret, setSetting } from '../modules/settings';
@@ -123,6 +123,7 @@ export function registerSync(app: App, ctx: Ctx) {
   app.post('/api/repos/:id/analyze', async (c) => c.json(await analyzeRepository(ctx, c.req.param('id'))));
   app.get('/api/repos/:id/tree', (c) => c.json(treeChildren(ctx, c.req.param('id'), c.req.query('path') ?? '')));
   app.get('/api/repos/:id/graph', (c) => c.json(repoGraph(ctx, c.req.param('id'), (c.req.query('expanded') ?? '').split(',').filter(Boolean), { includeTests: c.req.query('tests') === '1' })));
+  app.get('/api/repos/:id/find', (c) => c.json(findPaths(ctx, c.req.param('id'), c.req.query('q') ?? '')));
   app.get('/api/repos/:id/architecture', (c) => c.json(architecture(ctx, c.req.param('id'))));
   app.get('/api/repos/:id/path', (c) => c.json(pathDetail(ctx, c.req.param('id'), c.req.query('path') ?? '')));
   app.get('/api/repos/:id/file', async (c) => c.json(await fileContent(ctx, c.req.param('id'), c.req.query('path') ?? '')));

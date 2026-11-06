@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ReactFlow, ReactFlowProvider, Background, Controls, MiniMap, Handle, Position, useReactFlow, MarkerType, type Node, type Edge, type NodeProps } from '@xyflow/react';
@@ -25,8 +25,8 @@ interface PathDetail {
 interface Architecture { repo: { fullName: string; languages: Record<string, number> }; roles: { role: string; label: string; files: number; lines: number; simple: Simple | null }[]; topFolders: { path: string; role: string; label: string; simple: Simple; basis: string }[]; dependencies: { production: number; development: number }; mostUsed: { path: string; importedBy: number }[]; analysis: Graph['analysis'] }
 interface Overview { repo: { id: string; fullName: string; description: string | null; status: string; statusDetail: string | null; htmlUrl: string | null; defaultBranch: string | null; trackedBranch: string | null; branch: string | null; headSha: string | null; lastSyncedAt: string | null; primaryLanguage: string | null; private: boolean; fileCount: number | null; treeTruncated: boolean }; links: { node_id: string; name: string; status: string }[]; branches: { name: string }[]; commits: { sha: string; message: string; author_name: string | null; committed_at: string | null; html_url: string }[]; dependencies: { name: string; version_spec: string | null; dev: number; ecosystem: string; manifest_path: string }[]; analysis: Graph['analysis'] }
 
-const ROLE_COLORS: Record<string, string> = { frontend: '#6aa7ff', backend: '#8d95ff', api: '#4fd4c8', database: '#f2b84b', tests: '#5cc98f', config: '#9aa3b8', docs: '#c792ea', scripts: '#ff9d5c', assets: '#f07aa8', other: '#7c8396' };
-const ROLE_LABELS: Record<string, string> = { frontend: 'Frontend', backend: 'Backend', api: 'API', database: 'Datenbank', tests: 'Tests', config: 'Konfiguration', docs: 'Doku', scripts: 'Skripte', assets: 'Assets', other: 'Sonstiges' };
+const ROLE_COLORS: Record<string, string> = { frontend: '#6aa7ff', backend: '#8d95ff', api: '#4fd4c8', database: '#f2b84b', shared: '#e57399', tests: '#5cc98f', config: '#9aa3b8', docs: '#c792ea', scripts: '#ff9d5c', assets: '#f07aa8', other: '#7c8396' };
+const ROLE_LABELS: Record<string, string> = { frontend: 'Frontend', backend: 'Backend', api: 'API', database: 'Datenbank', shared: 'Gemeinsam', tests: 'Tests', config: 'Konfiguration', docs: 'Doku', scripts: 'Skripte', assets: 'Assets', other: 'Sonstiges' };
 const NODE_W = 210;
 const NODE_H = 70;
 
@@ -91,7 +91,9 @@ function useLayout(graph: Graph | undefined, opts: { showDeps: boolean; selected
     ];
     const edges: Edge[] = graph.nodes.map((n) => ({ id: `h:${n.path}`, source: n.parent || rootId, target: n.path, type: 'smoothstep', style: { stroke: 'var(--border-strong)', strokeWidth: 1.4 }, focusable: false }));
     if (opts.showDeps) {
+      const ids = new Set(graph.nodes.map((n) => n.path));
       for (const e of graph.edges) {
+        if (!ids.has(e.from) || !ids.has(e.to)) continue;
         const active = opts.selected === null || e.from === opts.selected || e.to === opts.selected;
         edges.push({
           id: `d:${e.from}->${e.to}`, source: e.from, target: e.to, animated: active && opts.selected !== null, label: e.count > 1 ? String(e.count) : undefined,
@@ -155,6 +157,8 @@ function ExplorerCanvas({ repoId, overview }: { repoId: string; overview: Overvi
   const [selected, setSelected] = useState<string | null>(null);
   const [showDeps, setShowDeps] = useState(true);
   const [showTests, setShowTests] = useState(false);
+  const [rootFiles, setRootFiles] = useState(false);
+  const centerRef = useRef<string | null>(null);
   const [filter, setFilter] = useState('');
   const [fileView, setFileView] = useState<string | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
@@ -172,9 +176,10 @@ function ExplorerCanvas({ repoId, overview }: { repoId: string; overview: Overvi
   const toggle = useCallback((p: string) => setExpanded((e) => (e.includes(p) ? e.filter((x) => x !== p && !x.startsWith(p + '/')) : [...e, p])), []);
   const tour = arch.data?.topFolders ?? [];
   const tourPath = tourStep !== null ? (tourStep === 0 ? '' : tour[tourStep - 1]?.path ?? null) : null;
-  const { nodes, edges } = useLayout(graph.data, { showDeps, selected, tourPath, toggle, filter });
+  const visibleGraph = useMemo(() => (graph.data && !rootFiles ? { ...graph.data, nodes: graph.data.nodes.filter((n) => n.parent !== '' || n.type !== 'file' || n.path === selected) } : graph.data), [graph.data, rootFiles, selected]);
+  const { nodes, edges } = useLayout(visibleGraph, { showDeps, selected, tourPath, toggle, filter });
 
-  useEffect(() => { const t = setTimeout(() => rf.fitView({ padding: 0.15, duration: 400 }), 60); return () => clearTimeout(t); }, [graph.data?.nodes.length, rf]);
+  useEffect(() => { const t = setTimeout(() => { if (!centerRef.current) rf.fitView({ padding: 0.15, duration: 400, maxZoom: 1.1 }); }, 60); return () => clearTimeout(t); }, [visibleGraph?.nodes.length, rf]);
   useEffect(() => { if (tourPath !== null) { setSelected(tourPath); const n = rf.getNode(tourPath || '__root__'); if (n) rf.setCenter(n.position.x + NODE_W / 2, n.position.y + NODE_H / 2, { zoom: 1.1, duration: 500 }); } }, [tourPath, rf]);
   // deep link ?path= from global search: expand ancestors and select
   useEffect(() => {
@@ -189,87 +194,115 @@ function ExplorerCanvas({ repoId, overview }: { repoId: string; overview: Overvi
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSearch = (e: React.FormEvent) => {
+  const [pendingCenter, setPendingCenter] = useState<string | null>(null);
+  centerRef.current = pendingCenter;
+  const reveal = (p: string) => {
+    const parts = p.split('/');
+    setExpanded((e) => [...new Set([...e, ...parts.slice(0, -1).map((_, i) => parts.slice(0, i + 1).join('/'))])]);
+    setSelected(p);
+    setPendingCenter(p);
+  };
+  useEffect(() => {
+    if (!pendingCenter) return;
+    const n = rf.getNode(pendingCenter);
+    if (!n) return;
+    const t = setTimeout(() => { rf.setCenter(n.position.x + NODE_W / 2, n.position.y + NODE_H / 2, { zoom: 1.1, duration: 450 }); setPendingCenter(null); }, 120);
+    return () => clearTimeout(t);
+  }, [pendingCenter, nodes, rf]);
+  const onSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    const hit = graph.data?.nodes.find((n) => n.path.toLowerCase().includes(filter.toLowerCase()));
-    if (hit) { setSelected(hit.path); const n = rf.getNode(hit.path); if (n) rf.setCenter(n.position.x + NODE_W / 2, n.position.y + NODE_H / 2, { zoom: 1.2, duration: 400 }); }
+    const term = filter.trim();
+    if (!term) return;
+    const visible = graph.data?.nodes.find((n) => n.path.toLowerCase() === term.toLowerCase()) ?? graph.data?.nodes.find((n) => n.path.toLowerCase().includes(term.toLowerCase()));
+    if (visible) { reveal(visible.path); return; }
+    const hits = await api.get<{ path: string; type: string }[]>(`/api/repos/${repoId}/find${qs({ q: term })}`).catch(() => []);
+    if (!hits.length) { toast({ kind: 'info', title: 'Nichts gefunden', body: `Kein Pfad enthält „${term}“.` }); return; }
+    reveal(hits[0].path);
+    setFilter('');
   };
 
   const step = tourStep !== null && tourStep > 0 ? tour[tourStep - 1] : null;
   const a = graph.data?.analysis;
 
+  const robot = robotOpen ? (
+    <div className="card robot">
+      <RobotFigure talking={tourStep !== null || ask.isPending} onClick={() => setRobotOpen(false)} />
+      {tourStep === null ? (
+        <RobotBubble title={<><Bot size={14} /> OMI</>} onClose={() => { setRobotOpen(false); setPrefs({ robotEnabled: false }); }}
+          actions={<>
+            <Button size="sm" variant="primary" onClick={() => setTourStep(0)} disabled={!tour.length}>Zeig es mir</Button>
+            {selected !== null && <Button size="sm" onClick={() => setPrefs({ explainLevel: level === 'simple' ? 'technical' : 'simple' })}>{level === 'simple' ? 'Technisch erklären' : 'Einfach erklären'}</Button>}
+          </>}>
+          {selected !== null && selected !== '' ? <>Du schaust dir <code>{selected.split('/').pop()}</code> an. Unten erkläre ich, was dieser Baustein macht.</> : <>Hey! Möchtest du wissen, wie <strong>{overview.repo.fullName.split('/')[1]}</strong> aufgebaut ist? Ich zeige dir die einzelnen Bestandteile und erkläre, wie alles zusammenarbeitet.</>}
+          {aiStatus.data?.ai.configured ? (
+            <form className="row" style={{ marginTop: 10 }} onSubmit={(e) => { e.preventDefault(); if (question.trim()) ask.mutate(); }}>
+              <input className="input" style={{ height: 32, flex: 1 }} value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Frage zum Code stellen …" aria-label="Frage an OMI" />
+              <Button size="sm" type="submit" icon loading={ask.isPending} aria-label="Frage senden"><Send /></Button>
+            </form>
+          ) : <p className="subtle xsmall" style={{ marginTop: 8 }}>Freie Fragen beantworte ich, sobald die Claude API eingerichtet ist. Bis dahin erkläre ich nur, was die Analyse nachweislich zeigt.</p>}
+          {ask.data && <div className="small" style={{ marginTop: 10, maxHeight: 200, overflowY: 'auto', whiteSpace: 'pre-wrap' }}><Sparkles size={12} /> {ask.data.answer}</div>}
+        </RobotBubble>
+      ) : (
+        <RobotBubble title={<><Bot size={14} /> Tour {tourStep + 1}/{tour.length + 1}</>} onClose={() => { setTourStep(null); setSelected(null); }}
+          actions={<>
+            <Button size="sm" disabled={tourStep === 0} onClick={() => setTourStep((s) => (s ?? 1) - 1)}>Zurück</Button>
+            {tourStep < tour.length ? <Button size="sm" variant="primary" onClick={() => setTourStep((s) => (s ?? 0) + 1)}>Weiter <ArrowRight /></Button> : <Button size="sm" variant="primary" onClick={() => { setTourStep(null); setSelected(null); }}>Fertig</Button>}
+          </>}>
+          {tourStep === 0 ? (
+            <>Das ist das ganze Repository – <strong>die Werkzeugkiste</strong>. {arch.data ? <>Es besteht aus {tour.length} Hauptbereichen, geschrieben vor allem in {Object.keys(arch.data.repo.languages).slice(0, 3).join(', ') || 'mehreren Sprachen'}{arch.data.dependencies.production ? <>, und nutzt {arch.data.dependencies.production} externe Pakete</> : null}.</> : null}</>
+          ) : step ? (
+            level === 'simple'
+              ? <><code>{step.path}</code> ist vermutlich <strong>{step.simple.metaphor}</strong>: {step.simple.text}</>
+              : <><code>{step.path}</code> – vermutete Rolle: <strong>{step.label}</strong>. Wähle unten erkannte Abhängigkeiten, um Datenflüsse nachzuverfolgen.</>
+          ) : null}
+        </RobotBubble>
+      )}
+    </div>
+  ) : (
+    <Button onClick={() => setRobotOpen(true)}><Bot /> OMI einblenden</Button>
+  );
+
   return (
     <div className="explorer">
-      <div className="explorer-canvas" style={fullscreen ? { position: 'fixed', inset: 0, zIndex: 65, height: '100vh', borderRadius: 0 } : undefined}>
-        <div className="explorer-toolbar">
+      <div className="explorer-main">
+        <div className="explorer-toolbar" role="toolbar" aria-label="Darstellung des Graphen">
           <form onSubmit={onSearch} className="input-icon" style={{ flex: '1 1 200px', maxWidth: 320 }}><Search /><input className="input" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Im Graphen suchen …" aria-label="Im Graphen suchen" /></form>
           <Segmented label="Erklärungsebene" value={level} onChange={(v) => setPrefs({ explainLevel: v })} options={[{ value: 'simple', label: 'Einfach' }, { value: 'technical', label: 'Technisch' }]} />
-          <div className="card row" style={{ padding: '4px 10px', gap: 14, borderRadius: 10, background: 'var(--surface-glass)' }}>
-            <Switch checked={showDeps} onChange={setShowDeps} label={<span className="xsmall">Abhängigkeiten</span>} />
-            <Switch checked={showTests} onChange={setShowTests} label={<span className="xsmall">Tests</span>} />
-          </div>
-          <Button size="sm" onClick={() => { setExpanded([]); setSelected(null); setTourStep(null); }}>Übersicht</Button>
+          <Switch checked={showDeps} onChange={setShowDeps} label={<span className="small">Abhängigkeiten</span>} />
+          <Switch checked={rootFiles} onChange={setRootFiles} label={<span className="small">Dateien im Stamm</span>} />
+          <Switch checked={showTests} onChange={setShowTests} label={<span className="small">Tests</span>} />
+          <span className="spacer" />
+          <Button size="sm" onClick={() => { setExpanded([]); setSelected(null); setTourStep(null); setTimeout(() => rf.fitView({ padding: 0.15, duration: 400 }), 50); }}>Übersicht</Button>
           <Button size="sm" icon onClick={() => setFullscreen((f) => !f)} aria-label={fullscreen ? 'Vollbild verlassen' : 'Vollbild'}>{fullscreen ? <Minimize /> : <Maximize />}</Button>
         </div>
-        {graph.isLoading ? <div style={{ padding: 80 }}><Skeleton h={300} r={16} /></div> : graph.data && graph.data.nodes.length === 0 ? (
-          <div style={{ padding: 80, textAlign: 'center' }} className="muted">Keine Dateistruktur vorhanden – bitte zuerst abgleichen.</div>
-        ) : (
-          <ReactFlow
-            nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView minZoom={0.15} maxZoom={2.2} colorMode={document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'}
-            nodesDraggable={false} nodesConnectable={false} elementsSelectable onlyRenderVisibleElements
-            onNodeClick={(_, n) => setSelected(n.id === '__root__' ? '' : n.id)}
-            onNodeDoubleClick={(_, n) => { const g = (n.data as CxData).g; if (g.type === 'folder' && g.path) toggle(g.path); else if (g.type === 'file' && !g.protected) setFileView(g.path); }}
-            onPaneClick={() => setSelected(null)} proOptions={{ hideAttribution: true }}
-          >
-            <Background gap={22} size={1} color="var(--grid-dot)" />
-            <Controls showInteractive={false} position="top-right" style={{ marginTop: 56 }} />
-            <MiniMap pannable zoomable nodeColor={(n) => ROLE_COLORS[(n.data as CxData).g.role ?? 'other'] ?? '#888'} maskColor="color-mix(in srgb, var(--bg) 70%, transparent)" className="hide-sm" />
-          </ReactFlow>
-        )}
-        <div className="legend" aria-label="Legende">
-          <span><i /> Ordnerstruktur (tatsächlich)</span>
-          <span><i className="dep" /> Import-Abhängigkeit (erkannt)</span>
-          <span>Rollenfarben: vermutet</span>
-        </div>
-        <div className="robot">
-          <RobotFigure talking={tourStep !== null || ask.isPending} onClick={() => setRobotOpen((o) => !o)} />
-          {robotOpen && (
-            tourStep === null ? (
-              <RobotBubble title={<><Bot size={14} /> OMI</>} onClose={() => { setRobotOpen(false); setPrefs({ robotEnabled: false }); }}
-                actions={<>
-                  <Button size="sm" variant="primary" onClick={() => setTourStep(0)} disabled={!tour.length}>Zeig es mir</Button>
-                  {selected !== null && <Button size="sm" onClick={() => setPrefs({ explainLevel: level === 'simple' ? 'technical' : 'simple' })}>{level === 'simple' ? 'Technisch erklären' : 'Einfach erklären'}</Button>}
-                </>}>
-                {selected !== null && selected !== '' ? <>Du schaust dir <code>{selected.split('/').pop()}</code> an. Rechts erkläre ich dir, was dieser Baustein macht.</> : <>Hey! Möchtest du wissen, wie <strong>{overview.repo.fullName.split('/')[1]}</strong> aufgebaut ist? Ich zeige dir die einzelnen Bestandteile und erkläre, wie alles zusammenarbeitet.</>}
-                {aiStatus.data?.ai.configured ? (
-                  <form className="row" style={{ marginTop: 10 }} onSubmit={(e) => { e.preventDefault(); if (question.trim()) ask.mutate(); }}>
-                    <input className="input" style={{ height: 32, flex: 1 }} value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Frage zum Code stellen …" aria-label="Frage an OMI" />
-                    <Button size="sm" type="submit" icon loading={ask.isPending} aria-label="Frage senden"><Send /></Button>
-                  </form>
-                ) : <p className="subtle xsmall" style={{ marginTop: 8 }}>Freie Fragen beantworte ich, sobald die Claude API eingerichtet ist (ANTHROPIC_API_KEY). Ohne sie erkläre ich nur nachweisbare Fakten.</p>}
-                {ask.data && <div className="small" style={{ marginTop: 10, maxHeight: 180, overflowY: 'auto', whiteSpace: 'pre-wrap' }}><Sparkles size={12} /> {ask.data.answer}</div>}
-              </RobotBubble>
-            ) : (
-              <RobotBubble title={<><Bot size={14} /> Tour {tourStep + 1}/{tour.length + 1}</>} onClose={() => { setTourStep(null); setSelected(null); }}
-                actions={<>
-                  <Button size="sm" disabled={tourStep === 0} onClick={() => setTourStep((s) => (s ?? 1) - 1)}>Zurück</Button>
-                  {tourStep < tour.length ? <Button size="sm" variant="primary" onClick={() => setTourStep((s) => (s ?? 0) + 1)}>Weiter <ArrowRight /></Button> : <Button size="sm" variant="primary" onClick={() => { setTourStep(null); setSelected(null); }}>Fertig</Button>}
-                </>}>
-                {tourStep === 0 ? (
-                  <>Das ist das ganze Repository – <strong>die Werkzeugkiste</strong>. {arch.data ? <>Es besteht aus {tour.length} Hauptbereichen, geschrieben vor allem in {Object.keys(arch.data.repo.languages).slice(0, 3).join(', ') || 'mehreren Sprachen'}{arch.data.dependencies.production ? <>, und nutzt {arch.data.dependencies.production} externe Pakete</> : null}.</> : null}</>
-                ) : step ? (
-                  level === 'simple'
-                    ? <><code>{step.path}</code> ist vermutlich <strong>{step.simple.metaphor}</strong>: {step.simple.text}</>
-                    : <><code>{step.path}</code> – vermutete Rolle: <strong>{step.label}</strong>. Klicke rechts auf die erkannten Abhängigkeiten, um Datenflüsse nachzuverfolgen.</>
-                ) : null}
-              </RobotBubble>
-            )
+        <div className="explorer-canvas" style={fullscreen ? { position: 'fixed', inset: 0, zIndex: 65, height: '100vh', borderRadius: 0 } : undefined}>
+          {fullscreen && <Button size="sm" style={{ position: 'absolute', top: 12, left: 12, zIndex: 6 }} onClick={() => setFullscreen(false)}><Minimize /> Vollbild verlassen</Button>}
+          {graph.isLoading ? <div style={{ padding: 80 }}><Skeleton h={300} r={16} /></div> : graph.data && graph.data.nodes.length === 0 ? (
+            <div style={{ padding: 80, textAlign: 'center' }} className="muted">Keine Dateistruktur vorhanden – bitte zuerst abgleichen.</div>
+          ) : (
+            <ReactFlow
+              nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView minZoom={0.1} maxZoom={2.2} colorMode={document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'}
+              nodesDraggable={false} nodesConnectable={false} elementsSelectable onlyRenderVisibleElements
+              onNodeClick={(_, n) => setSelected(n.id === '__root__' ? '' : n.id)}
+              onNodeDoubleClick={(_, n) => { const g = (n.data as CxData).g; if (g.type === 'folder' && g.path) toggle(g.path); else if (g.type === 'file' && !g.protected) setFileView(g.path); }}
+              onPaneClick={() => setSelected(null)} proOptions={{ hideAttribution: true }}
+            >
+              <Background gap={22} size={1} color="var(--grid-dot)" />
+              <Controls showInteractive={false} position="top-right" />
+              <MiniMap pannable zoomable nodeColor={(n) => ROLE_COLORS[(n.data as CxData).g.role ?? 'other'] ?? '#888'} maskColor="color-mix(in srgb, var(--bg) 70%, transparent)" className="hide-sm" position="bottom-left" />
+            </ReactFlow>
           )}
+          <div className="legend" aria-label="Legende">
+            <span><i /> Ordnerstruktur (tatsächlich)</span>
+            <span><i className="dep" /> Import-Abhängigkeit (erkannt)</span>
+            <span>Rollenfarben: vermutet</span>
+          </div>
         </div>
       </div>
 
       <div className="explorer-panel stack">
-        <DetailPanel repoId={repoId} path={selected} level={level} onOpenFile={setFileView} onSelect={(p) => { const parts = p.split('/'); setExpanded((e) => [...new Set([...e, ...parts.slice(0, -1).map((_, i) => parts.slice(0, i + 1).join('/'))])]); setSelected(p); }} />
+        {robot}
+        <DetailPanel repoId={repoId} path={selected} level={level} onOpenFile={setFileView} onSelect={reveal} />
         <Card title="Analyse" icon={<ScanSearch />}>
           {a ? (
             <dl className="kv">

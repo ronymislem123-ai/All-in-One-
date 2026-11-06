@@ -108,7 +108,7 @@ export default function ConflictsPage() {
   return (
     <div>
       <PageHeader eyebrow={<><GitMerge size={14} /> Konfliktmanagement</>} title="Konflikte & Entscheidungen" lead="Mehrdeutige Zuordnungen werden nie still überschrieben. Beide Stände bleiben erhalten, bis du entscheidest." actions={<Segmented label="Filter" value={status} onChange={setStatus} options={[{ value: 'open', label: 'Offen' }, { value: 'resolved', label: 'Gelöst' }, { value: 'all', label: 'Alle' }]} />} />
-      <div className="split" style={{ gridTemplateColumns: 'minmax(0, 380px) minmax(0, 1fr)' }}>
+      <div className="split list-detail">
         <div className="card flush" style={{ alignSelf: 'start' }}>
           {list.isLoading ? <div style={{ padding: 16 }}><Skeleton h={160} /></div> : !list.data?.length ? (
             <EmptyState icon={<CheckCircle />} title={status === 'open' ? 'Keine offenen Konflikte' : 'Keine Einträge'}>Alles eindeutig zugeordnet.</EmptyState>

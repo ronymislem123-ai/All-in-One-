@@ -16,6 +16,7 @@ export const SIMPLE_EXPLANATIONS: Record<Role | 'repository' | 'folder', { metap
   backend: { metaphor: 'Das Gehirn', text: 'Das Backend arbeitet im Hintergrund: Es rechnet, prüft und entscheidet, was mit Daten passiert.' },
   api: { metaphor: 'Die Telefonleitung', text: 'Die API verbindet Systeme miteinander – hier kommen Anfragen an und Antworten gehen raus.' },
   database: { metaphor: 'Das Gedächtnis', text: 'Hier wird festgelegt, wie Daten dauerhaft gespeichert und wiedergefunden werden.' },
+  shared: { metaphor: 'Die gemeinsame Sprache', text: 'Bausteine, die mehrere Teile gemeinsam nutzen – etwa Begriffe, Typen und Regeln –, damit alle dasselbe meinen.' },
   tests: { metaphor: 'Die Qualitätskontrolle', text: 'Tests prüfen automatisch, ob alles so funktioniert wie geplant.' },
   config: { metaphor: 'Die Bedienungsanleitung für Werkzeuge', text: 'Konfigurationsdateien sagen den Werkzeugen, wie sie das Projekt bauen und starten sollen.' },
   docs: { metaphor: 'Das Handbuch', text: 'Dokumentation erklärt Menschen, wie das Projekt funktioniert.' },
@@ -126,6 +127,18 @@ export function repoGraph(ctx: Ctx, repoId: string, expanded: string[], opts: { 
     }),
     analysis: latestAnalysis(ctx, repoId),
   };
+}
+
+/** Finds files/folders by path fragment (for the explorer search; ranks exact name matches first). */
+export function findPaths(ctx: Ctx, repoId: string, q: string) {
+  requireRepo(ctx, repoId);
+  const needle = q.trim().toLowerCase();
+  if (!needle) return [];
+  return ctx.db.all<{ path: string; type: string }>(
+    `SELECT path, type FROM repo_tree WHERE repo_id = ? AND lower(path) LIKE ? ESCAPE '\\'
+     ORDER BY (lower(name) = ?) DESC, (lower(path) = ?) DESC, length(path) LIMIT 20`,
+    [repoId, `%${needle.replace(/[%_\\]/g, (m) => '\\' + m)}%`, needle.split('/').pop(), needle],
+  ).map((r) => ({ path: r.path, type: r.type === 'tree' ? 'folder' : 'file' }));
 }
 
 /** Architecture summary by (heuristic) role – used by the robot tour. */
