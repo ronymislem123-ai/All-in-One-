@@ -1,0 +1,2947 @@
+{
+  "version": 1,
+  "ideas": [
+    {
+      "slug": "business-interview-evidenzboard",
+      "title": "Evidenz-Board für Problem-Interviews",
+      "summary": "Wertet Transkripte von Kundeninterviews aus und zeigt, welche Probleme wirklich belegt sind – mit Zitaten statt Bauchgefühl.",
+      "description": "Nutzer laden Transkripte oder Notizen aus Gesprächen mit potenziellen Kunden hoch. Claude extrahiert genannte Probleme, bisherige Lösungsversuche, Signale für Zahlungsbereitschaft und wörtliche Zitate und ordnet sie einem Hypothesen-Katalog zu. Ein Board zeigt pro Hypothese, wie viele Gespräche sie stützen oder ihr widersprechen, und markiert Suggestivfragen im Interviewverlauf.",
+      "problem": "Nach zehn Interviews erinnern sich Gründer vor allem an die Aussagen, die ihre Idee bestätigen. Widersprüche und schwache Signale gehen in unstrukturierten Notizen verloren.",
+      "goal": "Validierungsentscheidungen auf nachvollziehbare, zitierbare Evidenz aus echten Gesprächen stützen.",
+      "benefit": "Man sieht auf einen Blick, welche Annahmen belegt, widerlegt oder ungeprüft sind, und kann jede Aussage bis zum Originalzitat zurückverfolgen.",
+      "audience": "Gründer in der Ideenphase, Produktverantwortliche, Solo-Selbstständige",
+      "category": "business",
+      "subcategory": "business-validation",
+      "features": [
+        "Import von Transkripten (TXT, DOCX, VTT) und Freitext-Notizen",
+        "Extraktion von Problemen, Workarounds und Zahlungsbereitschaftssignalen mit Originalzitat",
+        "Hypothesen-Board: stützend, widersprechend oder nicht erwähnt – pro Gespräch",
+        "Markierung von Suggestivfragen und Zukunftsversprechen („würde ich kaufen“) als schwache Evidenz",
+        "Export eines Validierungsberichts als Markdown"
+      ],
+      "highlights": [
+        "Jede Aussage ist bis zum Zitat im Transkript zurückverfolgbar",
+        "Bewertet auch die Qualität der eigenen Fragen, nicht nur die Antworten"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "React",
+        "SQLite",
+        "Claude API",
+        "Lokale Spracherkennung (optional)"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Interviews, die mit Einverständnis der Gesprächspartner aufgezeichnet oder protokolliert wurden"
+      ],
+      "extensions": [
+        "Interview-Leitfaden-Generator, der gezielt Lücken im Board adressiert",
+        "Vergleich zwischen Zielgruppensegmenten",
+        "Audio-Upload mit lokaler Transkription"
+      ],
+      "risks": [
+        "Transkripte enthalten personenbezogene Daten – Einwilligung und sorgfältige Speicherung nach DSGVO sind nötig",
+        "Die Extraktion kann Nuancen und Ironie falsch deuten; Stichproben-Prüfung bleibt nötig",
+        "Wenige Interviews bleiben wenige Interviews – das Tool ersetzt keine ausreichende Stichprobe"
+      ],
+      "monetization": {
+        "assessment": "Als Werkzeug für Gründer und Produktteams denkbar, etwa als kleines Abo. Der Markt für Research-Tools ist allerdings umkämpft, und der Nutzen hängt davon ab, ob Nutzer überhaupt regelmäßig Interviews führen.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "validierung",
+        "kundeninterviews",
+        "gründung",
+        "evidenz",
+        "research"
+      ]
+    },
+    {
+      "slug": "business-nachfrage-experimente",
+      "title": "Nachfrage-Experimente mit ehrlicher Warteliste",
+      "summary": "Erstellt Landingpages für Ideen-Tests mit transparenter Warteliste und wertet Klicks und Anmeldungen als Experiment mit Vorab-Kriterien aus.",
+      "description": "Zu einer Ideenbeschreibung erzeugt Claude zwei bis drei Landingpage-Varianten mit unterschiedlichem Nutzenversprechen. Die Seiten sagen offen, dass das Produkt noch in Planung ist, und bieten eine Warteliste an. Ein kleines Dashboard vergleicht Besuche, Klicks auf den Call-to-Action und Anmeldungen je Variante und hält die vor dem Start festgelegten Erfolgskriterien fest.",
+      "problem": "Ideen werden oft monatelang gebaut, bevor jemand prüft, ob überhaupt Interesse besteht. Spontane Tests scheitern daran, dass keine Erfolgskriterien vorab festgelegt werden.",
+      "goal": "Interesse an einer Idee mit geringem Aufwand und vorab definierten Kriterien messbar machen.",
+      "benefit": "Statt Wochen Entwicklung reicht ein Wochenende, um zu sehen, welches Nutzenversprechen überhaupt Reaktionen auslöst – inklusive dokumentierter Entscheidungsgrundlage.",
+      "audience": "Gründer, Side-Project-Entwickler, kleine Agenturen",
+      "category": "business",
+      "subcategory": "business-validation",
+      "features": [
+        "Generierung von Landingpage-Varianten aus einer Ideenbeschreibung",
+        "Pflichtfeld „Erfolgs- und Abbruchkriterium“ vor dem Start",
+        "Datensparsames, cookieloses Zählen von Besuchen und Klicks",
+        "Warteliste mit Double-Opt-in",
+        "Auswertung pro Variante mit Hinweis auf zu kleine Stichproben"
+      ],
+      "highlights": [
+        "Erzwingt Hypothese und Abbruchkriterium vor dem Start",
+        "Transparente Kommunikation statt Täuschung der Besucher"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Astro",
+        "TypeScript",
+        "SQLite",
+        "Claude API",
+        "Selbst gehostetes, cookieloses Analytics"
+      ],
+      "prerequisites": [
+        "Domain und Hosting",
+        "Traffic-Quelle, z. B. Community-Beiträge oder ein kleines Werbebudget",
+        "Impressum und Datenschutzerklärung"
+      ],
+      "extensions": [
+        "Kurze Umfrage an Wartelisten-Anmelder",
+        "Vergleich mehrerer Ideen in einem Experiment-Portfolio",
+        "Tests unterschiedlicher Preisangaben"
+      ],
+      "risks": [
+        "Bei wenig Traffic sind die Ergebnisse kaum aussagekräftig",
+        "Rechtliche Pflichten (Impressum, Datenschutz, Double-Opt-in) müssen eingehalten werden",
+        "Interesse auf einer Landingpage ist kein Beleg für spätere Zahlungsbereitschaft"
+      ],
+      "monetization": {
+        "assessment": "Primär ein Eigenwerkzeug. Als Vorlage oder kleines Tool für andere Gründer denkbar, es gibt jedoch viele Landingpage-Baukästen; der Mehrwert läge im Experiment-Rahmen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "validierung",
+        "landingpage",
+        "experimente",
+        "warteliste"
+      ]
+    },
+    {
+      "slug": "business-gruendungs-pflichten-cockpit",
+      "title": "Gründungs- und Pflichten-Cockpit für Kleinstbetriebe",
+      "summary": "Führt Einzelunternehmer durch Anmeldungen, wiederkehrende Pflichten und Fristen in Deutschland – als Checkliste mit Quellen, nicht als Rechtsberatung.",
+      "description": "Ein geführter Fragebogen erfasst Rechtsform, Tätigkeit, Umsatzerwartung und Bundesland und leitet daraus eine Checkliste typischer Schritte ab, etwa Gewerbeanmeldung, steuerliche Erfassung beim Finanzamt, Berufsgenossenschaft oder Künstlersozialkasse. Wiederkehrende Pflichten wie Umsatzsteuer-Voranmeldungen werden als Fristen geführt. Jeder Punkt verweist auf eine amtliche Quelle; Claude erklärt Begriffe in einfacher Sprache und kennzeichnet, wann eine Steuerberatung sinnvoll ist.",
+      "problem": "Wer sich selbstständig macht, verliert schnell den Überblick, welche Anmeldungen und wiederkehrenden Pflichten für die eigene Situation gelten. Die Informationen sind über viele Behörden-Websites verstreut.",
+      "goal": "Einen persönlichen, nachvollziehbaren Pflichten- und Fristenplan für die ersten Jahre der Selbstständigkeit bereitstellen.",
+      "benefit": "Weniger vergessene Fristen und Anmeldungen sowie klarere Fragen an Steuerberatung und Behörden.",
+      "audience": "Gründer von Einzelunternehmen, Freiberufler, Nebenberufliche",
+      "category": "business",
+      "subcategory": "business-operations",
+      "features": [
+        "Fragebogen zu Rechtsform, Tätigkeit, Bundesland und Umsatzerwartung",
+        "Regelbasierte Checkliste mit Quellenlink und Prüfdatum je Schritt",
+        "Fristenkalender mit ICS-Export",
+        "Umsatzbeobachtung relativ zur Kleinunternehmergrenze mit Hinweis auf Prüfbedarf",
+        "Begriffserklärungen per Claude mit deutlichem Hinweis auf fehlende Verbindlichkeit",
+        "Versioniertes Änderungsprotokoll der Regelbasis"
+      ],
+      "highlights": [
+        "Regeln liegen versioniert und prüfbar vor – Claude erklärt nur und entscheidet nicht",
+        "Jeder Hinweis zeigt Quelle und Stand"
+      ],
+      "complexity": 3,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "SQLite",
+        "JSON-Regelwerk",
+        "Claude API",
+        "ICS"
+      ],
+      "prerequisites": [
+        "Recherche und laufende Pflege der Regelbasis anhand amtlicher Quellen",
+        "Claude-API-Zugang",
+        "Idealerweise fachliche Gegenprüfung durch eine Steuerberatung"
+      ],
+      "extensions": [
+        "Belegablage pro Pflicht",
+        "Erinnerungen per E-Mail oder Push",
+        "Varianten für weitere Rechtsformen wie GbR oder UG"
+      ],
+      "risks": [
+        "Steuer- und Rechtsregeln ändern sich; veraltete Regeln können zu Fehlern führen",
+        "Das Tool ersetzt keine Rechts- oder Steuerberatung und muss das klar kommunizieren",
+        "Regionale Unterschiede (Kommune, Kammer) sind schwer vollständig abzubilden"
+      ],
+      "monetization": {
+        "assessment": "Ein Angebot für Gründer ist denkbar, aber Pflegeaufwand der Regelbasis und Haftungsfragen sind erheblich. Realistischer als Eigenwerkzeug oder in Kooperation mit beratenden Berufen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 3
+      },
+      "tags": [
+        "gründung",
+        "fristen",
+        "selbstständigkeit",
+        "behörden",
+        "checkliste"
+      ]
+    },
+    {
+      "slug": "business-kunden-stundensatz-radar",
+      "title": "Effektiver-Stundensatz-Radar pro Kunde",
+      "summary": "Zeigt Selbstständigen, was sie pro Kunde wirklich verdienen, wenn Mails, Abstimmungen und Nacharbeit mitgezählt werden.",
+      "description": "Das Tool verknüpft Zeiterfassung, Rechnungsbeträge und optional Kalender- und E-Mail-Metadaten je Kunde. Daraus berechnet es den effektiven Stundensatz inklusive unbezahlter Kommunikations- und Korrekturzeit. Claude fasst monatlich zusammen, welche Kunden oder Projektarten auffällig vom Zielsatz abweichen und welche Faktoren dazu beitragen.",
+      "problem": "Viele Selbstständige kalkulieren mit einem festen Stundensatz, verdienen bei einzelnen Kunden aber deutlich weniger, weil Abstimmung und Nacharbeit nicht erfasst werden.",
+      "goal": "Die tatsächliche Wirtschaftlichkeit einzelner Kundenbeziehungen sichtbar machen.",
+      "benefit": "Eine fundiertere Grundlage für Preisgespräche, Pauschalangebote oder die Entscheidung, Kundenbeziehungen anders zu gestalten.",
+      "audience": "Freelancer, Solo-Selbstständige, kleine Agenturen",
+      "category": "business",
+      "subcategory": "business-solopreneur",
+      "features": [
+        "Import von Zeiterfassungs- und Rechnungsdaten als CSV",
+        "Zuordnung von Kalenderterminen und E-Mail-Threads zu Kunden über Domains (nur Metadaten)",
+        "Soll-Ist-Vergleich des Stundensatzes je Kunde und Projekt",
+        "Monatsbericht mit Abweichungen und möglichen Ursachen",
+        "Szenario-Rechner: Wie sähe es mit Pauschalpreis X aus?"
+      ],
+      "highlights": [
+        "Macht unsichtbare Kommunikationszeit messbar",
+        "Arbeitet lokal mit Metadaten statt mit Mailinhalten"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "pandas",
+        "SQLite",
+        "Claude API",
+        "ICS- und CSV-Import"
+      ],
+      "prerequisites": [
+        "Zeiterfassungsdaten",
+        "Rechnungsübersicht als CSV",
+        "Optional Kalenderexport"
+      ],
+      "extensions": [
+        "Angebotskalkulation auf Basis historischer Projektdaten",
+        "Frühwarnung bei Projekten, die aus dem Budget laufen",
+        "Auswertung nach Projektart"
+      ],
+      "risks": [
+        "Die Schätzung von Mailzeit aus Metadaten ist grob",
+        "Ohne konsequente Zeiterfassung sind die Ergebnisse wenig belastbar"
+      ],
+      "monetization": {
+        "assessment": "In erster Linie ein Eigenwerkzeug. Für Freelancer-Communities als Vorlage denkbar; ob jemand für ein weiteres Einzeltool zahlt, ist unklar.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "freelancer",
+        "stundensatz",
+        "preisgestaltung",
+        "zeiterfassung"
+      ]
+    },
+    {
+      "slug": "finance-fixkosten-detektor",
+      "title": "Fixkosten- und Abo-Detektor für Kontoauszüge",
+      "summary": "Findet in exportierten Kontoumsätzen wiederkehrende Zahlungen, stille Preiserhöhungen und vergessene Abos – komplett lokal.",
+      "description": "Kontoumsätze werden als CSV- oder CAMT-Export eingelesen. Ein deterministischer Algorithmus erkennt wiederkehrende Zahlungen über Empfänger, Betragsmuster und Intervalle; Claude bereinigt unklare Empfängernamen nur auf Wunsch und nur mit gekürzten Daten. Ergebnis ist eine Liste aller Fixkosten mit Jahressumme, Preisentwicklung und Notizen zu Kündigungsfristen.",
+      "problem": "Abos und Verträge sammeln sich unbemerkt an, und Preiserhöhungen fallen bei kleinen Beträgen nicht auf. Banking-Apps zeigen Umsätze, aber selten eine verständliche Fixkostenübersicht.",
+      "goal": "Eine vollständige, verständliche Übersicht aller wiederkehrenden Ausgaben schaffen.",
+      "benefit": "Man sieht die Jahreskosten jedes Abos und bemerkt Preiserhöhungen, ohne Bankdaten an Dritte weiterzugeben.",
+      "audience": "Privathaushalte, Paare mit gemeinsamem Konto, Studierende",
+      "category": "finance",
+      "subcategory": "finance-budget",
+      "features": [
+        "Import von CSV- und CAMT-Exporten mit Spalten-Mapping",
+        "Erkennung wiederkehrender Zahlungen inklusive Intervall (monatlich, quartalsweise, jährlich)",
+        "Preisverlauf je Vertrag mit Hinweis auf Erhöhungen",
+        "Jahressummen und Anteil am Nettoeinkommen",
+        "Notizfeld für Kündigungsfristen und Vertragsnummern"
+      ],
+      "highlights": [
+        "Erkennung läuft deterministisch und lokal, KI nur optional zur Namensbereinigung",
+        "Macht Preiserhöhungen sichtbar, die in Einzelbuchungen untergehen"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "SQLite",
+        "Claude API (optional)"
+      ],
+      "prerequisites": [
+        "Kontoauszüge als CSV- oder CAMT-Export"
+      ],
+      "extensions": [
+        "Erinnerung vor Kündigungsfristen",
+        "Vergleich mit dem Vorjahr",
+        "Ansicht über mehrere Konten und Haushaltsmitglieder"
+      ],
+      "risks": [
+        "Bankexporte unterscheiden sich stark im Format, Importer brauchen Pflege",
+        "Sensible Finanzdaten sollten verschlüsselt und lokal gespeichert werden"
+      ],
+      "monetization": {
+        "assessment": "Vor allem als Eigenwerkzeug sinnvoll. Ein öffentliches Angebot stünde in Konkurrenz zu Banking-Apps und müsste hohe Datenschutzerwartungen erfüllen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 5
+      },
+      "tags": [
+        "budget",
+        "abos",
+        "fixkosten",
+        "kontoauszug",
+        "datenschutz"
+      ]
+    },
+    {
+      "slug": "finance-etf-ueberschneidungs-roentgen",
+      "title": "ETF-Überschneidungs-Röntgen",
+      "summary": "Zerlegt mehrere ETFs in ihre Einzelpositionen und zeigt, wie stark sich Unternehmen, Länder und Sektoren tatsächlich überschneiden.",
+      "description": "Nutzer laden die Positionslisten ihrer ETFs hoch, die Fondsanbieter typischerweise als CSV oder Excel veröffentlichen, und geben ihre Gewichtungen an. Das Tool aggregiert auf Ebene der Einzeltitel und visualisiert Überschneidungen, Länder- und Sektorkonzentrationen sowie die größten effektiven Positionen. Claude erklärt die Ergebnisse in einfachen Worten, gibt aber ausdrücklich keine Kauf- oder Verkaufsempfehlungen.",
+      "problem": "Wer mehrere breit gestreute Fonds besitzt, hält oft unbemerkt dieselben Großunternehmen mehrfach. Die tatsächliche Konzentration ist aus Factsheets kaum ablesbar.",
+      "goal": "Die reale Streuung eines Fondsportfolios transparent machen.",
+      "benefit": "Man versteht die eigene Konzentration auf einzelne Unternehmen, Länder und Sektoren und kann gezielter eigene Recherche betreiben.",
+      "audience": "Privatanleger mit mehreren Fonds, Finanzinteressierte",
+      "category": "finance",
+      "subcategory": "finance-portfolio",
+      "features": [
+        "Import von Positionslisten (CSV, XLSX) mit Spaltenerkennung",
+        "Zusammenführung von Titeln über ISIN, Namensabgleich als Fallback",
+        "Treemap der effektiven Einzelpositionen",
+        "Überschneidungsmatrix zwischen Fonds",
+        "Datumsanzeige je Positionsliste mit Warnung bei veralteten Daten"
+      ],
+      "highlights": [
+        "Rechnet auf Einzeltitel-Ebene statt nur mit Länder- und Sektorangaben",
+        "Klare Trennung zwischen Analyse und Empfehlung"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "pandas",
+        "DuckDB",
+        "Plotly",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Positionslisten der Fonds (vom Anbieter veröffentlicht)",
+        "Eigene Gewichtungen im Depot"
+      ],
+      "extensions": [
+        "Historischer Verlauf der Konzentration",
+        "Einbezug von Einzelaktien und Sparplänen",
+        "Szenarioansicht für hypothetische Umschichtungen"
+      ],
+      "risks": [
+        "Positionslisten sind zeitverzögert, und Formate ändern sich",
+        "Abgleich ohne ISIN kann fehlerhaft sein",
+        "Keine Anlageberatung – die Ergebnisse beschreiben, sie empfehlen nichts"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug und Lernprojekt gut geeignet. Ein öffentliches Angebot berührt regulatorische Grenzen der Anlageberatung und bräuchte sorgfältige Formulierungen sowie geklärte Datennutzungsrechte.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "etf",
+        "portfolio",
+        "diversifikation",
+        "visualisierung",
+        "analyse"
+      ]
+    },
+    {
+      "slug": "finance-lebensphasen-simulator",
+      "title": "Lebensphasen-Finanzsimulator mit offenen Annahmen",
+      "summary": "Simuliert Haushaltsfinanzen über Jahrzehnte für Ereignisse wie Elternzeit, Teilzeit oder Wohnungskauf – mit sichtbaren, veränderbaren Annahmen.",
+      "description": "Der Haushalt wird als Modell aus Einkommen, Ausgaben, Rücklagen und Krediten abgebildet. Nutzer legen Lebensereignisse auf eine Zeitachse und sehen die Auswirkungen auf Liquidität und Vermögen in mehreren Szenarien mit Bandbreiten statt einer einzigen Zahl. Jede Annahme wie Inflation, Renditebandbreite oder Gehaltsentwicklung ist sichtbar und veränderbar; Claude übersetzt frei beschriebene Ereignisse in Modellparameter, die vor der Übernahme bestätigt werden.",
+      "problem": "Große Lebensentscheidungen werden finanziell oft mit Faustregeln getroffen. Tabellenkalkulationen werden schnell unübersichtlich und verstecken ihre Annahmen.",
+      "goal": "Finanzielle Folgen von Lebensentscheidungen als Szenarien mit Unsicherheitsbandbreiten nachvollziehbar machen.",
+      "benefit": "Paare und Familien können Optionen gemeinsam durchspielen und sehen, welche Annahmen das Ergebnis am stärksten beeinflussen.",
+      "audience": "Paare, Familien, Menschen vor großen Entscheidungen",
+      "category": "finance",
+      "subcategory": "finance-portfolio",
+      "features": [
+        "Zeitachse mit Lebensereignissen wie Elternzeit, Teilzeit, Umzug, Kredit oder Jobwechsel",
+        "Monte-Carlo-Simulation mit Bandbreitendarstellung",
+        "Sensitivitätsanalyse: Welche Annahme wirkt am stärksten?",
+        "Freitext-Ereignisse, die Claude in Parameter übersetzt und zur Bestätigung anzeigt",
+        "Szenarienvergleich nebeneinander",
+        "PDF-Bericht mit vollständigem Annahmenprotokoll"
+      ],
+      "highlights": [
+        "Zeigt Unsicherheit statt Scheingenauigkeit",
+        "Das Annahmenprotokoll macht jedes Ergebnis reproduzierbar"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "React",
+        "Web Worker",
+        "SQLite",
+        "Claude API",
+        "Recharts"
+      ],
+      "prerequisites": [
+        "Eigene Einnahmen- und Ausgabendaten",
+        "Grundverständnis von Finanzbegriffen"
+      ],
+      "extensions": [
+        "Steuerliche Näherungen pro Szenario mit klarer Kennzeichnung",
+        "Gemeinsame Bearbeitung für Paare",
+        "Datenübernahme aus dem Fixkosten-Detektor"
+      ],
+      "risks": [
+        "Modelle vereinfachen stark und können falsche Sicherheit vermitteln",
+        "Keine Finanz- oder Anlageberatung",
+        "Steuer- und Sozialversicherungsregeln sind nur grob abbildbar"
+      ],
+      "monetization": {
+        "assessment": "Eher als Eigenwerkzeug oder Open-Source-Projekt sinnvoll. Ein kommerzielles Angebot bewegt sich nahe an regulierter Finanzberatung und würde eine rechtliche Prüfung erfordern.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "finanzplanung",
+        "simulation",
+        "szenarien",
+        "familie",
+        "monte-carlo"
+      ]
+    },
+    {
+      "slug": "finance-steuerbeleg-sammler",
+      "title": "Steuerbeleg-Sammler mit Prüfliste",
+      "summary": "Sammelt Belege übers Jahr per Foto oder PDF, liest Betrag und Datum aus und ordnet sie typischen Kategorien der Einkommensteuererklärung zu.",
+      "description": "Belege werden per Foto, weitergeleiteter Mail oder überwachtem Ordner erfasst. Claude extrahiert Datum, Betrag und Aussteller und schlägt eine Kategorie vor, etwa Werbungskosten, haushaltsnahe Dienstleistungen oder Spenden, jeweils mit Konfidenz und kurzer Begründung. Unsichere Zuordnungen landen in einer Prüfliste; am Jahresende entsteht eine sortierte Übersicht mit Summen und den Originaldateien.",
+      "problem": "Belege für die Steuererklärung liegen verstreut in Mails, Schubladen und Download-Ordnern. Am Jahresende fehlt die Zeit, und relevante Ausgaben werden vergessen.",
+      "goal": "Steuerrelevante Belege laufend und mit wenig Aufwand strukturiert sammeln.",
+      "benefit": "Die Steuererklärung oder das Gespräch mit der Steuerberatung ist deutlich besser vorbereitet, weil alle Belege sortiert und summiert vorliegen.",
+      "audience": "Angestellte, Familien, Nebenberufliche",
+      "category": "finance",
+      "subcategory": "finance-tax",
+      "features": [
+        "Erfassung per Foto, PDF-Upload und überwachtem Ordner",
+        "Extraktion von Datum, Betrag, Aussteller und Zahlungsart",
+        "Kategorievorschlag mit Konfidenz und Begründung",
+        "Prüfliste für unsichere Belege",
+        "Jahresexport als CSV und ZIP mit sprechend benannten Originaldateien"
+      ],
+      "highlights": [
+        "Unsichere Fälle werden sichtbar statt still einsortiert",
+        "Originaldateien bleiben unverändert erhalten"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "SQLite",
+        "Claude API (Bildverarbeitung)",
+        "Tesseract (optional)"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Belege digital oder als Foto"
+      ],
+      "extensions": [
+        "Abgleich mit Kontoumsätzen zur Vollständigkeitsprüfung",
+        "Erinnerung an typischerweise fehlende Belege",
+        "Getrennte Profile für mehrere Personen im Haushalt"
+      ],
+      "risks": [
+        "Kategorien sind Vorschläge, keine Steuerberatung – die Absetzbarkeit hängt vom Einzelfall ab",
+        "Schlechte Fotos führen zu Lesefehlern",
+        "Bewusst entscheiden, welche sensiblen Daten an eine Cloud-API gehen"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug sehr nützlich. Für ein öffentliches Produkt gibt es etablierte Steuersoftware; eine mögliche Nische wäre die strukturierte Vorbereitung für die Steuerberatung.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 4
+      },
+      "tags": [
+        "steuern",
+        "belege",
+        "ocr",
+        "einkommensteuer",
+        "ablage"
+      ]
+    },
+    {
+      "slug": "trading-risiko-budget-rechner",
+      "title": "Positionsgrößen- und Tagesverlust-Rechner",
+      "summary": "Berechnet Positionsgrößen aus Risikobudget, Stopp-Abstand und Gebühren und zeigt einen persönlichen Tagesverlust-Stopp an.",
+      "description": "Nutzer hinterlegen Kontogröße, maximales Risiko pro Trade in Prozent und ein Tagesverlust-Limit. Für jeden geplanten Trade berechnet der Rechner die Positionsgröße aus Einstieg, Stopp, Gebühren und gegebenenfalls Hebel und zeigt den maximalen Verlust in Euro. Ist das Tageslimit erreicht, zeigt das Tool deutlich an, dass laut eigenem Regelwerk für heute Schluss ist.",
+      "problem": "Viele Verluste entstehen nicht durch falsche Analysen, sondern durch zu große Positionen und fehlende Grenzen nach einer Verlustserie.",
+      "goal": "Risiko pro Trade und pro Tag vor dem Einstieg konkret in Euro sichtbar machen.",
+      "benefit": "Vor jeder Entscheidung ist klar, wie viel im ungünstigen Fall verloren gehen kann – auch beim Paper-Trading als Übung.",
+      "audience": "Trading-Einsteiger, Paper-Trader, Lernende",
+      "category": "trading",
+      "subcategory": "trading-risk",
+      "features": [
+        "Positionsgröße aus Risiko-Prozent, Stopp-Abstand und Gebühren",
+        "Hebel- und Margin-Warnung mit Verlustdarstellung bei Kurslücken",
+        "Tagesverlust-Zähler mit deutlichem Stopp-Hinweis",
+        "Szenariotabelle für Verlustserien von 5 oder 10 Trades",
+        "Offline nutzbar als PWA"
+      ],
+      "highlights": [
+        "Fokus auf Verlustbegrenzung statt auf Gewinnversprechen",
+        "Visualisiert, wie Verlustserien auf das Konto wirken"
+      ],
+      "complexity": 1,
+      "effort": "xs",
+      "technologies": [
+        "TypeScript",
+        "Vite",
+        "PWA",
+        "LocalStorage"
+      ],
+      "prerequisites": [
+        "Keine technischen Voraussetzungen",
+        "Eigene Risikoregeln sollten vorab schriftlich festgelegt sein"
+      ],
+      "extensions": [
+        "Verknüpfung mit dem Trading-Journal",
+        "Assistent zum Formulieren eigener Risikoregeln",
+        "Export der Berechnungen"
+      ],
+      "risks": [
+        "Ein Rechner verhindert keine Regelbrüche – die Disziplin bleibt beim Nutzer",
+        "Kurslücken und Slippage können zu höheren Verlusten als berechnet führen",
+        "Trading, besonders mit Hebelprodukten, birgt hohe Verlustrisiken bis zum Totalverlust"
+      ],
+      "monetization": {
+        "assessment": "Leicht nachzubauen und eher als Eigenwerkzeug oder Lernprojekt sinnvoll.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 2,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "trading",
+        "risikomanagement",
+        "positionsgröße",
+        "paper-trading"
+      ]
+    },
+    {
+      "slug": "trading-emotions-journal",
+      "title": "Trading-Journal mit Plan- und Emotionsabgleich",
+      "summary": "Erfasst vor und nach jedem Trade Plan, Gemütslage und Regeltreue und zeigt in Wochenrückblicken Verhaltensmuster statt Marktsignale.",
+      "description": "Vor einem Trade dokumentiert man These, Einstieg, Stopp, Ziel und die aktuelle Gemütslage, danach Ergebnis und Regelabweichungen. Claude analysiert wöchentlich die eigenen Einträge und benennt Muster, etwa größere Positionen nach Verlusten oder Planabweichungen zu bestimmten Tageszeiten, jeweils mit Verweis auf die betreffenden Einträge. Das Journal gibt bewusst keine Marktsignale, sondern spiegelt ausschließlich das eigene Verhalten.",
+      "problem": "Gerade Lernende erkennen wiederkehrende Verhaltensfehler oft nicht, weil Notizen unstrukturiert sind oder ganz fehlen.",
+      "goal": "Eigene Entscheidungsmuster sichtbar machen und Regeltreue messbar verbessern.",
+      "benefit": "Nach einigen Wochen werden konkrete Muster erkennbar, und eigene Regeln lassen sich gezielt anpassen – unabhängig davon, ob echt oder auf Papier gehandelt wird.",
+      "audience": "Lernende Trader, Paper-Trader, Privatanleger mit aktivem Handel",
+      "category": "trading",
+      "subcategory": "trading-journal",
+      "features": [
+        "Pre-Trade-Formular mit These, Stopp, Ziel und Stimmungsskala",
+        "Post-Trade-Erfassung mit Regelabweichungen und Chart-Screenshot",
+        "Kennzahlen zu Regeltreue, Haltedauer und Ergebnis nach Gemütslage",
+        "Wöchentlicher Rückblick durch Claude mit Belegen aus den Einträgen",
+        "CSV-Import von Broker-Exporten"
+      ],
+      "highlights": [
+        "Trennt Prozessqualität vom Ergebnis",
+        "Claude bewertet nur Verhalten, nicht den Markt"
+      ],
+      "complexity": 2,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "SvelteKit",
+        "SQLite",
+        "Claude API",
+        "Chart.js"
+      ],
+      "prerequisites": [
+        "Disziplin zur regelmäßigen Erfassung",
+        "Optional Broker-Export als CSV"
+      ],
+      "extensions": [
+        "Versionierte Regelwerke mit Vorher-Nachher-Vergleich",
+        "Sprachnotizen direkt nach dem Trade",
+        "Verknüpfung mit dem Positionsgrößen-Rechner"
+      ],
+      "risks": [
+        "Kleine Stichproben verleiten zu Fehlschlüssen",
+        "Ein Journal ersetzt keine Risikoaufklärung – Trading kann zu erheblichen Verlusten führen",
+        "Hinweise zur Psychologie sind keine therapeutische Beratung"
+      ],
+      "monetization": {
+        "assessment": "Journale gibt es in vielen Varianten. Der Fokus auf Verhaltensmuster könnte eine Nische sein, eine Zahlungsbereitschaft ist aber ungewiss.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "trading",
+        "journal",
+        "verhalten",
+        "reflexion",
+        "paper-trading"
+      ]
+    },
+    {
+      "slug": "trading-primaerquellen-dossier",
+      "title": "Recherche-Dossier aus Primärquellen",
+      "summary": "Fasst Geschäftsberichte, Mitteilungen und Transkripte zu einem Unternehmen mit Quellenangaben zusammen – mit Pro und Contra, ohne Empfehlung.",
+      "description": "Nutzer laden Primärquellen wie Geschäftsberichte, Quartalsmitteilungen oder Transkripte von Analystenkonferenzen hoch. Claude erstellt ein Dossier zu Geschäftsmodell, Kennzahlenentwicklung, genannten Risiken und offenen Fragen, wobei jede Aussage auf Seite oder Absatz der Quelle verweist. Ein eigener Abschnitt sammelt Argumente für und gegen die eigene These; eine Kauf- oder Verkaufsempfehlung gibt das Tool nicht.",
+      "problem": "Privatanleger lesen selten Primärquellen, weil diese lang und sperrig sind, und verlassen sich auf Meinungen aus zweiter Hand.",
+      "goal": "Eigene Recherche auf Basis von Primärquellen effizienter und überprüfbar machen.",
+      "benefit": "Man versteht ein Unternehmen schneller aus erster Hand und kann jede Aussage im Original nachprüfen.",
+      "audience": "Privatanleger, Studierende der Wirtschaftswissenschaften, Wirtschaftsinteressierte",
+      "category": "trading",
+      "subcategory": "trading-research",
+      "features": [
+        "Upload von PDFs und Transkripten mit Seitenreferenzen",
+        "Strukturiertes Dossier: Geschäftsmodell, Kennzahlen, Risiken, Aussagen des Managements",
+        "Verweise auf Quelle und Seite für jede Aussage",
+        "Vergleich von Aussagen über mehrere Quartale",
+        "Abschnitt „Was spricht gegen meine These?“"
+      ],
+      "highlights": [
+        "Belegpflicht für jede Aussage",
+        "Gezielte Gegenargumente gegen den Bestätigungsfehler"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "PyMuPDF",
+        "SQLite",
+        "Claude API mit Quellenverweisen",
+        "Markdown-Export"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Primärquellen, z. B. von Investor-Relations-Seiten"
+      ],
+      "extensions": [
+        "Beobachtungsliste mit Hinweis auf neue Berichte",
+        "Glossar für Bilanzbegriffe",
+        "Vergleich mehrerer Unternehmen einer Branche"
+      ],
+      "risks": [
+        "Zusammenfassungen können Fehler enthalten – Nachprüfung im Original bleibt nötig",
+        "Keine Anlageberatung; Entscheidungen liegen vollständig beim Nutzer",
+        "Lange Dokumente verursachen spürbare API-Kosten"
+      ],
+      "monetization": {
+        "assessment": "Gut als Eigenwerkzeug. Ein öffentliches Angebot müsste sich klar von Anlageberatung abgrenzen und konkurriert mit etablierten Research-Plattformen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "research",
+        "geschäftsberichte",
+        "quellen",
+        "aktien",
+        "analyse"
+      ]
+    },
+    {
+      "slug": "trading-hypothesen-labor",
+      "title": "Hypothesen-Labor für Backtests und Paper-Trading",
+      "summary": "Übersetzt Strategieideen in prüfbaren Code, testet sie mit Kosten und Out-of-Sample-Daten und warnt aktiv vor Überanpassung.",
+      "description": "Eine Strategieidee wird in Alltagssprache beschrieben; Claude Code übersetzt sie in explizite, lesbare Regeln und Testcode, den der Nutzer prüft und freigibt. Das Labor führt Backtests mit Transaktionskosten, Slippage-Annahmen und getrennten In-Sample- und Out-of-Sample-Zeiträumen durch und zeigt Kennzahlen wie den maximalen Drawdown. Besteht eine Hypothese, folgt ein Forward-Test im Paper-Trading; eine Anbindung an echten Handel ist bewusst nicht vorgesehen.",
+      "problem": "Backtests sehen fast immer gut aus, weil Kosten fehlen, Parameter überoptimiert sind oder unbemerkt Zukunftsdaten einfließen. Einsteiger halten solche Ergebnisse oft für verlässlich.",
+      "goal": "Strategieideen methodisch sauber und mit realistischer Skepsis prüfen.",
+      "benefit": "Viele Ideen scheitern früh und ohne Geldeinsatz im Labor, und man lernt dabei die typischen Fallstricke von Backtests kennen.",
+      "audience": "Technisch interessierte Privatanleger, Studierende, Quant-Einsteiger",
+      "category": "trading",
+      "subcategory": "trading-journal",
+      "features": [
+        "Strategiebeschreibung in Alltagssprache mit generierten, prüfbaren Regeln",
+        "Backtest-Engine mit Gebühren, Slippage und Walk-Forward-Analyse",
+        "Overfitting-Warnungen, z. B. bei vielen Parametern und wenigen Trades",
+        "Kennzahlen wie Drawdown, Trefferquote und Ergebnisverteilung",
+        "Paper-Trading-Forward-Test mit Vergleich zum Backtest",
+        "Laborbuch, das auch verworfene Hypothesen dokumentiert"
+      ],
+      "highlights": [
+        "Dokumentiert gescheiterte Hypothesen genauso sorgfältig wie erfolgreiche",
+        "Bewusst ohne Anbindung an Live-Handel"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "Python",
+        "pandas",
+        "DuckDB",
+        "Jupyter",
+        "Claude Code"
+      ],
+      "prerequisites": [
+        "Historische Kursdaten mit geklärten Nutzungsrechten",
+        "Python-Grundkenntnisse",
+        "Claude-Code-Zugang"
+      ],
+      "extensions": [
+        "Permutations- und Monte-Carlo-Tests",
+        "Vergleich mit einfachen Benchmarks",
+        "Teilen von Laborbüchern ohne lizenzierte Kursdaten"
+      ],
+      "risks": [
+        "Auch saubere Backtests sagen keine zukünftigen Ergebnisse voraus",
+        "Qualität und Lizenzen historischer Kursdaten sind oft problematisch",
+        "Generierter Code kann subtile Fehler wie Look-Ahead-Bias enthalten und muss geprüft werden"
+      ],
+      "monetization": {
+        "assessment": "Primär ein Lern- und Eigenwerkzeug. Kommerzielle Angebote im Trading-Umfeld unterliegen hohen regulatorischen und haftungsrechtlichen Anforderungen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "backtesting",
+        "paper-trading",
+        "quant",
+        "overfitting",
+        "claude-code"
+      ]
+    },
+    {
+      "slug": "productivity-wochenrueckblick-aus-spuren",
+      "title": "Wochenrückblick aus digitalen Spuren",
+      "summary": "Erstellt jeden Freitag einen ehrlichen Rückblick aus Kalender, erledigten Aufgaben und Commits – geplant gegenüber tatsächlich getan.",
+      "description": "Ein kleines Skript sammelt am Wochenende Daten aus Kalenderexport, Aufgabenliste und optional Git-Logs. Claude vergleicht die zu Wochenbeginn notierten Ziele mit dem, was tatsächlich passiert ist, benennt Unterbrechungen und Zeitfresser und schlägt drei Prioritäten für die nächste Woche vor. Das Ergebnis landet als Markdown-Notiz im eigenen Notizsystem.",
+      "problem": "Wochenrückblicke werden oft empfohlen, aber selten gemacht, weil das Zusammensuchen der Informationen mühsam ist.",
+      "goal": "Einen regelmäßigen Wochenrückblick mit minimalem Aufwand ermöglichen.",
+      "benefit": "In wenigen Minuten liegt eine Rückschau vor, die Planungsfehler und wiederkehrende Störungen sichtbar macht.",
+      "audience": "Wissensarbeiter, Entwickler, Selbstständige",
+      "category": "productivity",
+      "subcategory": "productivity-planning",
+      "features": [
+        "Import aus ICS-Kalender, Aufgabenexport und Git-Logs",
+        "Abgleich mit den Wochenzielen vom Montag",
+        "Einordnung von Zeitblöcken in Meetings, Fokusarbeit und Kleinkram",
+        "Vorschlag für drei Prioritäten der Folgewoche",
+        "Ablage als Markdown mit Kalenderwoche"
+      ],
+      "highlights": [
+        "Nutzt vorhandene Spuren statt zusätzlicher Erfassung",
+        "Stellt Absicht und Realität direkt gegenüber"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "Claude API",
+        "ICS-Parser",
+        "Markdown",
+        "Cron"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Exportmöglichkeit für Kalender und Aufgaben"
+      ],
+      "extensions": [
+        "Quartalsrückblick aus den Wochennotizen",
+        "Trendgrafik Fokuszeit gegenüber Meetingzeit",
+        "Ablage als Projektnotiz in OMEGA Infinity"
+      ],
+      "risks": [
+        "Unvollständige Daten ergeben ein schiefes Bild",
+        "Kalenderinhalte können vertraulich sein – vor dem API-Aufruf filtern"
+      ],
+      "monetization": {
+        "assessment": "Ein typisches Eigenwerkzeug. Eine Weitergabe als Vorlage oder Open-Source-Skript liegt näher als ein Produkt.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "rückblick",
+        "planung",
+        "reflexion",
+        "kalender",
+        "automatisierung"
+      ]
+    },
+    {
+      "slug": "productivity-energiekurven-planer",
+      "title": "Tagesplanung nach persönlicher Energiekurve",
+      "summary": "Lernt aus kurzen Check-ins, wann man konzentriert, kreativ oder müde ist, und schlägt passende Zeitfenster für Aufgabentypen vor.",
+      "description": "Dreimal täglich fragt eine Mini-App in wenigen Sekunden nach Energie und Konzentration, und Aufgaben erhalten eine Einschätzung ihrer kognitiven Last. Nach zwei bis drei Wochen zeigt das Tool eine persönliche Energiekurve je Wochentag samt Unsicherheit. Claude erstellt daraus Wochenvorschläge, die anspruchsvolle Aufgaben in Hochphasen und Routinearbeit in Tiefs legen, und begründet jede Verschiebung.",
+      "problem": "Klassische Planer behandeln jede Stunde gleich, obwohl die Leistungsfähigkeit im Tagesverlauf stark schwankt.",
+      "goal": "Aufgaben anhand belegter persönlicher Leistungsphasen statt nach freien Lücken im Kalender planen.",
+      "benefit": "Schwierige Aufgaben landen eher in Phasen, in denen man sie gut bewältigt – auf Grundlage eigener Daten statt pauschaler Ratschläge.",
+      "audience": "Wissensarbeiter, Studierende, Menschen mit flexiblen Arbeitszeiten",
+      "category": "productivity",
+      "subcategory": "productivity-planning",
+      "features": [
+        "Check-in in unter zehn Sekunden per Benachrichtigung oder Widget",
+        "Aufgaben-Tagging nach kognitiver Last",
+        "Energiekurve je Wochentag mit Unsicherheitsangabe",
+        "Planungsvorschläge mit Begründung",
+        "Notizen zu Einflussfaktoren wie Schlaf oder Bewegung"
+      ],
+      "highlights": [
+        "Planung auf Basis eigener Messungen statt allgemeiner Ratgeber-Tipps",
+        "Zeigt offen, wie belastbar die Kurve bei wenigen Datenpunkten ist"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "PWA",
+        "SQLite",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Bereitschaft zu regelmäßigen Check-ins über mehrere Wochen"
+      ],
+      "extensions": [
+        "Kalenderintegration mit automatischer Blockplanung",
+        "Abgleich mit Schlafdaten aus Wearables",
+        "Teamansicht für besser gelegte Meetings"
+      ],
+      "risks": [
+        "Selbsteinschätzungen sind subjektiv und schwanken",
+        "Nachlassende Check-in-Disziplin dünnt die Datenbasis aus",
+        "Kein Ersatz für ärztliche Abklärung bei anhaltender Erschöpfung"
+      ],
+      "monetization": {
+        "assessment": "Eine Nische im Produktivitätsmarkt ist denkbar, der Markt ist aber übersättigt. Ohne nachgewiesenen Nutzen wäre eine Zahlungsbereitschaft fraglich.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 3,
+        "feasibility": 4
+      },
+      "tags": [
+        "planung",
+        "energie",
+        "fokus",
+        "selbstbeobachtung"
+      ]
+    },
+    {
+      "slug": "productivity-mental-load-bilanz",
+      "title": "Mental-Load-Bilanz für Haushalte",
+      "summary": "Macht unsichtbare Haushaltsarbeit wie Planen, Erinnern und Organisieren sichtbar und hilft, sie fair zwischen Partnern oder Mitbewohnern zu verteilen.",
+      "description": "Neben sichtbaren Aufgaben wie Putzen werden auch Denkaufgaben erfasst, etwa Geschenke planen, Arzttermine im Blick behalten oder Vorräte überwachen. Jede Aufgabe erhält eine Gewichtung nach Zeit, Häufigkeit und gefühlter Last, die alle Beteiligten unabhängig voneinander vergeben. Eine Monatsbilanz zeigt die Verteilung; Claude schlägt faire Rotationen vor und liefert einen neutral formulierten Leitfaden für das gemeinsame Gespräch.",
+      "problem": "In vielen Haushalten bleibt Organisations- und Planungsarbeit unsichtbar und ungleich verteilt, was zu Konflikten führt.",
+      "goal": "Die gesamte Haushaltsarbeit einschließlich Denkarbeit sichtbar und fair verhandelbar machen.",
+      "benefit": "Gespräche über Arbeitsteilung stützen sich auf gemeinsam erfasste Daten statt auf Vorwürfe.",
+      "audience": "Paare, Familien, Wohngemeinschaften",
+      "category": "productivity",
+      "subcategory": "productivity-household",
+      "features": [
+        "Aufgabenkatalog mit eigener Kategorie für Denkarbeit",
+        "Unabhängige Gewichtung durch jede Person mit Anzeige von Abweichungen",
+        "Monatsbilanz der Verteilung",
+        "Rotationsvorschläge unter Berücksichtigung von Vorlieben",
+        "Gesprächsleitfaden mit neutralen Formulierungen"
+      ],
+      "highlights": [
+        "Erfasst ausdrücklich unsichtbare Planungsarbeit",
+        "Zeigt, wo Beteiligte dieselbe Aufgabe unterschiedlich bewerten"
+      ],
+      "complexity": 2,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Next.js",
+        "PostgreSQL",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Bereitschaft aller Haushaltsmitglieder zur Mitwirkung"
+      ],
+      "extensions": [
+        "Erfassung per Sprachbefehl („gerade erledigt“)",
+        "Kalenderintegration für Termine",
+        "Vorlagenpakete für Familien mit kleinen Kindern"
+      ],
+      "risks": [
+        "Kann Konflikte verschärfen, wenn es als Kontrollinstrument genutzt wird",
+        "Der Erfassungsaufwand darf nicht selbst zur Last werden",
+        "Ersetzt keine Paar- oder Familienberatung"
+      ],
+      "monetization": {
+        "assessment": "Als kleine App für Familien denkbar, die Zahlungsbereitschaft für Haushalts-Apps ist jedoch meist gering.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "haushalt",
+        "mental-load",
+        "fairness",
+        "familie",
+        "wg"
+      ]
+    },
+    {
+      "slug": "productivity-vorrats-essensplaner",
+      "title": "Vorratsbasierte Essensplanung mit Ablaufpriorität",
+      "summary": "Führt den Vorrat mit Haltbarkeiten aus Kassenbons und plant Mahlzeiten so, dass bald ablaufende Lebensmittel zuerst verbraucht werden.",
+      "description": "Kassenbons werden fotografiert; Claude liest die Positionen aus, normalisiert Produktnamen und schätzt Haltbarkeiten, die der Nutzer bestätigen oder korrigieren kann. Ein Planer erstellt aus Vorrat, Vorlieben und Zeitbudget einen Wochenplan, der Lebensmittel mit kurzer Haltbarkeit bevorzugt, und erzeugt eine Einkaufsliste nur für die Lücken. Verbrauchte oder weggeworfene Lebensmittel werden per Tipp ausgebucht, sodass eine Verschwendungsstatistik entsteht.",
+      "problem": "Lebensmittel verderben, weil niemand den Überblick über Vorräte und Haltbarkeiten hat, und Essensplanung ignoriert meist, was schon da ist.",
+      "goal": "Mahlzeiten aus dem vorhandenen Vorrat planen und Lebensmittelabfälle messbar reduzieren.",
+      "benefit": "Weniger Wegwerfen, weniger Doppelkäufe und eine Einkaufsliste, die nur Fehlendes enthält.",
+      "audience": "Familien, Paare, Wohngemeinschaften",
+      "category": "productivity",
+      "subcategory": "productivity-household",
+      "features": [
+        "Kassenbon-Erfassung per Foto mit Positionserkennung",
+        "Vorratsliste mit geschätzter und bestätigter Haltbarkeit",
+        "Wochenplan mit Vorrang für bald ablaufende Zutaten",
+        "Einkaufsliste als Differenz zwischen Plan und Vorrat",
+        "Ausbuchen per Tipp mit Verschwendungsstatistik",
+        "Import eigener Rezepte"
+      ],
+      "highlights": [
+        "Plant rückwärts vom Vorrat statt vorwärts vom Rezept",
+        "Macht Verschwendung als Kennzahl sichtbar"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "React Native",
+        "SQLite",
+        "Claude API (Bildverarbeitung)",
+        "Eigener Sync-Server"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Disziplin beim Erfassen und Ausbuchen"
+      ],
+      "extensions": [
+        "Barcode-Scan mit einer offenen Produktdatenbank",
+        "Resteverwertungsvorschläge für einzelne Zutaten",
+        "Gemeinsamer Haushalt mit Echtzeit-Synchronisation"
+      ],
+      "risks": [
+        "Kassenbons sind oft abgekürzt und schwer zuzuordnen",
+        "Haltbarkeitsschätzungen sind Näherungen – im Zweifel zählt die Prüfung des Lebensmittels selbst",
+        "Hoher Erfassungsaufwand kann zum Abbruch der Nutzung führen"
+      ],
+      "monetization": {
+        "assessment": "Ähnliche Apps existieren, ein Abo-Modell erscheint schwierig. Plausibler als Eigenwerkzeug oder werbefreie Community-App.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "haushalt",
+        "essensplanung",
+        "lebensmittel",
+        "nachhaltigkeit",
+        "ocr"
+      ]
+    },
+    {
+      "slug": "ai-automation-briefpost-digitalisierer",
+      "title": "Briefpost-Digitalisierer mit Fristerkennung",
+      "summary": "Scannt Papierpost, erkennt Absender und Dokumenttyp, extrahiert Fristen und Beträge und legt alles nachvollziehbar ab.",
+      "description": "Eingescannte Briefe landen in einem Eingangsordner. Nach lokaler Texterkennung klassifiziert Claude Absender, Dokumenttyp und Dringlichkeit, extrahiert Fristen, Beträge und Aktenzeichen und schlägt Ablageort und sprechenden Dateinamen vor. Fristen werden als Aufgaben angelegt; alles mit niedriger Konfidenz landet in einer Prüfliste, statt automatisch abgelegt zu werden.",
+      "problem": "Papierpost stapelt sich, Fristen in Bescheiden oder Rechnungen gehen unter, und die Ablage ist uneinheitlich.",
+      "goal": "Eingehende Papierpost zuverlässig digitalisieren, verschlagworten und fristgerecht bearbeitbar machen.",
+      "benefit": "Fristen landen automatisch als Aufgabe im System, und alle Dokumente sind per Volltext auffindbar.",
+      "audience": "Privathaushalte, Selbstständige, kleine Büros",
+      "category": "ai-automation",
+      "subcategory": "ai-automation-extraction",
+      "features": [
+        "Ordnerüberwachung für die Scanner-Ausgabe",
+        "Lokale OCR mit Volltextindex",
+        "Klassifikation in Rechnung, Bescheid, Vertrag, Werbung und Sonstiges",
+        "Extraktion von Fristen, Beträgen und Aktenzeichen mit Konfidenz",
+        "Prüfliste für unsichere Fälle",
+        "Übergabe von Fristen als Aufgaben an OMEGA Infinity"
+      ],
+      "highlights": [
+        "Konfidenzbasierte Prüfliste statt blindem Automatismus",
+        "Einheitliche, sprechende Dateinamen nach festem Schema"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "OCRmyPDF",
+        "Tesseract",
+        "SQLite FTS5",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Dokumentenscanner oder Scan-App auf dem Smartphone",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Abgleich von Zahlungsaufforderungen mit Kontoumsätzen",
+        "Regelbasierte Weiterleitung an Haushaltsmitglieder",
+        "Hinweise zu Aufbewahrungsfristen"
+      ],
+      "risks": [
+        "Fristen können falsch erkannt werden – rechtlich relevante Fristen immer manuell prüfen",
+        "Sensible Dokumente: bewusst steuern, was an eine Cloud-API geht, oder vorab schwärzen"
+      ],
+      "monetization": {
+        "assessment": "Für Selbstständige und kleine Büros als Einrichtungsdienstleistung denkbar. Als Massenprodukt konkurriert es mit vielen Dokumentenmanagement-Lösungen.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 4
+      },
+      "tags": [
+        "ocr",
+        "briefpost",
+        "fristen",
+        "dokumente",
+        "klassifikation"
+      ]
+    },
+    {
+      "slug": "ai-automation-tabellen-mit-rechenprobe",
+      "title": "PDF-Tabellen-Extraktor mit Rechenprobe",
+      "summary": "Zieht Tabellen aus PDFs in CSV und prüft das Ergebnis automatisch über Summenzeilen, Saldenfortschreibung und Spaltentypen.",
+      "description": "Claude extrahiert Tabellen aus PDF-Seiten in ein vorgegebenes Schema. Anschließend prüfen deterministische Regeln die Daten: Stimmen Zwischensummen, ergibt der fortlaufende Saldo Sinn, sind Datums- und Betragsformate plausibel? Nur Tabellen, die alle Proben bestehen, gelten als verifiziert; bei den übrigen erscheinen die verdächtigen Zellen neben dem Originalausschnitt.",
+      "problem": "Tabellen aus PDFs abzutippen ist fehleranfällig, und auch KI-Extraktion kann einzelne Zahlen falsch lesen, ohne dass es auffällt.",
+      "goal": "Tabellendaten aus PDFs mit nachweisbarer Korrektheit extrahieren.",
+      "benefit": "Man weiß, welchen Zahlen man vertrauen kann, und prüft gezielt nur die auffälligen Zellen.",
+      "audience": "Buchhaltung, Analysten, Selbstständige, Datenjournalismus",
+      "category": "ai-automation",
+      "subcategory": "ai-automation-extraction",
+      "features": [
+        "Schemadefinition pro Dokumenttyp mit Spalten, Typen und Summenregeln",
+        "Extraktion per Claude mit strukturierter Ausgabe",
+        "Rechenproben für Summen, Salden und Zeilenanzahl",
+        "Seitenausschnitt neben auffälligen Zellen",
+        "Export als CSV oder XLSX mit Prüfstatus"
+      ],
+      "highlights": [
+        "Kombiniert KI-Extraktion mit deterministischer Verifikation",
+        "Fehler werden lokalisiert statt nur gemeldet"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "pdfplumber",
+        "Pydantic",
+        "Streamlit",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "PDFs mit tabellarischen Daten"
+      ],
+      "extensions": [
+        "Bibliothek wiederverwendbarer Schemas",
+        "Stapelverarbeitung ganzer Ordner",
+        "Vergleich zweier Dokumentversionen"
+      ],
+      "risks": [
+        "Tabellen ohne Summen oder Salden lassen sich nur eingeschränkt verifizieren",
+        "Schief gescannte Dokumente erhöhen die Fehlerquote"
+      ],
+      "monetization": {
+        "assessment": "Als Nischenwerkzeug für Buchhaltung oder Datenarbeit denkbar, etwa als Einrichtungsdienstleistung. Der Markt für PDF-Extraktion ist allerdings dicht besetzt.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "pdf",
+        "extraktion",
+        "tabellen",
+        "verifikation",
+        "csv"
+      ]
+    },
+    {
+      "slug": "ai-automation-lokaler-pipeline-runner",
+      "title": "Lokaler Pipeline-Runner mit Claude-Schritten und Freigaben",
+      "summary": "Definiert Automationen als YAML mit Auslösern, festen Schritten, Claude-Schritten, Freigabe-Toren und Kostenbudget.",
+      "description": "Pipelines werden als lesbare YAML-Dateien beschrieben: Auslöser wie Ordnerüberwachung, Zeitplan oder Webhook, gefolgt von Schritten wie Datei lesen, HTTP-Aufruf, Claude-Prompt mit strukturierter Ausgabe oder Shell-Befehl. Kritische Schritte warten auf eine Freigabe per Weboberfläche oder Push-Nachricht. Jeder Lauf wird mit Eingaben, Ausgaben, Tokenverbrauch und Kosten protokolliert und lässt sich erneut abspielen.",
+      "problem": "Viele kleine Automationen entstehen als verstreute Skripte – ohne Protokoll, ohne Kostenkontrolle und ohne Möglichkeit, riskante Schritte vorher zu bestätigen.",
+      "goal": "Eine einheitliche, nachvollziehbare und sichere Laufzeitumgebung für persönliche KI-Automationen schaffen.",
+      "benefit": "Neue Automationen sind schnell definiert, jeder Lauf ist nachvollziehbar, und riskante Aktionen passieren nie ohne Bestätigung.",
+      "audience": "Technisch versierte Einzelpersonen, kleine Teams, Entwickler",
+      "category": "ai-automation",
+      "subcategory": "ai-automation-pipelines",
+      "features": [
+        "YAML-Pipelines mit Schemavalidierung",
+        "Auslöser: Zeitplan, Ordnerüberwachung, Webhook, manuell",
+        "Claude-Schritte mit JSON-Schema-Ausgabe und Wiederholungslogik",
+        "Freigabe-Tore mit Benachrichtigung",
+        "Kostenbudget pro Pipeline und Tag",
+        "Laufhistorie mit Replay-Funktion"
+      ],
+      "highlights": [
+        "Freigabe-Tore und Kostenbudgets sind eingebaut, nicht nachgerüstet",
+        "Replay erlaubt es, geänderte Prompts mit echten historischen Eingaben zu testen"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "SQLite",
+        "JSON Schema",
+        "Docker",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Server oder dauerhaft laufender Rechner",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "MCP-Server als eigener Schritt-Typ",
+        "Visueller Pipeline-Editor",
+        "Gemeinsame Pipeline-Bibliothek"
+      ],
+      "risks": [
+        "Shell-Schritte sind sicherheitskritisch und brauchen Sandboxing",
+        "Ohne Alarmierung können Pipelines unbemerkt fehlschlagen",
+        "Konkurrenz durch etablierte Workflow-Werkzeuge"
+      ],
+      "monetization": {
+        "assessment": "Als Open-Source-Projekt mit optionalem Support denkbar. Der Markt für Workflow-Automatisierung ist groß, aber stark umkämpft.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "automatisierung",
+        "pipelines",
+        "yaml",
+        "freigaben",
+        "kostenkontrolle"
+      ]
+    },
+    {
+      "slug": "ai-automation-themen-digest",
+      "title": "Themen-Digest mit Dublettenerkennung",
+      "summary": "Bündelt Meldungen aus RSS-Feeds nach Ereignis, entfernt Dubletten und liefert morgens einen kurzen Digest mit allen Quellen.",
+      "description": "Ein Zeitplan holt Artikel aus selbst gewählten RSS-Feeds. Über Embeddings oder Textähnlichkeit werden Artikel zum selben Ereignis gruppiert; Claude fasst jede Gruppe in zwei bis drei Sätzen zusammen, nennt alle Quellen und markiert, wo sich Quellen widersprechen. Der Digest kommt per E-Mail oder als Markdown-Datei.",
+      "problem": "Wer viele Quellen verfolgt, liest dieselbe Nachricht mehrfach und verpasst trotzdem Wichtiges.",
+      "goal": "Täglich in wenigen Minuten einen vollständigen, dublettenfreien Überblick über selbst gewählte Themen bekommen.",
+      "benefit": "Deutlich weniger Lesezeit bei gleicher Abdeckung, und Widersprüche zwischen Quellen werden sichtbar.",
+      "audience": "Fachleute mit Branchenfokus, Forschende, Journalismus",
+      "category": "ai-automation",
+      "subcategory": "ai-automation-pipelines",
+      "features": [
+        "RSS- und Atom-Import mit Feedverwaltung",
+        "Gruppierung ähnlicher Artikel zu Ereignissen",
+        "Kurzzusammenfassung pro Ereignis mit Quellenliste",
+        "Kennzeichnung widersprüchlicher Angaben",
+        "Versand per E-Mail oder Ablage als Markdown"
+      ],
+      "highlights": [
+        "Gruppiert nach Ereignis statt nach Quelle",
+        "Zeigt Widersprüche, statt sie zu glätten"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "feedparser",
+        "SQLite",
+        "Lokales Embedding-Modell",
+        "SMTP",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Liste relevanter Feeds"
+      ],
+      "extensions": [
+        "Relevanz-Feedback zum Nachschärfen",
+        "Wochen-Digest mit Trendthemen",
+        "Volltextabruf bei Kurz-Feeds unter Beachtung der Nutzungsbedingungen"
+      ],
+      "risks": [
+        "Zusammenfassungen können Nuancen verlieren",
+        "Urheberrecht: nur für den Eigengebrauch, keine Veröffentlichung fremder Inhalte",
+        "Manche Feeds liefern nur Anrisstexte"
+      ],
+      "monetization": {
+        "assessment": "Für den Eigengebrauch gedacht. Eine Veröffentlichung von Zusammenfassungen fremder Inhalte wäre urheberrechtlich heikel.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "rss",
+        "digest",
+        "nachrichten",
+        "clustering",
+        "zusammenfassung"
+      ]
+    },
+    {
+      "slug": "ai-agents-entscheidungs-rat",
+      "title": "Entscheidungs-Rat aus gegensätzlichen Agenten",
+      "summary": "Mehrere Agenten mit festen Rollen prüfen einen Plan aus gegensätzlichen Perspektiven, ein Moderator verdichtet die Einwände zu einer Prüfliste.",
+      "description": "Ein Plan oder eine Entscheidungsvorlage geht an mehrere Agenten mit klar definierten Rollen, etwa Skeptiker, Kostenperspektive, Nutzerperspektive und Umsetzungsrisiko. Sie argumentieren in begrenzten Runden und dürfen sich gegenseitig widersprechen. Ein Moderator-Agent fasst die Einwände zusammen, gewichtet sie und leitet konkrete Prüffragen ab; das gesamte Protokoll bleibt einsehbar.",
+      "problem": "Eigene Pläne werden meist nur von Menschen mit ähnlicher Sichtweise geprüft, und ein einzelner KI-Durchlauf liefert oft zu glatte, zustimmende Antworten.",
+      "goal": "Blinde Flecken in Plänen durch strukturierte Gegenpositionen sichtbar machen.",
+      "benefit": "Vor wichtigen Entscheidungen liegt eine Liste konkreter Einwände und offener Fragen vor, die man gezielt klären kann.",
+      "audience": "Gründer, Projektleitungen, Einzelpersonen vor größeren Entscheidungen",
+      "category": "ai-agents",
+      "subcategory": "ai-agents-multi",
+      "features": [
+        "Konfigurierbare Rollen mit eigenen Systemprompts",
+        "Debattenrunden mit Rundenlimit und Kostenbudget",
+        "Moderator-Synthese mit gewichteter Einwandliste",
+        "Vollständiges, durchsuchbares Debattenprotokoll",
+        "Export der Prüffragen als Aufgaben in OMEGA Infinity"
+      ],
+      "highlights": [
+        "Rollen sind ausdrücklich auf Widerspruch ausgelegt",
+        "Transparentes Protokoll statt Black-Box-Urteil"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "SQLite",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Sorgfältig formulierte Rollenbeschreibungen"
+      ],
+      "extensions": [
+        "Menschliche Teilnehmende als zusätzliche Rolle",
+        "Erneuter Durchlauf nach Planänderung mit Vergleich der Einwände",
+        "Bibliothek bewährter Rollensets"
+      ],
+      "risks": [
+        "Agenten desselben Modells teilen blinde Flecken – echte Perspektivenvielfalt ist begrenzt",
+        "Rechtliche oder medizinische Perspektiven sind keine Fachberatung",
+        "Mehrere Runden erhöhen die API-Kosten"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug oder Workshop-Format sinnvoll. Als Produkt schwer von allgemeinen Chat-Werkzeugen abzugrenzen.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "multi-agent",
+        "entscheidungen",
+        "debatte",
+        "risikoanalyse"
+      ]
+    },
+    {
+      "slug": "ai-agents-recherche-mit-belegpflicht",
+      "title": "Recherche-Agent mit Belegpflicht",
+      "summary": "Ein Agent recherchiert eine Frage im Web und lässt jede Aussage nur mit überprüfter Quelle stehen – der Rest wird als offen markiert.",
+      "description": "Der Agent zerlegt eine Rechercheanfrage in Teilfragen, sucht und liest Quellen über Werkzeuge und notiert zu jeder Aussage die Fundstelle. Ein zweiter Prüfschritt kontrolliert, ob die Fundstelle die Aussage tatsächlich stützt; nicht belegbare Aussagen werden gestrichen oder als offen gekennzeichnet. Ergebnis sind eine Evidenztabelle mit Quellentyp und Datum sowie ein kurzer Bericht.",
+      "problem": "KI-gestützte Recherchen klingen überzeugend, enthalten aber oft unbelegte oder falsch zugeordnete Aussagen.",
+      "goal": "Rechercheergebnisse liefern, bei denen jede Aussage auf eine überprüfte Fundstelle zurückgeht.",
+      "benefit": "Ergebnisse lassen sich schnell gegenprüfen, und es ist ehrlich ausgewiesen, welche Fragen offen bleiben.",
+      "audience": "Wissensarbeiter, Studierende, Journalismus, Produktteams",
+      "category": "ai-agents",
+      "subcategory": "ai-agents-single",
+      "features": [
+        "Zerlegung in Teilfragen mit Rechercheplan",
+        "Werkzeuge für Websuche und Seitenabruf",
+        "Belegprüfung: Stützt die Fundstelle die Aussage?",
+        "Evidenztabelle mit Quellentyp und Datum",
+        "Abschnitt „Nicht belegt / offen“"
+      ],
+      "highlights": [
+        "Die Belegpflicht ist technisch erzwungen",
+        "Unsicherheit wird ausdrücklich ausgewiesen"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Python",
+        "Claude API (Tool Use)",
+        "Playwright",
+        "SQLite"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Zugang zu einer Such-API"
+      ],
+      "extensions": [
+        "Einbindung eigener PDF-Bibliotheken über MCP",
+        "Wiederholte Recherche mit Änderungsvergleich",
+        "Eigene Liste vertrauenswürdiger Quellen"
+      ],
+      "risks": [
+        "Die Belegprüfung durch ein Modell ist selbst fehleranfällig",
+        "Paywalls und Bot-Sperren schränken die Quellenauswahl ein",
+        "Nutzungsbedingungen der abgerufenen Websites beachten"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug und Baustein für andere Projekte wertvoll. Ein eigenständiges Produkt konkurriert mit großen Anbietern.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 4
+      },
+      "tags": [
+        "agent",
+        "recherche",
+        "quellen",
+        "faktencheck",
+        "tool-use"
+      ]
+    },
+    {
+      "slug": "ai-agents-szenario-pruefstand",
+      "title": "Szenario-Prüfstand für Agenten-Prompts",
+      "summary": "Spielt gespeicherte Testszenarien gegen einen Agenten ab und zeigt nach jeder Prompt-Änderung, was besser und was schlechter wurde.",
+      "description": "Für einen Agenten werden Testszenarien angelegt: Eingabe, simulierte Werkzeugantworten und Prüfkriterien wie erwartete Werkzeugaufrufe, Pflichtinhalte oder verbotene Aktionen. Nach jeder Änderung an Prompt oder Werkzeugen spielt der Prüfstand alle Szenarien ab, bewertet sie mit Regeln und optional mit einem Claude-Bewerter und vergleicht mit der vorherigen Version. So werden Rückschritte sichtbar, bevor der Agent produktiv genutzt wird.",
+      "problem": "Prompt-Änderungen an Agenten verbessern oft einen Fall und verschlechtern unbemerkt andere.",
+      "goal": "Änderungen an Agenten mit wiederholbaren Tests absichern.",
+      "benefit": "Man iteriert schneller an Agenten, weil Rückschritte sofort sichtbar werden.",
+      "audience": "Entwickler von Agenten und KI-Automationen",
+      "category": "ai-agents",
+      "subcategory": "ai-agents-single",
+      "features": [
+        "Szenariodateien mit Eingabe, Werkzeug-Mocks und Prüfkriterien",
+        "Regelbasierte Prüfungen für Werkzeugaufrufe, Pflichtinhalte und Verbote",
+        "Optionaler Modell-Bewerter mit Begründung",
+        "Versionsvergleich als Tabelle",
+        "Kostenschätzung pro Testlauf"
+      ],
+      "highlights": [
+        "Werkzeug-Mocks erlauben Tests ohne echte Seiteneffekte",
+        "Direkter Vorher-Nachher-Vergleich je Szenario"
+      ],
+      "complexity": 3,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Vitest",
+        "YAML",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Ein bestehender Agent mit klar definierten Werkzeugen"
+      ],
+      "extensions": [
+        "CI-Integration mit Schwellenwerten",
+        "Mehrfachläufe zur Messung der Streuung",
+        "Neue Szenarien aus Produktionsprotokollen ableiten"
+      ],
+      "risks": [
+        "Nicht-deterministische Ausgaben erfordern Mehrfachläufe und erhöhen die Kosten",
+        "Modell-Bewerter können systematisch verzerrt urteilen"
+      ],
+      "monetization": {
+        "assessment": "Vor allem als internes Entwicklerwerkzeug oder Open-Source-Bibliothek sinnvoll.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "agenten",
+        "testing",
+        "evaluation",
+        "prompts",
+        "regression"
+      ]
+    },
+    {
+      "slug": "ai-agents-feature-werkstatt",
+      "title": "Agenten-Werkstatt für Feature-Entwicklung",
+      "summary": "Ein Orchestrator zerlegt ein Feature in Teilaufgaben, die spezialisierte Agenten in getrennten Git-Worktrees umsetzen, testen und gegenseitig prüfen.",
+      "description": "Aus einer Feature-Beschreibung erstellt ein Planer-Agent einen Aufgabenplan, den der Mensch freigibt. Implementierungs-Agenten arbeiten parallel in isolierten Git-Worktrees, ein Test-Agent schreibt und führt Tests aus, ein Review-Agent prüft Diffs gegen die Projektkonventionen. Ein Dashboard zeigt Fortschritt, Kosten, offene Fragen und Merge-Konflikte; jeder Merge erfordert eine menschliche Freigabe.",
+      "problem": "Einzelne Coding-Agenten stoßen bei größeren Features an Kontextgrenzen, und paralleles Arbeiten ohne Koordination erzeugt Konflikte.",
+      "goal": "Größere Features durch koordinierte, isolierte Agenten mit menschlichen Kontrollpunkten umsetzen.",
+      "benefit": "Routinearbeit lässt sich parallelisieren, während klar kontrolliert bleibt, was ins Repository gelangt.",
+      "audience": "Entwickler, kleine Entwicklerteams, Solo-Gründer mit Softwareprojekten",
+      "category": "ai-agents",
+      "subcategory": "ai-agents-multi",
+      "features": [
+        "Planer-Agent mit freigabepflichtigem Aufgabenplan",
+        "Parallele Implementierung in Git-Worktrees",
+        "Test- und Review-Agenten mit Projektkonventionen",
+        "Dashboard für Fortschritt, Kosten und Blockaden",
+        "Menschliche Freigabe vor jedem Merge",
+        "Protokoll aller Agentenentscheidungen"
+      ],
+      "highlights": [
+        "Isolation über Worktrees verhindert gegenseitiges Überschreiben",
+        "Kosten- und Freigabekontrolle als Kernfunktion"
+      ],
+      "complexity": 5,
+      "effort": "xl",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "Claude Code",
+        "Git Worktrees",
+        "SQLite",
+        "Docker"
+      ],
+      "prerequisites": [
+        "Claude-Code-Zugang",
+        "Repository mit Testsuite",
+        "Ausreichendes API-Budget"
+      ],
+      "extensions": [
+        "Übernahme von Aufgaben direkt aus dem Projektboard",
+        "Lernende Projektkonventionen aus Review-Kommentaren",
+        "Unterstützung mehrerer Repositories"
+      ],
+      "risks": [
+        "Hohe API-Kosten bei langen Läufen",
+        "Fehlerhafte Pläne vervielfachen sich über mehrere Agenten",
+        "Generierter Code bleibt in menschlicher Verantwortung und muss geprüft werden"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug und Lernprojekt sehr wertvoll. Als Produkt in einem sich schnell bewegenden Markt mit großen Anbietern schwer zu positionieren.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 2
+      },
+      "tags": [
+        "multi-agent",
+        "claude-code",
+        "softwareentwicklung",
+        "orchestrierung",
+        "git"
+      ]
+    },
+    {
+      "slug": "web-apps-csv-aufraeumer",
+      "title": "CSV-Aufräumer für deutsche Datenformate",
+      "summary": "Erkennt im Browser Kodierung, Trennzeichen sowie deutsche Zahlen- und Datumsformate und bereinigt CSV-Dateien, ohne Daten hochzuladen.",
+      "description": "Eine CSV-Datei wird per Drag-and-drop geladen und vollständig lokal im Browser analysiert. Das Tool erkennt Kodierungen wie Windows-1252 oder UTF-8, Semikolon als Trennzeichen, Dezimalkommas, Tausenderpunkte und deutsche Datumsangaben und zeigt eine Vorschau mit Korrekturvorschlägen. Optional beschreibt Claude anhand weniger anonymisierter Beispielzeilen die Bedeutung unklarer Spalten.",
+      "problem": "CSV-Exporte aus deutschen Programmen führen beim Import in andere Werkzeuge regelmäßig zu kaputten Umlauten, falschen Zahlen und vertauschten Datumsfeldern.",
+      "goal": "CSV-Dateien schnell und datenschutzfreundlich in ein sauberes, eindeutiges Format überführen.",
+      "benefit": "Umlaute, Beträge und Datumsangaben kommen korrekt an, ohne dass sensible Dateien einen Server erreichen.",
+      "audience": "Büroangestellte, Datenanalysten, Entwickler, Vereinskassierer",
+      "category": "web-apps",
+      "subcategory": "web-apps-tools",
+      "features": [
+        "Automatische Erkennung von Kodierung und Trennzeichen",
+        "Umwandlung von Dezimalkommas und deutschen Datumsformaten",
+        "Vorschau mit markierten Problemzellen",
+        "Export als UTF-8-CSV, JSON oder XLSX",
+        "Optionale Spaltenbeschreibung durch Claude mit anonymisierten Beispielen"
+      ],
+      "highlights": [
+        "Verarbeitung vollständig im Browser",
+        "Spezialisiert auf typische Probleme deutscher Exporte"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Vite",
+        "Papa Parse",
+        "Web Worker",
+        "Claude API (optional)"
+      ],
+      "prerequisites": [
+        "Keine für die Grundfunktion",
+        "Claude-API-Zugang für die Spaltenbeschreibung"
+      ],
+      "extensions": [
+        "Gespeicherte Bereinigungsrezepte pro Datenquelle",
+        "Validierungsregeln, z. B. für IBAN oder Postleitzahl",
+        "Kommandozeilenversion"
+      ],
+      "risks": [
+        "Mehrdeutige Datumsangaben wie 03/04 lassen sich nicht immer eindeutig auflösen",
+        "Sehr große Dateien stoßen an Speichergrenzen des Browsers"
+      ],
+      "monetization": {
+        "assessment": "Als kostenloses Werkzeug oder Portfolio-Projekt sinnvoll; direkte Einnahmen sind kaum zu erwarten.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "csv",
+        "datenbereinigung",
+        "browser",
+        "datenschutz",
+        "werkzeug"
+      ]
+    },
+    {
+      "slug": "web-apps-gruppen-entscheidungsmatrix",
+      "title": "Gruppen-Entscheidungsmatrix mit verdeckter Gewichtung",
+      "summary": "Mehrere Personen gewichten Kriterien zunächst verdeckt und unabhängig, danach zeigt die Matrix, wo die Gruppe wirklich uneinig ist.",
+      "description": "Eine Person legt Optionen und Kriterien an und teilt einen Link. Jede beteiligte Person gewichtet Kriterien und bewertet Optionen, ohne die Antworten der anderen zu sehen. Anschließend zeigt die App Gesamtergebnis, Streuung pro Kriterium und die Punkte mit der größten Uneinigkeit; Claude formuliert daraus Gesprächsfragen für die Diskussion.",
+      "problem": "In Gruppenentscheidungen setzen sich oft die lautesten Stimmen durch, und echte Meinungsunterschiede bleiben verborgen.",
+      "goal": "Gruppenentscheidungen strukturierter und mit sichtbaren Meinungsunterschieden treffen.",
+      "benefit": "Diskussionen konzentrieren sich auf die Punkte, bei denen tatsächlich Uneinigkeit besteht.",
+      "audience": "Teams, Vereine, Familien, Wohngemeinschaften",
+      "category": "web-apps",
+      "subcategory": "web-apps-tools",
+      "features": [
+        "Optionen und Kriterien mit Teilen-Link",
+        "Verdeckte, unabhängige Gewichtung",
+        "Streuungsanzeige pro Kriterium",
+        "Sensitivitätsansicht: Wie stabil ist das Ergebnis?",
+        "Gesprächsleitfaden durch Claude"
+      ],
+      "highlights": [
+        "Verdeckte Abgabe reduziert Ankereffekte",
+        "Fokus auf Uneinigkeit statt nur auf das Siegerergebnis"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "SvelteKit",
+        "SQLite",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Hosting für die Web-App"
+      ],
+      "extensions": [
+        "Anonymer Modus",
+        "Vorlagen für typische Entscheidungen",
+        "Export als Entscheidungsprotokoll"
+      ],
+      "risks": [
+        "Gewichtete Matrizen täuschen Objektivität vor, wo Bauchgefühl mitspielt",
+        "In kleinen Gruppen sind Antworten trotz Verdeckung erratbar"
+      ],
+      "monetization": {
+        "assessment": "Eher als kostenloses Werkzeug oder Teil einer größeren Plattform denkbar; als eigenständiges Abo-Produkt wenig plausibel.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "entscheidungen",
+        "gruppe",
+        "team",
+        "abstimmung"
+      ]
+    },
+    {
+      "slug": "web-apps-vereins-dienstplattform",
+      "title": "Dienst- und Helferplattform für kleine Vereine",
+      "summary": "Organisiert Helferdienste, Schichten und Materiallisten für Vereinsfeste und Trainingsbetrieb – ohne dass Mitglieder ein Konto brauchen.",
+      "description": "Vorstände legen Veranstaltungen mit Schichten, benötigten Rollen und Materiallisten an. Mitglieder tragen sich über einen persönlichen Link ein, tauschen Schichten untereinander und erhalten Erinnerungen per E-Mail. Claude hilft, Schichtpläne aus Vorjahresdaten abzuleiten und Aufrufe zu formulieren, wenn Lücken bleiben.",
+      "problem": "Helferdienste in Vereinen laufen über Papierlisten, Messenger-Gruppen und Tabellen, und kurz vor dem Termin fehlen trotzdem Leute.",
+      "goal": "Den Helfer- und Dienstbetrieb kleiner Vereine einfach, transparent und datensparsam organisieren.",
+      "benefit": "Vorstände sehen Lücken frühzeitig, Mitglieder tragen sich ohne Hürde ein, und Erfahrungen aus dem Vorjahr gehen nicht verloren.",
+      "audience": "Sportvereine, Fördervereine, Elternvertretungen, Ehrenamtsinitiativen",
+      "category": "web-apps",
+      "subcategory": "web-apps-platforms",
+      "features": [
+        "Veranstaltungen mit Schichten, Rollen und Mindestbesetzung",
+        "Eintragen und Tauschen per persönlichem Link ohne Konto",
+        "Erinnerungen und Lückenwarnungen per E-Mail",
+        "Materiallisten mit Zuständigkeiten",
+        "Planvorschläge aus Vorjahresdaten durch Claude",
+        "Datensparsamkeit mit konfigurierbaren Löschfristen"
+      ],
+      "highlights": [
+        "Kein Konto für Mitglieder nötig",
+        "Nutzt die Planung des Vorjahres als Ausgangspunkt"
+      ],
+      "complexity": 3,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "Next.js",
+        "PostgreSQL",
+        "E-Mail-Versanddienst",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Hosting mit Serverstandort in der EU",
+        "Auftragsverarbeitungsvertrag für den E-Mail-Versand"
+      ],
+      "extensions": [
+        "Mehrsprachigkeit",
+        "Kalender-Abonnement pro Mitglied",
+        "Mehrere Vereine pro Instanz"
+      ],
+      "risks": [
+        "Mitgliederdaten unterliegen der DSGVO",
+        "Vereine haben oft wenig Budget und wechseln ungern Werkzeuge",
+        "Betrieb und Support kosten dauerhaft Zeit"
+      ],
+      "monetization": {
+        "assessment": "Ein günstiges Angebot für Vereine ist denkbar, die Zahlungsbereitschaft ist aber gering und der Supportaufwand hoch. Spendenmodell oder Open Source sind realistische Alternativen.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 4
+      },
+      "tags": [
+        "verein",
+        "ehrenamt",
+        "dienstplan",
+        "plattform",
+        "dsgvo"
+      ]
+    },
+    {
+      "slug": "web-apps-nachbarschafts-leihregal",
+      "title": "Digitales Leihregal für die Hausgemeinschaft",
+      "summary": "Eine kleine Plattform, auf der Nachbarn selten genutzte Gegenstände verleihen – mit QR-Etiketten, Leihfristen und Gruppenregeln.",
+      "description": "Mitglieder einer geschlossenen Gruppe stellen Gegenstände wie Bohrmaschine, Leiter oder Fondue-Set ein; Claude erstellt aus einem Foto eine kurze Beschreibung mit Zubehörliste. Ausleihen werden angefragt, bestätigt und per QR-Etikett am Gegenstand übergeben und zurückgenommen. Die Gruppe ist nur per Einladung zugänglich, damit sie überschaubar und vertrauenswürdig bleibt.",
+      "problem": "Viele Haushalte kaufen Geräte, die sie nur selten brauchen, während Nachbarn dieselben Dinge ungenutzt im Keller haben.",
+      "goal": "Teilen in einer überschaubaren, vertrauenswürdigen Nachbarschaft unkompliziert machen.",
+      "benefit": "Weniger Neukäufe, mehr Kontakt in der Nachbarschaft und ein klarer Überblick, wer gerade was ausgeliehen hat.",
+      "audience": "Hausgemeinschaften, Nachbarschaftsinitiativen, Wohnprojekte",
+      "category": "web-apps",
+      "subcategory": "web-apps-platforms",
+      "features": [
+        "Einladungsbasierte Gruppen",
+        "Erfassung per Foto mit generierter Beschreibung und Zubehörliste",
+        "Leihanfragen mit Fristen und Erinnerungen",
+        "QR-Etiketten für Übergabe und Rückgabe",
+        "Zustandsnotiz mit Foto bei der Rückgabe"
+      ],
+      "highlights": [
+        "Bewusst kleine, geschlossene Gruppen statt anonymem Marktplatz",
+        "QR-Etiketten verbinden Gegenstand und Datensatz"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Next.js",
+        "SQLite",
+        "PWA",
+        "Claude API (Bildverarbeitung)"
+      ],
+      "prerequisites": [
+        "Hosting",
+        "Eine aktive Gruppe von Nachbarn"
+      ],
+      "extensions": [
+        "Punkte- oder Kautionssystem",
+        "Wunschliste für gesuchte Gegenstände",
+        "Pflege- und Reparaturhinweise je Gerät"
+      ],
+      "risks": [
+        "Haftung bei Schäden muss in Gruppenregeln geklärt werden",
+        "Der Nutzen hängt stark von der Aktivität der Gruppe ab"
+      ],
+      "monetization": {
+        "assessment": "Als Gemeinschaftsprojekt gedacht; eine Monetarisierung würde dem Charakter widersprechen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 3,
+        "feasibility": 4
+      },
+      "tags": [
+        "nachbarschaft",
+        "teilen",
+        "nachhaltigkeit",
+        "plattform",
+        "qr-code"
+      ]
+    },
+    {
+      "slug": "desktop-download-ordner-butler",
+      "title": "Download-Ordner-Butler mit Rückgängig-Protokoll",
+      "summary": "Sortiert und benennt Dateien im Download-Ordner nach Inhalt – mit Vorschau, festen Regeln und einem Protokoll zum Rückgängigmachen.",
+      "description": "Ein Hintergrunddienst beobachtet den Download-Ordner. Feste Regeln behandeln eindeutige Fälle wie Installationsdateien oder Bilder; bei PDFs und Dokumenten schlägt Claude anhand eines Textauszugs Kategorie und sprechenden Dateinamen vor. Alle Aktionen werden protokolliert und lassen sich einzeln oder gesammelt rückgängig machen.",
+      "problem": "Download-Ordner werden zu Sammelbecken kryptisch benannter Dateien, die man später nicht wiederfindet.",
+      "goal": "Downloads automatisch, nachvollziehbar und umkehrbar ordnen.",
+      "benefit": "Dateien landen mit sinnvollen Namen am richtigen Ort, ohne Sorge vor unwiderruflichen Fehlgriffen.",
+      "audience": "Alle, die viel mit Dateien arbeiten",
+      "category": "desktop",
+      "subcategory": "desktop-utilities",
+      "features": [
+        "Ordnerüberwachung mit Wartezeit, bis Downloads abgeschlossen sind",
+        "Regelwerk für eindeutige Dateitypen",
+        "Inhaltsbasierte Vorschläge für Dokumente per Claude",
+        "Vorschaumodus vor dem ersten scharfen Einsatz",
+        "Rückgängig-Protokoll",
+        "Ausschlussliste für sensible Dateien"
+      ],
+      "highlights": [
+        "Jede Aktion ist umkehrbar",
+        "Sensible Dateien lassen sich von der KI-Verarbeitung ausschließen"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "watchdog",
+        "SQLite",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang für Dokumentvorschläge"
+      ],
+      "extensions": [
+        "Erkennung von Duplikaten mit Löschvorschlägen",
+        "Wochenbericht über alte, ungenutzte Dateien",
+        "Regeln in natürlicher Sprache formulieren"
+      ],
+      "risks": [
+        "Fehlklassifikationen verschieben Dateien an unerwartete Orte – Vorschau und Protokoll sind deshalb Pflicht",
+        "Dokumentinhalte gehen an eine API, sofern sie nicht ausgeschlossen sind"
+      ],
+      "monetization": {
+        "assessment": "Ein typisches Eigenwerkzeug. Ähnliche Utilities existieren; ein Verkauf wäre allenfalls als günstige Kleinsoftware denkbar.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 2,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "dateien",
+        "ordnung",
+        "automatisierung",
+        "desktop"
+      ]
+    },
+    {
+      "slug": "desktop-screenshot-gedaechtnis",
+      "title": "Durchsuchbares Screenshot-Gedächtnis",
+      "summary": "Macht alle Screenshots per lokaler Texterkennung durchsuchbar, ergänzt Beschreibungen und schwärzt erkannte sensible Daten.",
+      "description": "Neue Screenshots werden automatisch lokal per OCR ausgelesen und in einen Volltextindex aufgenommen. Optional erzeugt Claude eine kurze Beschreibung für Screenshots ohne Text, etwa Diagramme oder UI-Entwürfe. Vor jeder Übertragung an die API werden erkannte Muster wie IBAN, E-Mail-Adressen oder Passwortfelder geschwärzt; eine Suchoberfläche zeigt Treffer mit Vorschau.",
+      "problem": "Screenshots sind oft das schnellste Notizwerkzeug, aber später kaum wiederzufinden.",
+      "goal": "Screenshots genauso durchsuchbar machen wie Textnotizen.",
+      "benefit": "Ein Suchbegriff genügt, um den Screenshot mit einer Fehlermeldung, einem Zitat oder einer Bestellbestätigung wiederzufinden.",
+      "audience": "Entwickler, Designer, Wissensarbeiter",
+      "category": "desktop",
+      "subcategory": "desktop-utilities",
+      "features": [
+        "Automatische Erfassung neuer Screenshots",
+        "Lokale OCR mit Volltextsuche",
+        "Optionale Bildbeschreibung per Claude",
+        "Musterbasierte Schwärzung sensibler Daten vor API-Aufrufen",
+        "Filter nach Datum, Anwendung und Schlagwort"
+      ],
+      "highlights": [
+        "OCR und Index bleiben lokal",
+        "Schwärzung vor jeder Cloud-Verarbeitung"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "Tauri",
+        "Rust",
+        "Tesseract",
+        "SQLite FTS5",
+        "Claude API (Bildverarbeitung)"
+      ],
+      "prerequisites": [
+        "Desktop-Rechner",
+        "Optional Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Ähnlichkeitssuche über Bild-Embeddings",
+        "Sammlungen und Notizen zu Screenshots",
+        "Löschvorschläge für veraltete Screenshots"
+      ],
+      "risks": [
+        "Musterbasierte Schwärzung erkennt nicht alle sensiblen Inhalte",
+        "Die OCR-Qualität schwankt bei kleiner Schrift und dunklen Oberflächen"
+      ],
+      "monetization": {
+        "assessment": "Als Kleinsoftware denkbar, Betriebssysteme bauen jedoch zunehmend ähnliche Funktionen ein. Realistisch eher ein Eigenwerkzeug.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "screenshots",
+        "ocr",
+        "suche",
+        "datenschutz",
+        "desktop"
+      ]
+    },
+    {
+      "slug": "desktop-moodboard-stilanalyse",
+      "title": "Moodboard-Leinwand mit Stilanalyse",
+      "summary": "Eine unendliche Leinwand für Referenzbilder, die Farbpaletten extrahiert, Stilmerkmale benennt und daraus einen Stilleitfaden exportiert.",
+      "description": "Referenzen werden per Drag-and-drop, Zwischenablage oder Link auf eine Leinwand gelegt und gruppiert. Das Tool extrahiert Farbpaletten lokal und lässt Claude Stilmerkmale wie Bildsprache, typografischen Eindruck und Komposition in Schlagworten beschreiben. Aus einer Gruppe entsteht ein Stilleitfaden mit Paletten, Beispielbildern und Beschreibung als PDF oder Markdown; die Herkunft jedes Bildes wird gespeichert.",
+      "problem": "Kreative sammeln Referenzen in Ordnern und Browser-Tabs, doch deren Gemeinsamkeiten bleiben implizit und schwer zu vermitteln.",
+      "goal": "Visuelle Referenzen ordnen und ihre Stilmerkmale in eine teilbare Sprache übersetzen.",
+      "benefit": "Aus losen Referenzen wird schnell ein konkreter Stilleitfaden, der Briefings und Abstimmungen erleichtert.",
+      "audience": "Designer, Illustratoren, Content Creator, kleine Marken",
+      "category": "desktop",
+      "subcategory": "desktop-creative",
+      "features": [
+        "Unendliche Leinwand mit Gruppen und Notizen",
+        "Lokale Extraktion von Farbpaletten",
+        "Stilbeschreibung per Claude",
+        "Herkunftsangabe je Bild",
+        "Export als Stilleitfaden (PDF, Markdown)",
+        "Suche nach Farbe und Schlagwort"
+      ],
+      "highlights": [
+        "Übersetzt Bildwirkung in begründete Begriffe",
+        "Herkunftsnachweis für jedes Referenzbild"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "Tauri",
+        "TypeScript",
+        "Canvas/WebGL",
+        "SQLite",
+        "Claude API (Bildverarbeitung)"
+      ],
+      "prerequisites": [
+        "Desktop-Rechner",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Gemeinsame Boards mit Kommentaren",
+        "Übergabe der Paletten als Design-Token",
+        "Ähnlichkeitssuche in der eigenen Sammlung"
+      ],
+      "risks": [
+        "Referenzbilder sind urheberrechtlich geschützt – nur zur internen Inspiration, nicht zur Weiterverwendung",
+        "Stilbeschreibungen bleiben subjektiv"
+      ],
+      "monetization": {
+        "assessment": "Es gibt einen Markt für Kreativwerkzeuge, der aber hohe Ansprüche an die Bedienqualität stellt. Als Einmalkauf-Software denkbar, Erfolg ungewiss.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "moodboard",
+        "design",
+        "farben",
+        "stil",
+        "kreativ"
+      ]
+    },
+    {
+      "slug": "desktop-schriftpaar-sichter",
+      "title": "Schriftpaar-Sichter für eigene Texte",
+      "summary": "Zeigt installierte Schriften paarweise mit dem eigenen Text, prüft die Zeichenabdeckung und merkt sich Favoriten samt Lizenzhinweis.",
+      "description": "Das Tool liest die lokal installierten Schriften und rendert einen selbst gewählten Text als Kombination aus Überschrift und Fließtext. Filter nach Schriftklassifikation, Strichstärken und Zeichenabdeckung, etwa für Umlaute und ß, erleichtern die Auswahl. Favoriten werden mit den in der Schriftdatei hinterlegten Lizenzangaben gespeichert.",
+      "problem": "Schriften werden oft mit Blindtext ausgewählt, ohne Blick auf Zeichensatz und Lizenz, was später Probleme macht.",
+      "goal": "Schriftkombinationen schnell mit realen Inhalten vergleichen.",
+      "benefit": "In wenigen Minuten findet man passende Paare, die alle benötigten Zeichen abdecken, und behält die Lizenzinformationen im Blick.",
+      "audience": "Designer, Entwickler, Selbstpublizierende",
+      "category": "desktop",
+      "subcategory": "desktop-creative",
+      "features": [
+        "Auflistung lokaler Schriften mit Metadaten",
+        "Paarvorschau mit eigenem Text",
+        "Prüfung der Zeichenabdeckung",
+        "Favoriten mit Lizenzfeld aus den Schriftmetadaten",
+        "Export als CSS-Snippet"
+      ],
+      "highlights": [
+        "Arbeitet mit dem eigenen Text statt mit Blindtext",
+        "Zeigt Lizenzinformationen direkt beim Vergleich"
+      ],
+      "complexity": 1,
+      "effort": "xs",
+      "technologies": [
+        "Tauri",
+        "TypeScript",
+        "opentype.js"
+      ],
+      "prerequisites": [
+        "Installierte Schriften auf dem Rechner"
+      ],
+      "extensions": [
+        "Paarvorschläge per Claude anhand einer Stilbeschreibung",
+        "Hinweise zur Lesbarkeit und Barrierefreiheit",
+        "Vergleich mit Webfonts"
+      ],
+      "risks": [
+        "Lizenzangaben in Schriftdateien sind manchmal unvollständig – verbindlich ist die Originallizenz"
+      ],
+      "monetization": {
+        "assessment": "Ein kleines Hilfswerkzeug ohne realistische Einnahmeerwartung.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 2,
+        "usefulness": 3,
+        "feasibility": 5
+      },
+      "tags": [
+        "typografie",
+        "schriften",
+        "design",
+        "werkzeug"
+      ]
+    },
+    {
+      "slug": "browser-extensions-quellen-kontext-leser",
+      "title": "Quellen-Kontext beim Lesen von Artikeln",
+      "summary": "Zeigt beim Lesen eines Artikels, welche Aussagen verlinkte Quellen haben, wie alt diese sind und ob die Links noch funktionieren.",
+      "description": "Die Erweiterung analysiert den Artikeltext und seine ausgehenden Links. Sie markiert Aussagen mit Quellenangabe, prüft verlinkte Seiten auf Erreichbarkeit und Veröffentlichungsdatum und fasst alles in einer kompakten Seitenleiste zusammen. Auf Wunsch fasst Claude zusammen, welche Kernaussagen ohne Beleg bleiben, ohne über deren Wahrheit zu urteilen.",
+      "problem": "Leser können kaum einschätzen, wie gut ein Artikel belegt ist, ohne jedem Link einzeln zu folgen.",
+      "goal": "Die Belegstruktur eines Textes beim Lesen auf einen Blick sichtbar machen.",
+      "benefit": "Man erkennt schnell, welche Aussagen gut belegt sind und wo sich eigene Nachprüfung lohnt.",
+      "audience": "Interessierte Leser, Studierende, Journalismus, Forschende",
+      "category": "browser-extensions",
+      "subcategory": "browser-research",
+      "features": [
+        "Markierung belegter und unbelegter Kernaussagen",
+        "Linkprüfung auf Erreichbarkeit und Weiterleitungen",
+        "Anzeige von Quelldatum und Quellentyp",
+        "Seitenleiste mit Belegübersicht",
+        "Optionale Zusammenfassung unbelegter Aussagen per Claude"
+      ],
+      "highlights": [
+        "Bewertet die Belegstruktur, nicht die Wahrheit",
+        "Funktioniert ohne Konto und speichert nichts dauerhaft"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "WebExtension API (Manifest V3)",
+        "Readability",
+        "Claude API (optional)"
+      ],
+      "prerequisites": [
+        "Chromium- oder Firefox-Browser",
+        "Optional Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Verweis auf Archivversionen toter Links",
+        "Export einer Quellenliste",
+        "Vergleich zweier Artikel zum selben Thema"
+      ],
+      "risks": [
+        "Die Erkennung von Kernaussagen ist unvollständig",
+        "Linkprüfungen erzeugen zusätzliche Anfragen an fremde Server",
+        "Kann fälschlich als Faktencheck verstanden werden"
+      ],
+      "monetization": {
+        "assessment": "Gut als Open-Source-Erweiterung; eine Monetarisierung ist nicht vorgesehen.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "browser",
+        "quellen",
+        "lesen",
+        "medienkompetenz",
+        "links"
+      ]
+    },
+    {
+      "slug": "browser-extensions-markierungen-mit-begruendung",
+      "title": "Markierungen mit Begründung und Wiedervorlage",
+      "summary": "Speichert Textmarkierungen aus dem Web nur zusammen mit einem kurzen Warum und legt sie später in wachsenden Abständen wieder vor.",
+      "description": "Beim Markieren eines Textabschnitts fragt die Erweiterung in einer Zeile, warum er wichtig ist. Markierungen werden mit URL, Kontext und Begründung lokal gespeichert und nach einem Wiedervorlage-Rhythmus erneut gezeigt. Claude gruppiert gesammelte Markierungen auf Wunsch zu Themen und schlägt Verbindungen vor; ein Markdown-Export erlaubt die Übernahme ins eigene Notizsystem.",
+      "problem": "Gespeicherte Highlights werden selten wieder angesehen, und später weiß man nicht mehr, warum man etwas markiert hat.",
+      "goal": "Aus beiläufigem Markieren eine Wissenssammlung machen, die tatsächlich wieder genutzt wird.",
+      "benefit": "Wichtige Gedanken kommen zur rechten Zeit zurück, und der Kontext der eigenen Auswahl bleibt erhalten.",
+      "audience": "Vielleser, Studierende, Forschende, Wissensarbeiter",
+      "category": "browser-extensions",
+      "subcategory": "browser-research",
+      "features": [
+        "Markieren mit einzeiliger Pflichtbegründung",
+        "Lokale Speicherung mit Kontext und URL",
+        "Wiedervorlage in wachsenden Abständen",
+        "Themengruppen und Verbindungsvorschläge durch Claude",
+        "Markdown-Export"
+      ],
+      "highlights": [
+        "Die Begründung zwingt beim Speichern zum Mitdenken",
+        "Wiedervorlage statt endlosem Archiv"
+      ],
+      "complexity": 2,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "WebExtension API",
+        "IndexedDB",
+        "Claude API (optional)"
+      ],
+      "prerequisites": [
+        "Browser",
+        "Optional Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Synchronisation über ein eigenes Backend",
+        "Wiedervorlage als E-Mail-Digest",
+        "Verknüpfung mit Wissensseiten in OMEGA Infinity"
+      ],
+      "risks": [
+        "Die Pflichtbegründung kann als lästig empfunden werden",
+        "Markierungen auf dynamischen Seiten lassen sich nicht immer zuverlässig wiederfinden"
+      ],
+      "monetization": {
+        "assessment": "Ähnliche Werkzeuge existieren; als Eigenwerkzeug mit klarem Bezug zum eigenen Wissenssystem sinnvoll.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "browser",
+        "highlights",
+        "wissen",
+        "wiedervorlage",
+        "lernen"
+      ]
+    },
+    {
+      "slug": "browser-extensions-formular-assistent",
+      "title": "Formular-Assistent mit sichtbarer Feldzuordnung",
+      "summary": "Füllt wiederkehrende Webformulare aus einem lokalen Profil, zeigt jede Zuordnung vorab an und sendet nie selbstständig ab.",
+      "description": "Die Erweiterung erkennt Formularfelder auf beliebigen Seiten und schlägt eine Zuordnung zu Profildaten wie Adresse, Steuer-ID oder Kundennummern vor. Bei unklaren Feldern hilft Claude anhand von Feldbeschriftung und Seitentext, ohne die Profilwerte selbst zu erhalten. Vor dem Ausfüllen erscheint eine Übersicht aller Zuordnungen; bestätigte Zuordnungen werden pro Website gespeichert, und das Absenden bleibt immer beim Menschen.",
+      "problem": "Dieselben Daten werden immer wieder in Portale von Behörden, Versicherungen und Händlern eingetragen, und Passwortmanager erkennen ungewöhnliche Felder oft nicht.",
+      "goal": "Wiederkehrende Formulareingaben beschleunigen, ohne Kontrolle oder Datenschutz aufzugeben.",
+      "benefit": "Weniger Tipparbeit und Tippfehler bei voller Kontrolle darüber, was wohin eingetragen wird.",
+      "audience": "Privatpersonen, Selbstständige, Assistenzkräfte",
+      "category": "browser-extensions",
+      "subcategory": "browser-workflow",
+      "features": [
+        "Verschlüsseltes lokales Profil mit mehreren Identitäten",
+        "Feldzuordnung mit Vorschau vor dem Ausfüllen",
+        "KI-Hilfe für unklare Felder ohne Übertragung der Profilwerte",
+        "Gespeicherte Zuordnungen pro Website",
+        "Kein automatisches Absenden"
+      ],
+      "highlights": [
+        "Claude sieht nur Feldbeschriftungen, nie die persönlichen Werte",
+        "Transparente Vorschau jeder Zuordnung"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "WebExtension API",
+        "Web Crypto API",
+        "IndexedDB",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Browser",
+        "Claude-API-Zugang",
+        "Sorgfältiges Sicherheitskonzept"
+      ],
+      "extensions": [
+        "Unterstützung mehrstufiger Formulare",
+        "Teilen von Zuordnungsprofilen ohne persönliche Daten",
+        "Ausfüllhilfe für PDF-Formulare"
+      ],
+      "risks": [
+        "Eine Erweiterung mit Zugriff auf alle Seiten ist sicherheitskritisch",
+        "Falsch zugeordnete Felder können zu fehlerhaften Angaben führen",
+        "Websites ändern Formulare, gespeicherte Zuordnungen veralten"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug sinnvoll. Für eine Veröffentlichung wären Sicherheitsprüfungen und Vertrauensaufbau nötig; eine Monetarisierung ist unsicher.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "formulare",
+        "browser",
+        "datenschutz",
+        "automatisierung",
+        "profil"
+      ]
+    },
+    {
+      "slug": "browser-extensions-tab-bankrott-helfer",
+      "title": "Tab-Bankrott-Helfer",
+      "summary": "Gruppiert offene Tabs nach Thema, fasst sie kurz zusammen und speichert sie als Sitzungsnotiz, bevor sie geschlossen werden.",
+      "description": "Ab einer einstellbaren Anzahl offener Tabs bietet die Erweiterung eine Aufräumrunde an. Titel und kurze Textauszüge werden nach Thema gruppiert; Claude schreibt zu jeder Gruppe eine Zeile, worum es ging und welche Tabs vermutlich erledigt sind. Per Klick werden Gruppen als Markdown-Notiz gespeichert und die Tabs geschlossen.",
+      "problem": "Dutzende offene Tabs bremsen Rechner und Konzentration, aber man schließt sie nicht aus Angst, etwas zu verlieren.",
+      "goal": "Offene Tabs ohne Informationsverlust in eine aufgeräumte Notiz überführen.",
+      "benefit": "Der Browser wird wieder übersichtlich, und angefangene Recherchen lassen sich später aus der Notiz fortsetzen.",
+      "audience": "Vielsurfer, Entwickler, Recherchierende",
+      "category": "browser-extensions",
+      "subcategory": "browser-workflow",
+      "features": [
+        "Hinweis ab einstellbarer Tab-Anzahl",
+        "Thematische Gruppierung von Tabs",
+        "Einzeilige Zusammenfassung pro Gruppe",
+        "Markdown-Export mit Links und Notizen",
+        "Ausschlussliste für private oder sensible Domains"
+      ],
+      "highlights": [
+        "Schließen ohne Angst vor Verlust",
+        "Ausgeschlossene Domains werden nie an die API geschickt"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "WebExtension API",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Browser",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Wiederöffnen einer gespeicherten Sitzung",
+        "Lokale Gruppierung über Embeddings ohne API",
+        "Übergabe als Rechercheprojekt an OMEGA Infinity"
+      ],
+      "risks": [
+        "Seiteninhalte werden an eine API übertragen, sofern nicht ausgeschlossen",
+        "Die Gruppierung kann thematisch danebenliegen"
+      ],
+      "monetization": {
+        "assessment": "Kleines Eigenwerkzeug ohne Einnahmeerwartung.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "browser",
+        "tabs",
+        "ordnung",
+        "notizen"
+      ]
+    },
+    {
+      "slug": "design-kontrast-matrix",
+      "title": "Kontrast-Matrix für Farbpaletten",
+      "summary": "Zeigt für alle Farbkombinationen einer Palette das Kontrastverhältnis nach WCAG – für helles und dunkles Theme nebeneinander.",
+      "description": "Eine Palette wird als Liste von Hex-Werten oder als CSS-Variablen eingefügt. Das Tool berechnet für jede Kombination aus Vorder- und Hintergrund das Kontrastverhältnis und markiert, welche Paare die WCAG-Schwellen für normalen und großen Text erfüllen. Für nicht ausreichende Paare schlägt es die kleinste Helligkeitsanpassung vor, die die Schwelle erreicht.",
+      "problem": "Barrierefreiheit wird oft erst geprüft, wenn Designs fertig sind, und Einzelprüfungen übersehen Kombinationen.",
+      "goal": "Kontrastprobleme einer gesamten Palette auf einen Blick erkennen.",
+      "benefit": "Man sieht sofort, welche Farbpaare für Text taugen und wie wenig sich eine Farbe ändern müsste, um die Schwelle zu erreichen.",
+      "audience": "Designer, Frontend-Entwickler, Verantwortliche für Barrierefreiheit",
+      "category": "design",
+      "subcategory": "design-systems",
+      "features": [
+        "Import aus Hex-Liste oder CSS-Variablen",
+        "Matrix aller Kombinationen mit Kontrastwert",
+        "Ampel für die Stufen AA und AAA",
+        "Vorschläge zur minimalen Helligkeitsanpassung",
+        "Vergleich von hellem und dunklem Theme"
+      ],
+      "highlights": [
+        "Prüft die ganze Palette statt einzelner Paare",
+        "Liefert konkrete Korrekturvorschläge"
+      ],
+      "complexity": 1,
+      "effort": "xs",
+      "technologies": [
+        "TypeScript",
+        "Vite",
+        "culori"
+      ],
+      "prerequisites": [
+        "Keine"
+      ],
+      "extensions": [
+        "APCA als zusätzliches Kontrastmodell",
+        "Export korrigierter Token",
+        "Simulation von Farbsehschwächen"
+      ],
+      "risks": [
+        "Ausreichender Kontrast allein garantiert keine Barrierefreiheit",
+        "Schwellenwerte und Modelle können sich mit künftigen Richtlinien ändern"
+      ],
+      "monetization": {
+        "assessment": "Kleines, leicht nachbaubares Werkzeug ohne Einnahmeerwartung.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 2,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "barrierefreiheit",
+        "farben",
+        "kontrast",
+        "wcag",
+        "designsystem"
+      ]
+    },
+    {
+      "slug": "design-token-extraktor",
+      "title": "Design-Token-Extraktor für gewachsene Websites",
+      "summary": "Liest die tatsächlich genutzten Stile einer Website aus, findet Fast-Duplikate bei Farben und Abständen und schlägt ein konsolidiertes Token-Set vor.",
+      "description": "Ein Crawler lädt die Seiten der eigenen Website im Headless-Browser und sammelt die tatsächlich berechneten Stilwerte. Ähnliche Werte wie #333 und #343434 oder 15px und 16px werden zu Clustern zusammengefasst; Claude schlägt sinnvolle Token-Namen und eine reduzierte Skala vor. Ein Bericht zeigt, wo welche Werte vorkommen und welche Ersetzungen die Konsolidierung bedeuten würde.",
+      "problem": "Über Jahre gewachsene Websites enthalten Dutzende fast identische Farben, Abstände und Schriftgrößen, was Wartung und Rebranding erschwert.",
+      "goal": "Aus einem gewachsenen Ist-Zustand ein schlankes, benanntes Token-Set ableiten.",
+      "benefit": "Das Designsystem entsteht auf Basis der Realität, und der Umstellungsaufwand wird konkret abschätzbar.",
+      "audience": "Frontend-Teams, Agenturen, Website-Betreiber",
+      "category": "design",
+      "subcategory": "design-systems",
+      "features": [
+        "Crawl eigener Seiten mit berechneten Stilen",
+        "Clustering ähnlicher Farben im OKLCH-Farbraum sowie von Abständen und Schriftgrößen",
+        "Benennungsvorschläge für Token per Claude",
+        "Fundstellenbericht je Wert",
+        "Export als CSS-Variablen und JSON-Token"
+      ],
+      "highlights": [
+        "Arbeitet mit tatsächlich gerenderten Werten statt nur mit Quell-CSS",
+        "Zeigt den Konsolidierungsaufwand vor der Umsetzung"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "Playwright",
+        "culori",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Zugriff auf die eigene Website",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Automatischer Pull Request mit Ersetzungen",
+        "Laufende Prüfung auf neue Ausreißer in der CI",
+        "Export für Design-Werkzeuge"
+      ],
+      "risks": [
+        "Fremde Websites nur mit Erlaubnis crawlen",
+        "Das Clustering kann bewusst verschiedene Werte zusammenwerfen – menschliche Prüfung nötig"
+      ],
+      "monetization": {
+        "assessment": "Als Agenturwerkzeug oder Beratungsbaustein denkbar; als eigenständiges Produkt eher eine Nische.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "designsystem",
+        "design-tokens",
+        "css",
+        "refactoring"
+      ]
+    },
+    {
+      "slug": "design-stapelbearbeitung-per-beschreibung",
+      "title": "Stapel-Bildbearbeitung per Beschreibung",
+      "summary": "Übersetzt eine Beschreibung wie „alle auf 1600 px, WebP, leicht aufhellen“ in ein prüfbares Rezept und wendet es auf ganze Ordner an.",
+      "description": "Nutzer beschreiben gewünschte Bearbeitungen in Alltagssprache. Claude übersetzt sie in ein explizites Rezept aus Einzelschritten wie Skalieren, Zuschneiden, Formatwandlung, Helligkeit oder Wasserzeichen, das als lesbare Liste angezeigt und an drei Beispielbildern vorab gerendert wird. Nach Bestätigung verarbeitet eine lokale Bildbibliothek den gesamten Ordner; Rezepte lassen sich speichern und wiederverwenden.",
+      "problem": "Stapelbearbeitung erfordert entweder teure Software oder Kommandozeilenwissen, und Fehler fallen oft erst nach der Verarbeitung auf.",
+      "goal": "Wiederkehrende Bildbearbeitungen ohne Spezialwissen, aber mit voller Nachvollziehbarkeit automatisieren.",
+      "benefit": "Ganze Ordner werden konsistent bearbeitet, und das Rezept dokumentiert genau, was passiert ist.",
+      "audience": "Blogger, Shop-Betreiber, Vereine, Content Creator",
+      "category": "design",
+      "subcategory": "design-editing",
+      "features": [
+        "Bearbeitungswunsch in Alltagssprache",
+        "Rezept als lesbare, editierbare Schrittliste",
+        "Vorschau an Beispielbildern vor der Stapelverarbeitung",
+        "Lokale Verarbeitung ohne Bild-Upload",
+        "Gespeicherte Rezepte",
+        "Originale bleiben unangetastet"
+      ],
+      "highlights": [
+        "Die KI erzeugt nur das Rezept, die Bilder verlassen den Rechner nicht",
+        "Die Vorschau verhindert Massenfehler"
+      ],
+      "complexity": 2,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "sharp",
+        "Tauri",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Ordnerüberwachung für automatische Verarbeitung",
+        "Entfernen von EXIF-Daten als Datenschutzschritt",
+        "Kommandozeilenmodus"
+      ],
+      "risks": [
+        "Mehrdeutige Beschreibungen können zu unerwarteten Rezepten führen – deshalb Vorschaupflicht",
+        "Feine ästhetische Korrekturen bleiben Handarbeit"
+      ],
+      "monetization": {
+        "assessment": "Als günstige Desktop-Software denkbar, es gibt aber kostenlose Alternativen. Eher ein Eigenwerkzeug.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "bildbearbeitung",
+        "stapelverarbeitung",
+        "automatisierung",
+        "webp"
+      ]
+    },
+    {
+      "slug": "design-produktfoto-studio",
+      "title": "Produktfoto-Studio für kleine Anbieter",
+      "summary": "Stellt Produktfotos lokal frei, vereinheitlicht Hintergrund, Bildausschnitt und Schatten und erzeugt konsistente Bildserien für Shops.",
+      "description": "Produktfotos vom Smartphone werden mit einem lokal laufenden Segmentierungsmodell freigestellt. Das Tool richtet Produkte einheitlich aus, setzt sie auf definierte Hintergründe, ergänzt dezente Schatten und exportiert Varianten für verschiedene Plattformformate. Claude schlägt Alt-Texte und Dateinamen vor; eine Qualitätsprüfung markiert unscharfe oder schlecht freigestellte Bilder zur Nacharbeit.",
+      "problem": "Kleine Händler haben kein Fotostudio, und uneinheitliche Produktbilder wirken unprofessionell.",
+      "goal": "Aus Smartphone-Fotos eine konsistente, shoptaugliche Bildserie erstellen.",
+      "benefit": "Einheitliche Produktbilder mit wenig Aufwand, ohne Bilder an externe Dienste hochzuladen.",
+      "audience": "Kleine Online-Händler, Kunsthandwerker, Vereine mit Shop",
+      "category": "design",
+      "subcategory": "design-editing",
+      "features": [
+        "Lokale Freistellung per Segmentierungsmodell",
+        "Einheitlicher Bildausschnitt und Ausrichtung",
+        "Hintergrundvorlagen und Schatten",
+        "Export in mehrere Plattformformate",
+        "Alt-Text-Vorschläge per Claude",
+        "Qualitätsprüfung mit Nacharbeitsliste"
+      ],
+      "highlights": [
+        "Die Freistellung läuft lokal",
+        "Fokus auf Konsistenz einer ganzen Serie statt auf das Einzelbild"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "Python",
+        "ONNX Runtime",
+        "Segmentierungsmodell mit passender Lizenz",
+        "Pillow",
+        "Tauri",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Rechner mit ausreichender Leistung",
+        "Segmentierungsmodell mit geeigneter Lizenz",
+        "Grundausstattung aus Licht und neutralem Untergrund"
+      ],
+      "extensions": [
+        "Foto-Anleitung als Smartphone-App",
+        "Farbtreue-Prüfung mit Referenzkarte",
+        "Direkter Upload in Shopsysteme"
+      ],
+      "risks": [
+        "Freistellung bei Glas, Haaren oder feinen Strukturen bleibt fehleranfällig",
+        "Modelllizenzen prüfen, besonders bei kommerzieller Nutzung",
+        "Bearbeitete Bilder dürfen Produkte nicht irreführend darstellen"
+      ],
+      "monetization": {
+        "assessment": "Für kleine Händler als günstige Software oder Dienstleistung denkbar. Online-Dienste sind starke Konkurrenz; der Unterschied läge in der lokalen Verarbeitung.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "produktfotos",
+        "freistellen",
+        "ecommerce",
+        "bildbearbeitung",
+        "lokal"
+      ]
+    },
+    {
+      "slug": "image-generation-svg-icon-set",
+      "title": "Konsistentes SVG-Icon-Set per Stilvorgabe",
+      "summary": "Claude erzeugt SVG-Icons nach einer strengen Stilvorgabe, ein Linter prüft Raster, Strichstärke und Ecken, bevor ein Icon ins Set kommt.",
+      "description": "Eine Stilvorgabe definiert Raster, Strichstärke, Eckenradius, Füllregeln und erlaubte Elemente. Claude erzeugt zu einem Begriff mehrere SVG-Varianten, die ein automatischer Linter gegen die Vorgabe prüft und bei Abweichungen zurückweist. Bestandene Icons erscheinen in einer Vorschau neben dem bestehenden Set, damit die visuelle Konsistenz beurteilt werden kann.",
+      "problem": "In eigenen Projekten fehlen oft einzelne Icons im passenden Stil, und Bildgeneratoren liefern Rastergrafiken statt sauberer Vektoren.",
+      "goal": "Fehlende Icons schnell und stilkonsistent als saubere SVGs ergänzen.",
+      "benefit": "Man erhält editierbare Vektor-Icons, die technisch zum Set passen, statt Kompromissen aus verschiedenen Quellen.",
+      "audience": "Entwickler, Designer, Indie-Hacker",
+      "category": "image-generation",
+      "subcategory": "image-generation-assets",
+      "features": [
+        "Stilvorgabe als Konfigurationsdatei",
+        "Mehrere SVG-Varianten pro Begriff",
+        "Linter für Raster, Strichstärke, Pfadanzahl und viewBox",
+        "Vorschau im Kontext des bestehenden Sets",
+        "Export optimierter SVGs und eines Sprite-Sheets"
+      ],
+      "highlights": [
+        "Erzeugt echten Vektorcode statt Pixelbilder",
+        "Automatischer Stil-Linter als Qualitätsfilter"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "TypeScript",
+        "Node.js",
+        "SVGO",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Ein Referenz-Set oder eine klare Stilbeschreibung"
+      ],
+      "extensions": [
+        "Automatische Varianten (gefüllt, Kontur)",
+        "Icon-Suche über Synonyme",
+        "Export als React- oder Vue-Komponenten"
+      ],
+      "risks": [
+        "Komplexe Motive gelingen als generierter Pfadcode nur eingeschränkt; Nachbearbeitung im Vektorprogramm bleibt oft nötig",
+        "Vor der Veröffentlichung Ähnlichkeit zu geschützten Icons prüfen"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug sinnvoll. Icon-Sets sind ein gesättigter Markt mit vielen freien Angeboten.",
+        "confidence": "nicht-vorgesehen"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "svg",
+        "icons",
+        "vektor",
+        "designsystem",
+        "generierung"
+      ]
+    },
+    {
+      "slug": "image-generation-prompt-variantenmatrix",
+      "title": "Prompt-Variantenmatrix für Bildgenerierung",
+      "summary": "Variiert Prompt-Bausteine wie Licht, Stil und Perspektive systematisch, zeigt Ergebnisse als Raster und wertet eigene Bewertungen aus.",
+      "description": "Ein Prompt wird in Bausteine wie Motiv, Stil, Licht, Perspektive und Farbstimmung zerlegt. Das Tool erzeugt eine Matrix aus Varianten, schickt sie an eine frei wählbare Bildgenerierungs-API und stellt die Ergebnisse als Raster dar. Eigene Bewertungen werden je Baustein ausgewertet; Claude fasst zusammen, welche Formulierungen für den Zweck am besten funktioniert haben, und Modell, Parameter und Seeds werden protokolliert.",
+      "problem": "Gute Bild-Prompts entstehen durch unsystematisches Ausprobieren, und Erkenntnisse gehen zwischen Sitzungen verloren.",
+      "goal": "Prompt-Entwicklung für Bildgenerierung systematisch und reproduzierbar machen.",
+      "benefit": "Man versteht, welcher Baustein welchen Effekt hat, und kann gute Ergebnisse später reproduzieren.",
+      "audience": "Designer, Content Creator, Marketing-Teams",
+      "category": "image-generation",
+      "subcategory": "image-generation-workflow",
+      "features": [
+        "Zerlegung von Prompts in Bausteine",
+        "Matrixgenerierung mit Kostenschätzung vor dem Start",
+        "Rasteransicht mit Bewertungsfunktion",
+        "Auswertung je Baustein",
+        "Protokoll von Modell, Parametern und Seeds"
+      ],
+      "highlights": [
+        "Experimentelles Vorgehen statt Zufallstreffer",
+        "Kostenschätzung vor jedem Lauf"
+      ],
+      "complexity": 3,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "React",
+        "SQLite",
+        "Bildgenerierungs-API nach Wahl",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Zugang zu einer Bildgenerierungs-API",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Vergleich mehrerer Modelle",
+        "Teilen von Prompt-Rezepten",
+        "Automatische Bildqualitätsmetriken"
+      ],
+      "risks": [
+        "Jedes generierte Bild kostet Geld, Matrizen vervielfachen die Kosten",
+        "Nutzungsbedingungen und Rechte an generierten Bildern unterscheiden sich je Anbieter",
+        "Ergebnisse sind zwischen Modellversionen nicht stabil"
+      ],
+      "monetization": {
+        "assessment": "Als Werkzeug für Kreativteams denkbar; der Markt bewegt sich schnell, und Anbieter integrieren ähnliche Funktionen selbst.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 3,
+        "feasibility": 4
+      },
+      "tags": [
+        "bildgenerierung",
+        "prompts",
+        "experimente",
+        "reproduzierbarkeit"
+      ]
+    },
+    {
+      "slug": "image-generation-app-store-mockups",
+      "title": "Screenshot-Mockups und Store-Texte für eigene Apps",
+      "summary": "Setzt echte App-Screenshots in Geräterahmen und Szenen, erzeugt Bildüberschriften in mehreren Sprachen und exportiert alle Store-Formate.",
+      "description": "Echte Screenshots der eigenen App werden deterministisch über HTML-Vorlagen in Geräterahmen und einfache Hintergrundszenen montiert, statt sie generieren zu lassen. Claude schlägt zu jedem Screenshot kurze Überschriften und Store-Texte vor, die direkt in die Vorlagen übernommen werden. Ein Export erzeugt alle benötigten Bildgrößen für mehrere Sprachen in einem Durchgang.",
+      "problem": "Store-Screenshots und Präsentationsbilder für Apps sind zeitaufwendig, besonders bei mehreren Sprachen und Formaten.",
+      "goal": "Professionelle, ehrliche Präsentationsbilder aus echten Screenshots mit wenig Aufwand erzeugen.",
+      "benefit": "Nach einem App-Update genügen neue Screenshots, alle Varianten entstehen automatisch neu.",
+      "audience": "App-Entwickler, Indie-Hacker, kleine Studios",
+      "category": "image-generation",
+      "subcategory": "image-generation-assets",
+      "features": [
+        "Vorlagen mit Geräterahmen und Hintergründen",
+        "Deterministische Montage echter Screenshots",
+        "Überschriften- und Textvorschläge per Claude",
+        "Mehrsprachiger Export",
+        "Größenvorgaben für gängige Plattformen"
+      ],
+      "highlights": [
+        "Zeigt die echte App statt generierter Fantasiebilder",
+        "Ganze Bildserie aus einer Konfigurationsdatei"
+      ],
+      "complexity": 2,
+      "effort": "m",
+      "technologies": [
+        "TypeScript",
+        "Playwright",
+        "HTML/CSS-Vorlagen",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Screenshots der eigenen App",
+        "Geräterahmen mit passender Lizenz"
+      ],
+      "extensions": [
+        "Automatische Screenshots per UI-Test",
+        "Varianten von Überschriften zum Vergleichen",
+        "Animierte Vorschauvideos"
+      ],
+      "risks": [
+        "Geräterahmen und Marken von Herstellern unterliegen Nutzungsrichtlinien",
+        "Plattformvorgaben für Store-Bilder ändern sich"
+      ],
+      "monetization": {
+        "assessment": "Als Werkzeug für Indie-Entwickler denkbar, es gibt jedoch etablierte Alternativen. Eher ein Eigenwerkzeug.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 4
+      },
+      "tags": [
+        "mockups",
+        "app-store",
+        "screenshots",
+        "lokalisierung"
+      ]
+    },
+    {
+      "slug": "image-generation-stil-pipeline-mit-herkunft",
+      "title": "Asset-Pipeline mit Stilbibel und Herkunftsnachweis",
+      "summary": "Erzeugt Bildassets nach einer Stilbibel, prüft sie automatisch, verlangt Freigaben und dokumentiert lückenlos ihre Herkunft.",
+      "description": "Eine Stilbibel definiert Palette, Formate, Motivregeln und Referenzen. Aus einer Asset-Liste formuliert Claude Prompts nach dieser Bibel, eine Bildgenerierungs-API erzeugt Kandidaten, und automatische Prüfungen kontrollieren Abmessungen, Palettenabweichung und Transparenz. Ein Mensch wählt aus und gibt frei; zu jedem Asset werden Modell, Prompt, Datum, Bearbeitungsschritte und die zu diesem Zeitpunkt gültigen Nutzungsbedingungen gespeichert.",
+      "problem": "Generierte Assets wirken schnell uneinheitlich, und später weiß niemand mehr, wie ein Bild entstanden ist und unter welchen Bedingungen es genutzt werden darf.",
+      "goal": "Generierte Bildassets konsistent, geprüft und mit nachvollziehbarer Herkunft produzieren.",
+      "benefit": "Einheitlichere Asset-Sammlungen und eine Dokumentation, die bei Rechte- und Herkunftsfragen weiterhilft.",
+      "audience": "Indie-Spieleentwickler, kleine Marken, Agenturen",
+      "category": "image-generation",
+      "subcategory": "image-generation-workflow",
+      "features": [
+        "Stilbibel als versionierte Datei",
+        "Prompt-Erzeugung aus Asset-Liste und Stilbibel",
+        "Automatische Prüfungen für Größe, Palette und Transparenz",
+        "Freigabe-Workflow mit Vergleichsansicht",
+        "Herkunftsprotokoll je Asset",
+        "Export in Ordnerstrukturen für Spiel-Engines oder Websites"
+      ],
+      "highlights": [
+        "Lückenloser Herkunftsnachweis als Kernfunktion",
+        "Maschinelle Stilprüfung vor der menschlichen Auswahl"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Pillow",
+        "Bildgenerierungs-API nach Wahl",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Bildgenerierungs-API mit für den Zweck geeigneten Nutzungsbedingungen",
+        "Claude-API-Zugang",
+        "Klare Stilvorgaben"
+      ],
+      "extensions": [
+        "Nachbearbeitung wie Hochskalieren oder Hintergrundentfernung",
+        "Kennzeichnung generierter Inhalte in den Metadaten",
+        "Team-Freigaben mit Rollen"
+      ],
+      "risks": [
+        "Die Rechtslage zu generierten Bildern (Urheberrecht, Kennzeichnung) ist im Fluss und je Land verschieden",
+        "Stilkonsistenz bleibt trotz Prüfungen begrenzt",
+        "Große Asset-Listen verursachen hohe Generierungskosten"
+      ],
+      "monetization": {
+        "assessment": "Für kleine Studios als internes Werkzeug oder Dienstleistung denkbar; ein eigenes Produkt wäre stark von Anbieterbedingungen abhängig.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "bildgenerierung",
+        "assets",
+        "spieleentwicklung",
+        "herkunft",
+        "workflow"
+      ]
+    },
+    {
+      "slug": "video-audio-untertitel-werkstatt",
+      "title": "Untertitel-Werkstatt mit Glossar und Lesetempo-Prüfung",
+      "summary": "Erstellt Untertitel lokal per Spracherkennung, korrigiert Fachbegriffe über ein Glossar und prüft Lesegeschwindigkeit und Zeilenlänge.",
+      "description": "Videos werden lokal mit einem Whisper-kompatiblen Modell transkribiert. Claude korrigiert danach Eigennamen und Fachbegriffe anhand eines projektspezifischen Glossars und bricht Zeilen nach Sinneinheiten um. Eine Prüfung markiert Untertitel, die zu schnell aufeinanderfolgen oder zu lang sind, und exportiert SRT- sowie VTT-Dateien.",
+      "problem": "Automatische Untertitel verfälschen Namen und Fachbegriffe, und zu schnelle Untertitel sind schwer lesbar.",
+      "goal": "Gut lesbare, korrekte Untertitel mit wenig Nacharbeit erstellen.",
+      "benefit": "Weniger Korrekturaufwand und barrierefreiere Videos, weil Fachbegriffe stimmen und das Lesetempo eingehalten wird.",
+      "audience": "Content Creator, Vereine, Lehrende, kleine Unternehmen",
+      "category": "video-audio",
+      "subcategory": "video-editing",
+      "features": [
+        "Lokale Transkription mit Zeitstempeln",
+        "Glossar für Namen und Fachbegriffe",
+        "Zeilenumbruch nach Sinneinheiten",
+        "Prüfung von Zeichen pro Sekunde und Zeilenlänge",
+        "Export als SRT und VTT"
+      ],
+      "highlights": [
+        "Projektglossar sorgt für korrekte Fachbegriffe",
+        "Lesbarkeitsprüfung statt bloßer Transkription"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "faster-whisper",
+        "FFmpeg",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Rechner mit ausreichender Leistung (GPU hilfreich)",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Übersetzung in weitere Sprachen",
+        "Kennzeichnung der Sprecher",
+        "Einbrennen der Untertitel per FFmpeg"
+      ],
+      "risks": [
+        "Die Erkennung leidet bei Dialekt, Musik oder Nebengeräuschen",
+        "Die Rechte an den verarbeiteten Videos müssen beim Nutzer liegen"
+      ],
+      "monetization": {
+        "assessment": "Als Eigenwerkzeug oder als Dienstleistung für Vereine und Bildungseinrichtungen denkbar; viele Schnittprogramme bieten bereits Basisfunktionen.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 5,
+        "feasibility": 5
+      },
+      "tags": [
+        "untertitel",
+        "transkription",
+        "barrierefreiheit",
+        "video"
+      ]
+    },
+    {
+      "slug": "video-audio-textbasierter-rohschnitt",
+      "title": "Rohschnitt aus dem Transkript",
+      "summary": "Schneidet lange Aufnahmen über das Transkript: Text streichen oder markieren, und das Tool erzeugt eine Schnittliste fürs eigene Schnittprogramm.",
+      "description": "Eine Aufnahme wird transkribiert und als bearbeitbarer Text mit Zeitstempeln angezeigt. Nutzer streichen Passagen, markieren Highlights oder lassen Claude begründete Vorschläge für Kapitel und Kürzungen machen, die einzeln bestätigt werden. Daraus entsteht eine Schnittliste im EDL- oder XML-Format für gängige Schnittprogramme oder ein direkter Export per FFmpeg.",
+      "problem": "Sichtung und Grobschnitt langer Interviews, Vorträge oder Streams kosten Stunden, obwohl die inhaltliche Entscheidung eigentlich am Text getroffen wird.",
+      "goal": "Den Grobschnitt langer Aufnahmen über Text statt über die Zeitleiste ermöglichen.",
+      "benefit": "Die inhaltliche Arbeit geht deutlich schneller, und der Feinschnitt bleibt im gewohnten Schnittprogramm.",
+      "audience": "Podcaster, Video-Creator, Journalismus, Lehrende",
+      "category": "video-audio",
+      "subcategory": "video-editing",
+      "features": [
+        "Transkript mit wortgenauen Zeitstempeln",
+        "Streichen und Markieren direkt im Text",
+        "Kürzungs- und Kapitelvorschläge mit Begründung",
+        "Erkennung von Füllwörtern und langen Pausen",
+        "Export als EDL/XML oder direkter Schnitt per FFmpeg",
+        "Vorschau-Wiedergabe des Rohschnitts"
+      ],
+      "highlights": [
+        "Inhaltliche Entscheidungen am Text, Feinschnitt im Profiwerkzeug",
+        "Jeder KI-Vorschlag wird einzeln bestätigt"
+      ],
+      "complexity": 4,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "Electron",
+        "faster-whisper",
+        "FFmpeg",
+        "OpenTimelineIO",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Leistungsfähiger Rechner",
+        "Schnittprogramm mit EDL- oder XML-Import",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Mehrkamera-Unterstützung",
+        "Kurzclips aus markierten Highlights",
+        "Filter nach Sprecher"
+      ],
+      "risks": [
+        "Wortgenaue Zeitstempel sind nicht immer exakt, Schnitte können holpern",
+        "Schnittlisten-Formate werden je Programm unterschiedlich unterstützt"
+      ],
+      "monetization": {
+        "assessment": "Das Prinzip existiert in kommerziellen Programmen; als Open-Source-Alternative oder Eigenwerkzeug realistisch, als Produkt schwierig.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 3
+      },
+      "tags": [
+        "videoschnitt",
+        "transkript",
+        "podcast",
+        "automatisierung"
+      ]
+    },
+    {
+      "slug": "video-audio-shownotes-mit-zeitmarken",
+      "title": "Shownotes und Kapitelmarken aus Podcast-Episoden",
+      "summary": "Erzeugt aus einer Episode Kapitelmarken, Shownotes mit erwähnten Quellen und eine Liste prüfbedürftiger Aussagen.",
+      "description": "Nach der Transkription teilt Claude die Episode in Kapitel mit Zeitmarken, fasst jedes Kapitel kurz zusammen und sammelt erwähnte Bücher, Studien, Personen und Links. Aussagen mit Zahlen oder Fakten landen auf einer Prüfliste, damit sie vor der Veröffentlichung kontrolliert werden. Kapitel lassen sich als ID3-Kapitel direkt in die Audiodatei schreiben.",
+      "problem": "Shownotes und Kapitel sind für Hörer wertvoll, werden aber aus Zeitmangel oft weggelassen oder nur oberflächlich erstellt.",
+      "goal": "Jede Episode mit wenig Aufwand mit Kapiteln, Shownotes und Quellenliste veröffentlichen.",
+      "benefit": "Hörer finden Inhalte schneller, und Faktenfehler fallen vor der Veröffentlichung auf.",
+      "audience": "Podcaster, Unternehmens- und Bildungspodcasts",
+      "category": "video-audio",
+      "subcategory": "audio-podcast",
+      "features": [
+        "Transkription mit Sprechertrennung",
+        "Kapitelmarken mit Kurzbeschreibung",
+        "Liste erwähnter Quellen und Personen",
+        "Prüfliste für Fakten und Zahlen",
+        "Export als Markdown und ID3-Kapitel"
+      ],
+      "highlights": [
+        "Faktenprüfliste vor der Veröffentlichung",
+        "Kapitel direkt in der Audiodatei"
+      ],
+      "complexity": 2,
+      "effort": "s",
+      "technologies": [
+        "Python",
+        "faster-whisper",
+        "pyannote (optional)",
+        "mutagen",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Claude-API-Zugang",
+        "Episoden als Audiodatei"
+      ],
+      "extensions": [
+        "Blogartikel aus Episoden",
+        "Zitatkarten mit Zeitmarke für Social Media",
+        "Durchsuchbares Episodenarchiv"
+      ],
+      "risks": [
+        "Die Sprechertrennung ist bei überlappender Rede ungenau",
+        "Zusammenfassungen können Aussagen verkürzen – Endkontrolle durch die Macher nötig"
+      ],
+      "monetization": {
+        "assessment": "Als Dienstleistung für Podcast-Produktionen denkbar; Hosting-Plattformen bieten ähnliche Funktionen aber zunehmend selbst an.",
+        "confidence": "plausibel"
+      },
+      "scores": {
+        "originality": 3,
+        "usefulness": 4,
+        "feasibility": 5
+      },
+      "tags": [
+        "podcast",
+        "shownotes",
+        "kapitel",
+        "transkription"
+      ]
+    },
+    {
+      "slug": "video-audio-hoerspiel-produktionsplaner",
+      "title": "Produktionsplaner für Hörspiele und Audio-Fiction",
+      "summary": "Verwaltet Skript, Rollen, Takes und Geräuschbedarf einer Hörspielproduktion und zeigt, welche Szene in welchem Stand ist.",
+      "description": "Ein Skript wird importiert und in Szenen, Rollen und Regieanweisungen zerlegt; Claude leitet daraus Geräusch- und Atmo-Bedarf sowie Sprecherlisten ab. Aufgenommene Takes werden Szenen und Zeilen zugeordnet, bewertet und kommentiert. Ein Board zeigt den Produktionsstand je Szene von der Aufnahme bis zur Mischung, und Sprecher erhalten automatisch ihre Zeilen als Skriptauszug.",
+      "problem": "Hörspielproduktionen mit mehreren Sprechern verlieren schnell den Überblick über Takes, fehlende Zeilen und Geräuschbedarf.",
+      "goal": "Den gesamten Ablauf einer Audio-Fiction-Produktion vom Skript bis zur Mischung strukturiert abbilden.",
+      "benefit": "Weniger vergessene Zeilen und Geräusche, schnellere Abstimmung mit Sprechern und ein klarer Produktionsstand.",
+      "audience": "Hörspielgruppen, Audio-Fiction-Podcaster, Theatergruppen, Schulprojekte",
+      "category": "video-audio",
+      "subcategory": "audio-podcast",
+      "features": [
+        "Skriptimport mit Szenen- und Rollenerkennung",
+        "Geräusch- und Atmo-Liste aus Regieanweisungen",
+        "Take-Verwaltung mit Zuordnung zu Skriptzeilen",
+        "Szenen-Board mit Produktionsstatus",
+        "Skriptauszüge pro Sprecher",
+        "Export von Take-Listen für die Mischung"
+      ],
+      "highlights": [
+        "Verknüpft Skriptzeile, Take und Produktionsstand",
+        "Leitet den Geräuschbedarf automatisch aus Regieanweisungen ab"
+      ],
+      "complexity": 3,
+      "effort": "l",
+      "technologies": [
+        "TypeScript",
+        "React",
+        "PostgreSQL",
+        "Web Audio API",
+        "Objektspeicher",
+        "Claude API"
+      ],
+      "prerequisites": [
+        "Skript in Textform",
+        "Aufnahmen als Audiodateien",
+        "Claude-API-Zugang"
+      ],
+      "extensions": [
+        "Abgleich von Takes mit dem Skript per Transkription",
+        "Geräuschbibliothek mit Lizenzangaben",
+        "Online-Aufnahmesitzungen"
+      ],
+      "risks": [
+        "Kleine Nischenzielgruppe",
+        "Hoher Speicherbedarf für Audiodateien",
+        "Das Skript-Parsing hängt stark vom Formatierungsstil ab"
+      ],
+      "monetization": {
+        "assessment": "Eine kleine, engagierte Nische; denkbar als Open-Source-Projekt oder günstiges Gruppenangebot, Einnahmen sind ungewiss.",
+        "confidence": "spekulativ"
+      },
+      "scores": {
+        "originality": 4,
+        "usefulness": 3,
+        "feasibility": 3
+      },
+      "tags": [
+        "hörspiel",
+        "audio",
+        "produktion",
+        "skript",
+        "kreativ"
+      ]
+    }
+  ]
+}

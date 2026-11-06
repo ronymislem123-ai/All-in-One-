@@ -1,0 +1,374 @@
+{
+  "version": 1,
+  "generatedAt": "2026-11-06",
+  "articles": [
+    {
+      "slug": "claude-code-einstieg-installation",
+      "title": "Claude Code: Was es ist und wie du startest",
+      "topic": "claude-code",
+      "difficulty": "einsteiger",
+      "summary": "Claude Code ist ein agentisches Coding-Tool, das deine Codebasis liest, Dateien bearbeitet und Befehle ausführt – im Terminal, in der IDE, in der Desktop-App und im Browser. Dieser Artikel zeigt Installation, Oberflächen und den ersten Start.",
+      "body": "## Was ist Claude Code?\n\nClaude Code ist laut offizieller Dokumentation ein agentisches Coding-Tool: Es liest deine Codebasis, bearbeitet Dateien, führt Befehle aus und bindet deine Entwicklungswerkzeuge ein. Du beschreibst in normaler Sprache, was du willst – Claude plant den Weg, ändert Code über mehrere Dateien hinweg und prüft das Ergebnis.\n\n## Wo es läuft\n\n- **Terminal (CLI):** die vollständige Variante für die Kommandozeile.\n- **VS Code und Cursor:** Erweiterung mit Inline-Diffs, @-Erwähnungen und Plan-Review.\n- **JetBrains:** Plugin für IntelliJ IDEA, PyCharm, WebStorm u. a.; benötigt die separat installierte CLI.\n- **Desktop-App:** eigenständige App mit visuellen Diffs und parallelen Sessions; Claude Code ist bereits enthalten.\n- **Web:** unter claude.ai/code ohne lokales Setup, auch für lange oder parallele Aufgaben.\n\nAlle Oberflächen nutzen dieselbe Engine: CLAUDE.md-Dateien, Einstellungen und MCP-Server deines Repos gelten überall. Für die meisten Oberflächen brauchst du ein Claude-Abo oder ein Konto in der Anthropic Console.\n\n## Installation im Terminal\n\nNative Installation (empfohlen) unter macOS, Linux und WSL:\n\n```bash\ncurl -fsSL https://claude.ai/install.sh | bash\n```\n\nUnter Windows in der PowerShell:\n\n```powershell\nirm https://claude.ai/install.ps1 | iex\n```\n\nAlternativ gibt es Homebrew (`brew install --cask claude-code`) und WinGet (`winget install Anthropic.ClaudeCode`). Native Installationen aktualisieren sich automatisch im Hintergrund, Homebrew- und WinGet-Installationen nicht. Öffne danach ein neues Terminal und prüfe mit `claude --version`, ob eine Versionsnummer erscheint.\n\n## Erster Start\n\n```bash\ncd your-project\nclaude\n```\n\nBeim ersten Start fordert Claude Code dich zum Login auf.\n\n## So nutzt du es beim Bauen deiner Projekte\n\n- Starte Claude Code immer im Projektordner, damit es den richtigen Kontext und deine CLAUDE.md findet.\n- Für Skripte und Automatisierung gibt es den nicht-interaktiven Modus mit `-p`, etwa `git diff main --name-only | claude -p \"review these changed files for security issues\"`.\n- Lege früh eine CLAUDE.md mit Build- und Testbefehlen an (siehe eigener Artikel).\n\nInstallationswege und Oberflächen entwickeln sich laufend weiter – im Zweifel gilt die verlinkte Dokumentation.",
+      "sources": [
+        {
+          "title": "Overview",
+          "url": "https://code.claude.com/docs/en/overview"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "claude-md-und-auto-memory",
+      "title": "CLAUDE.md und Auto Memory: Dauerhaftes Projektwissen",
+      "topic": "claude-code",
+      "difficulty": "einsteiger",
+      "summary": "Mit CLAUDE.md-Dateien gibst du Claude Code dauerhafte Anweisungen, Auto Memory sammelt Erkenntnisse automatisch. Hier erfährst du, wo die Dateien liegen und wie du wirksame Anweisungen schreibst.",
+      "body": "## Zwei Gedächtnis-Mechanismen\n\nJede Claude-Code-Session beginnt mit einem leeren Kontextfenster. Wissen wird auf zwei Wegen übertragen:\n\n- **CLAUDE.md-Dateien:** Anweisungen, die du selbst schreibst.\n- **Auto Memory:** Notizen, die Claude anhand deiner Korrekturen und Vorlieben selbst anlegt.\n\nBeide werden zu Beginn jeder Session geladen. Wichtig: Claude behandelt sie als Kontext, nicht als erzwungene Konfiguration. Was garantiert nie passieren darf, gehört in einen Hook oder eine Deny-Regel.\n\n## Wo CLAUDE.md liegen kann\n\n- **Benutzer:** `~/.claude/CLAUDE.md` – persönliche Vorlieben für alle Projekte.\n- **Projekt:** `./CLAUDE.md` oder `./.claude/CLAUDE.md` – per Versionskontrolle mit dem Team geteilt.\n- **Lokal:** `./CLAUDE.local.md` – persönliche Projektnotizen; in `.gitignore` eintragen.\n- **Organisation:** Managed Policy, unter Linux z. B. `/etc/claude-code/CLAUDE.md`.\n\n## Schnellstart\n\n- `/init` erzeugt eine erste CLAUDE.md aus deiner Codebasis. Existiert schon eine, schlägt `/init` Verbesserungen vor, statt sie zu überschreiben.\n- `/memory` listet deine Memory-Dateien, öffnet sie im Editor und schaltet Auto Memory ein oder aus.\n- `/context all` zeigt unter „Memory files“, welche Dateien tatsächlich geladen wurden.\n\n## Gute Anweisungen schreiben\n\n- Konkret und überprüfbar: „Run `npm test` before committing“ statt „Test your changes“.\n- Unter 200 Zeilen pro Datei bleiben – lange Dateien kosten Kontext und senken die Befolgung.\n- Widersprüchliche Anweisungen regelmäßig entfernen.\n- Weitere Dateien mit `@pfad/zur/datei` importieren, z. B. `See @README for project overview`.\n- Regeln, die nur für Teile des Codes gelten, als Markdown-Dateien in `.claude/rules/` mit `paths`-Frontmatter ablegen:\n\n```markdown\n---\npaths:\n  - \"src/api/**/*.ts\"\n---\n\n# API Development Rules\n\n- All API endpoints must include input validation\n```\n\n## Auto Memory\n\nAuto Memory ist in lokalen Sessions standardmäßig aktiv. Pro Projekt liegt sie unter `~/.claude/projects/<project>/memory/` mit der Indexdatei `MEMORY.md`, deren erste 200 Zeilen bzw. 25 KB in jede Session geladen werden. Sagst du „remember that …“, speichert Claude dort; soll etwas in die CLAUDE.md, sag ausdrücklich „add this to CLAUDE.md“.\n\n## Praxis für deine Projekte\n\nDie offiziellen Best Practices empfehlen, nur aufzuschreiben, was Claude nicht durch Lesen des Repos herausfindet: Build- und Testbefehle, Team-Entscheidungen, Stolperfallen. Der wertvollste Eintrag ist oft der Befehl, der deine Tests startet. Speicherorte und Limits können sich mit neuen Versionen ändern.",
+      "sources": [
+        {
+          "title": "How Claude remembers your project",
+          "url": "https://code.claude.com/docs/en/memory"
+        },
+        {
+          "title": "Best practices for Claude Code",
+          "url": "https://code.claude.com/docs/en/best-practices"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "slash-befehle-und-skills",
+      "title": "Slash-Befehle und Skills in Claude Code",
+      "topic": "claude-code",
+      "difficulty": "fortgeschritten",
+      "summary": "Eingebaute Slash-Befehle steuern die Session, eigene Befehle baust du als Skills mit einer SKILL.md. Der Artikel zeigt Speicherorte, Argumente und die wichtigsten Frontmatter-Felder.",
+      "body": "## Eingebaute Befehle\n\nMit `/` öffnest du das Befehlsmenü; tippst du weiter, wird gefiltert. Ein Befehl wird nur am Anfang einer Nachricht erkannt, der Rest wird zu seinen Argumenten. Nützlich im Projektalltag:\n\n- `/init` – Start-CLAUDE.md erzeugen\n- `/memory` – CLAUDE.md-Dateien bearbeiten, Auto Memory verwalten\n- `/plan [Beschreibung]` – direkt in den Plan-Modus wechseln\n- `/context` – Kontextnutzung anzeigen; `/compact [Anweisungen]` – Verlauf zusammenfassen\n- `/clear` – neue Unterhaltung mit leerem Kontext\n- `/rewind` – Code und/oder Unterhaltung auf einen früheren Punkt zurücksetzen\n- `/permissions`, `/hooks`, `/mcp`, `/model`, `/status`, `/doctor`\n\nNicht jeder Befehl erscheint überall; das hängt von Plattform, Plan und Umgebung ab.\n\n## Eigene Befehle sind Skills\n\nBenutzerdefinierte Befehle wurden in Skills zusammengeführt: `.claude/commands/deploy.md` und `.claude/skills/deploy/SKILL.md` erzeugen beide `/deploy`. Bestehende Dateien in `.claude/commands/` funktionieren weiter. Skills bieten zusätzlich einen Ordner für Hilfsdateien, Frontmatter zur Steuerung und automatisches Laden, wenn Claude sie für relevant hält.\n\nSpeicherorte:\n\n- Persönlich: `~/.claude/skills/<skill-name>/SKILL.md` (alle Projekte)\n- Projekt: `.claude/skills/<skill-name>/SKILL.md` (committen, damit das Team ihn hat)\n- Plugin: `<plugin>/skills/<skill-name>/SKILL.md`\n\n## Ein Skill mit Argumenten\n\n```yaml\n---\nname: fix-issue\ndescription: Fix a GitHub issue\ndisable-model-invocation: true\n---\n\nFix GitHub issue $ARGUMENTS following our coding standards.\n```\n\n`/fix-issue 123` ersetzt `$ARGUMENTS` durch `123`. Einzelne Argumente erreichst du nullbasiert mit `$0`, `$1` usw.\n\n## Wichtige Frontmatter-Felder\n\n- `description` – empfohlen; daran entscheidet Claude, wann der Skill passt.\n- `disable-model-invocation: true` – nur du startest ihn (sinnvoll für Deploys).\n- `user-invocable: false` – nur Claude lädt ihn.\n- `allowed-tools` – Tools, die im aufrufenden Zug ohne Rückfrage erlaubt sind.\n\nFeldnamen müssen exakt stimmen; unbekannte Felder ignoriert Claude Code ohne Fehlermeldung.\n\n## Praxis für deine Projekte\n\nWiederkehrende Abläufe wie Release, Migration oder Review gehören in Skills statt in die CLAUDE.md: Der Inhalt eines Skills wird erst geladen, wenn er gebraucht wird. Halte `SKILL.md` unter 500 Zeilen und lagere Details in Dateien wie `reference.md` aus. Befehlsumfang und Felder ändern sich mit neuen Versionen – prüfe im Zweifel die Referenz.",
+      "sources": [
+        {
+          "title": "Commands",
+          "url": "https://code.claude.com/docs/en/commands"
+        },
+        {
+          "title": "Extend Claude with skills",
+          "url": "https://code.claude.com/docs/en/skills"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "hooks-automatisierung",
+      "title": "Hooks: Feste Automatisierung im Claude-Code-Lebenszyklus",
+      "topic": "claude-code",
+      "difficulty": "fortgeschritten",
+      "summary": "Hooks führen Shell-Befehle an festen Punkten im Ablauf von Claude Code aus – etwa zum Formatieren nach jeder Änderung oder zum Blockieren riskanter Aktionen. So konfigurierst du sie.",
+      "body": "## Was Hooks sind\n\nHooks sind benutzerdefinierte Shell-Befehle, die Claude Code an festen Punkten seines Lebenszyklus ausführt. Anders als Anweisungen in der CLAUDE.md sind sie deterministisch: Die Aktion passiert immer, statt darauf zu vertrauen, dass das Modell daran denkt.\n\n## Wichtige Events (Auswahl)\n\n- `SessionStart` – eine Session beginnt oder wird fortgesetzt\n- `UserPromptSubmit` – ein Prompt wurde abgeschickt, bevor Claude ihn verarbeitet\n- `PreToolUse` – vor einem Tool-Aufruf; kann ihn blockieren\n- `PostToolUse` – nach einem erfolgreichen Tool-Aufruf\n- `Notification` – Claude Code sendet eine Benachrichtigung\n- `Stop` – Claude ist mit der Antwort fertig\n- `PreCompact` – vor der Kontext-Kompaktierung\n\nDie vollständige Liste steht in der Hooks-Referenz.\n\n## Beispiel: Formatieren nach jeder Änderung\n\nIn `.claude/settings.json` deines Projekts:\n\n```json\n{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Edit|Write\",\n        \"hooks\": [\n          {\n            \"type\": \"command\",\n            \"command\": \"jq -r '.tool_input.file_path' | xargs npx prettier --write\"\n          }\n        ]\n      }\n    ]\n  }\n}\n```\n\nDer `matcher` filtert nach Tool-Namen, hier `Edit|Write`. Das Beispiel setzt `jq` voraus.\n\n## Blockieren mit Exit-Code 2\n\nEin Hook erhält die Event-Daten als JSON über stdin. Endet er mit Exit-Code 2, wird die Aktion blockiert; die Begründung schreibst du nach stderr, und Claude bekommt sie je nach Event als Feedback. Typisch ist ein `PreToolUse`-Skript, das Änderungen an `.env` oder `package-lock.json` verhindert. Für feinere Steuerung gibt ein Hook stattdessen mit Exit 0 ein JSON-Objekt auf stdout aus – pro Hook nur einen der beiden Wege wählen.\n\n## Wo Hooks konfiguriert werden\n\n- `~/.claude/settings.json` – alle deine Projekte\n- `.claude/settings.json` – ein Projekt, committbar\n- `.claude/settings.local.json` – ein Projekt, nicht geteilt\n- außerdem Managed Policy, Plugins sowie Skill- und Subagent-Frontmatter\n\n`/hooks` zeigt alle konfigurierten Hooks nach Event gruppiert. Mit `\"disableAllHooks\": true` schaltest du sie ab.\n\n## Praxis für deine Projekte\n\n- Formatter oder Linter als `PostToolUse`-Hook, damit jede Änderung sauber bleibt.\n- Geschützte Dateien per `PreToolUse` sperren.\n- Ein `Notification`-Hook meldet sich, wenn Claude auf dich wartet.\n\nNeben `command` gibt es die Hook-Typen `http`, `mcp_tool`, `prompt` und `agent`; Agent-Hooks sind laut Doku experimentell. Events und Felder können sich ändern – maßgeblich ist die Referenz.",
+      "sources": [
+        {
+          "title": "Automate actions with hooks",
+          "url": "https://code.claude.com/docs/en/hooks-guide"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "subagents",
+      "title": "Subagents: Spezialisierte Helfer mit eigenem Kontext",
+      "topic": "claude-code",
+      "difficulty": "fortgeschritten",
+      "summary": "Subagents erledigen Teilaufgaben in einem eigenen Kontextfenster mit eigenen Tools und Berechtigungen. Der Artikel erklärt eingebaute Subagents, eigene Definitionen und sinnvolle Einsatzfälle.",
+      "body": "## Was Subagents sind\n\nSubagents sind spezialisierte KI-Assistenten für bestimmte Aufgaben. Jeder läuft in einem eigenen Kontextfenster mit eigenem System-Prompt, eigenem Tool-Zugriff und eigenen Berechtigungen und gibt nur eine Zusammenfassung zurück. So bleiben Suchergebnisse, Logs oder Dateiinhalte, die du nicht mehr brauchst, aus deiner Hauptunterhaltung heraus.\n\n## Eingebaute Subagents\n\n- **Explore** – schneller, schreibgeschützter Agent zum Durchsuchen und Analysieren von Codebasen\n- **Plan** – Recherche-Agent im Plan-Modus mit nur lesenden Tools\n- **General-purpose** – für komplexe, mehrstufige Aufgaben, die Erkunden und Handeln verbinden\n\n## Eigene Subagents anlegen\n\nEigene Subagents sind Markdown-Dateien mit YAML-Frontmatter:\n\n- `.claude/agents/` – nur dieses Projekt; ins Repo committen\n- `~/.claude/agents/` – alle deine Projekte\n\nBei gleichem Namen gewinnt der Ort mit höherer Priorität; Projekt-Subagents stehen vor Benutzer-Subagents.\n\n```markdown\n---\nname: code-reviewer\ndescription: Reviews code for quality and best practices\ntools: Read, Glob, Grep\nmodel: sonnet\n---\n\nYou are a code reviewer. When invoked, analyze the code and provide\nspecific, actionable feedback on quality, security, and best practices.\n```\n\nPflicht sind nur `name` und `description`; der Body wird zum System-Prompt. Ohne `tools` erbt der Subagent alle verfügbaren Tools. Mit `model` wählst du z. B. `sonnet`, `opus`, `haiku` oder `inherit`.\n\n## Aufrufen\n\n- **Automatisch:** Claude delegiert anhand deiner Anfrage und des `description`-Felds. Formulierungen wie „use proactively“ in der Beschreibung fördern das.\n- **Explizit:** „Use the test-runner subagent to fix failing tests“\n- **Per @-Erwähnung:** `@\"code-reviewer (agent)\" look at the auth changes`\n- **Ganze Session:** `claude --agent code-reviewer`\n\n## Wann es sich lohnt\n\nLaut den Best Practices sind Subagents vor allem für parallele Arbeit, zum Fernhalten von umfangreichem Output und für unabhängige Reviews sinnvoll – jeder kostet aber zusätzliche Tokens. Dieselbe Aufgabe einfach weiterzureichen, verbessert die Antwort nicht; ein frischer Reviewer, der deine Begründung nicht kennt, hilft dagegen.\n\n## Praxis für deine Projekte\n\nEin Projekt-Reviewer mit nur lesenden Tools (`Read, Glob, Grep`) ist ein sicherer Einstieg: Er kann nichts verändern, liefert aber eine zweite Meinung zu deinen Änderungen. Felder und eingebaute Agents können sich mit neuen Versionen ändern.",
+      "sources": [
+        {
+          "title": "Create custom subagents",
+          "url": "https://code.claude.com/docs/en/sub-agents"
+        },
+        {
+          "title": "Best practices for Claude Code",
+          "url": "https://code.claude.com/docs/en/best-practices"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "berechtigungen-modi-und-settings",
+      "title": "Berechtigungen, Modi und settings.json",
+      "topic": "claude-code",
+      "difficulty": "fortgeschritten",
+      "summary": "Permission-Modi und allow/ask/deny-Regeln legen fest, was Claude Code ohne Rückfrage darf. Dazu: wo Einstellungsdateien liegen und welche Ebene Vorrang hat.",
+      "body": "## Permission-Modi\n\n- `default` (in der Oberfläche „Manual“): fragt bei der ersten Nutzung jedes Tools nach\n- `acceptEdits`: akzeptiert Dateiänderungen und gängige Dateisystembefehle wie `mkdir`, `touch`, `mv`, `cp` im Arbeitsverzeichnis automatisch\n- `plan`: Claude liest und erkundet, bearbeitet aber deinen Quellcode nicht\n- `auto`: ohne Routine-Rückfragen; ein Klassifikator prüft Aktionen im Hintergrund\n- `dontAsk`: lehnt alles ab, was sonst nachfragen würde – vorab erlaubte Tools laufen weiter\n- `bypassPermissions`: überspringt Rückfragen; nur in isolierten Containern oder VMs nutzen\n\nIm Terminal wechselst du mit `Shift+Tab` zwischen den Modi, beim Start per Flag:\n\n```bash\nclaude --permission-mode plan\n```\n\nDen Startmodus legst du mit `permissions.defaultMode` fest. Aktuelle Versionen starten Terminal- und VS-Code-Sessions standardmäßig in `auto`, sofern Auto Mode verfügbar ist, sonst in Manual; `claude -p` startet in `default`.\n\n## Regeln: allow, ask, deny\n\nRegeln haben die Form `Tool` oder `Tool(specifier)`. Ausgewertet wird in der Reihenfolge deny, ask, allow; die erste passende Regel entscheidet. Eine Allow-Regel kann keine Ausnahme aus einer Deny-Regel herausschneiden.\n\n```json\n{\n  \"permissions\": {\n    \"allow\": [\n      \"Bash(npm run *)\",\n      \"Bash(git commit *)\"\n    ],\n    \"deny\": [\n      \"Bash(git push *)\"\n    ]\n  }\n}\n```\n\nSetze das `*` hinter das Unterkommando: `Bash(git log *)` erlaubt nur `git log`, `Bash(git *)` jeden git-Befehl. Interaktiv verwaltest du Regeln mit `/permissions`.\n\n## Wo Einstellungen liegen\n\n- `~/.claude/settings.json` – Benutzer, alle Projekte\n- `.claude/settings.json` – geteiltes Projekt, ins Repo committen\n- `.claude/settings.local.json` – persönlich pro Projekt, bleibt aus Git heraus\n- Managed Settings – von der Organisation verteilt\n\nPriorität, höchste zuerst: Managed, Kommandozeile (`--settings`), Projekt-lokal, geteiltes Projekt, Benutzer. Listen wie `permissions.allow` werden über die Ebenen zusammengeführt. `/status` zeigt, welche Dateien geladen wurden.\n\n## Praxis für deine Projekte\n\nCommitte eine `.claude/settings.json`, die Test- und Lint-Befehle erlaubt und z. B. `Read(./.env)` verbietet. Berechtigungsregeln setzt Claude Code selbst durch – Anweisungen in der CLAUDE.md dagegen nicht. Modi und ihre Verfügbarkeit hängen von Version, Modell und Plan ab und ändern sich.",
+      "sources": [
+        {
+          "title": "Configure permissions",
+          "url": "https://code.claude.com/docs/en/permissions"
+        },
+        {
+          "title": "Choose a permission mode",
+          "url": "https://code.claude.com/docs/en/permission-modes"
+        },
+        {
+          "title": "Settings files and precedence",
+          "url": "https://code.claude.com/docs/en/settings"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "workflow-best-practices-claude-code",
+      "title": "Bewährter Workflow: Kontext geben, prüfen lassen, steuern",
+      "topic": "workflows",
+      "difficulty": "einsteiger",
+      "summary": "Die offiziellen Best Practices in kompakter Form: Claude fehlendes Wissen geben, eine überprüfbare Prüfung bereitstellen, früh gegensteuern und unverhandelbare Regeln technisch erzwingen.",
+      "body": "## Grundidee\n\nLaut den offiziellen Best Practices macht Claude Code in einer frischen Session oft schon mit einem einfachen Prompt das Richtige. Zusätzlicher Aufwand lohnt sich dort, wo dein Projekt Wissen, Regeln oder Grenzen hat, die Claude nicht aus dem Code ablesen kann.\n\n## 1. Sag Claude, was es nicht sehen kann\n\n- Nenne Datei, Symptom und was „behoben“ bedeutet. Statt „fix the login bug“ besser: „users report login fails after the session times out. look at token refresh in src/auth/, write a failing test that reproduces it, then fix it“.\n- Übergib Material direkt: `@` plus Pfad für Dateien, Screenshots einfügen, Ausgaben pipen, etwa `cat error.log | claude -p \"what's going on here\"`.\n- Weißt du noch nicht genau, was du willst, lass dich interviewen: „Interview me until you could write the spec, then write it to SPEC.md.“ Danach in einer frischen Session auf Basis von `SPEC.md` bauen.\n- Willst du die umfassende Variante mit Randfällen, schreib „be ambitious“.\n\n## 2. Gib Claude eine Prüfung\n\nClaude hört auf, wenn die Arbeit fertig aussieht. Mit etwas, das bestanden oder nicht bestanden meldet – Tests, Exit-Code eines Builds, Linter, ein Screenshot neben dem Mockup –, schließt Claude den Kreislauf selbst: ändern, prüfen, korrigieren. Der nützlichste Eintrag in der CLAUDE.md ist oft der Befehl, der diese Prüfung startet. Fordere Belege: den ausgeführten Befehl und seine Ausgabe.\n\n## 3. Größere Änderungen erst planen\n\nMit `/plan` oder `Shift+Tab` wechselst du in den Plan-Modus: Claude erkundet und schlägt einen Plan vor, ohne deinen Quellcode zu bearbeiten.\n\n## 4. Früh steuern\n\n- `Esc` stoppt Claude mitten in der Aktion, ohne bisherige Arbeit zu verlieren.\n- `/rewind` (oder zweimal `Esc` bei leerem Prompt) setzt Code, Unterhaltung oder beides zurück. Checkpoints decken nur Dateien ab, die Claude mit seinen Datei-Tools bearbeitet hat – sie ergänzen Git, ersetzen es aber nicht.\n- Nach zwei gescheiterten Korrekturen: `/clear` und ein besserer Prompt statt einer dritten Korrektur.\n\n## 5. Unverhandelbares erzwingen\n\nPrompt, CLAUDE.md und Skills sind Hinweise, die Claude abwägt. Was immer oder nie passieren muss, gehört in Hooks, Deny-Regeln oder Managed Settings.\n\n## Ablauf für ein neues Feature\n\n1. Spezifikation per Interview in `SPEC.md` erstellen lassen.\n2. Frische Session, Plan-Modus, Plan prüfen.\n3. Umsetzen lassen, mit Tests als Prüfung.\n4. Mit `/code-review` in einem frischen Subagent prüfen lassen, dann committen.\n\nDie Empfehlungen werden mit neuen Modellen regelmäßig angepasst – die verlinkte Seite ist maßgeblich.",
+      "sources": [
+        {
+          "title": "Best practices for Claude Code",
+          "url": "https://code.claude.com/docs/en/best-practices"
+        },
+        {
+          "title": "Commands",
+          "url": "https://code.claude.com/docs/en/commands"
+        },
+        {
+          "title": "Choose a permission mode",
+          "url": "https://code.claude.com/docs/en/permission-modes"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "claude-code-cloud-sessions",
+      "title": "Claude Code in der Cloud: Sessions im Browser und Teleport",
+      "topic": "workflows",
+      "difficulty": "fortgeschritten",
+      "summary": "Cloud-Sessions lassen Claude Code auf Anthropic-Infrastruktur weiterarbeiten, auch wenn dein Rechner aus ist. Du startest sie im Browser oder per --cloud und holst sie mit --teleport ins Terminal zurück.",
+      "body": "## Was eine Cloud-Session ist\n\nEine Cloud-Session ist eine Claude-Code-Session, die auf Cloud-Infrastruktur statt auf deinem Rechner läuft – standardmäßig auf von Anthropic verwalteter Infrastruktur. Sie läuft weiter, wenn du den Laptop zuklappst, und lässt sich von jedem Gerät aus prüfen und steuern. Laut Doku verfügbar auf Pro-, Max-, Ultra- und Team-Plänen sowie für Enterprise-Nutzer mit passenden Seats.\n\n## Starten\n\n- **Browser:** claude.ai/code („Claude Code on the web“)\n- **Mobil:** Code-Tab in der Claude-App\n- **Desktop-App:** eine Cloud-Umgebung im Umgebungswähler auswählen\n- **Terminal:**\n\n```bash\nclaude --cloud \"Fix the authentication bug in src/auth/login.ts\"\n```\n\nDie Cloud-VM klont das GitHub-Remote deines aktuellen Verzeichnisses auf dem aktuellen Branch – nicht deinen lokalen Stand. Lokale Commits also vorher pushen. Jeder `--cloud`-Aufruf erzeugt eine eigene Session, mehrere Aufgaben laufen so parallel.\n\n## GitHub verbinden\n\nEntweder die Claude GitHub App beim Web-Onboarding autorisieren oder im Terminal `/web-setup` ausführen, das dein lokales `gh`-Token an dein Claude-Konto übergibt. Auto-Fix für Pull Requests setzt die installierte Claude GitHub App voraus.\n\n## Zurück ins Terminal\n\n```bash\nclaude --teleport\n```\n\nöffnet eine Auswahl deiner Cloud-Sessions; `claude --teleport <session-id>` setzt eine bestimmte fort. Voraussetzungen: sauberer Git-Stand, dasselbe Repository, gepushter Branch und dasselbe claude.ai-Konto. Die Übergabe per CLI ist einseitig – eine laufende Terminal-Session lässt sich nicht in die Cloud schieben.\n\n## Umgebungen und Einstellungen\n\nJede Cloud-Session läuft in einer Cloud-Umgebung, die Netzwerkzugriff, Umgebungsvariablen und Setup-Skripte festlegt. Deine `~/.claude/settings.json` und `.claude/settings.local.json` werden in der Cloud nicht gelesen; die committete `.claude/settings.json` gilt in einer Session mit einem einzelnen Repository dagegen schon.\n\n## Praxis-Workflow\n\n1. Lokal planen: `claude --permission-mode plan`, Plan ins Repo committen und pushen.\n2. In der Cloud ausführen: `claude --cloud \"Execute the migration plan in docs/migration-plan.md\"`.\n3. Ergebnis im Browser prüfen, Pull Request erstellen oder per Teleport lokal weiterarbeiten.\n\nCloud-Sessions zählen zu denselben Nutzungslimits wie deine übrige Claude-Nutzung. Pläne, Befehle und Flags können sich ändern – prüfe die verlinkte Dokumentation.",
+      "sources": [
+        {
+          "title": "Use Claude Code in the cloud",
+          "url": "https://code.claude.com/docs/en/claude-code-on-the-web"
+        },
+        {
+          "title": "Settings files and precedence",
+          "url": "https://code.claude.com/docs/en/settings"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "claude-code-github-actions",
+      "title": "Claude Code GitHub Actions: @claude im Repository",
+      "topic": "workflows",
+      "difficulty": "fortgeschritten",
+      "summary": "Mit der GitHub Action anthropics/claude-code-action reagiert Claude auf @claude-Erwähnungen in Issues und Pull Requests oder läuft automatisiert auf GitHub-Events. Einrichtung, Modi und Sicherheitsregeln im Überblick.",
+      "body": "## Was es ist\n\nClaude Code GitHub Actions ist eine GitHub Action, die Claude Code in den Workflows deines Repositorys ausführt. Erwähnst du `@claude` in einem Pull-Request- oder Issue-Kommentar, analysiert Claude den Code, setzt Änderungen um und pusht Commits. Mit einem `prompt` läuft die Action auch automatisch auf beliebigen GitHub-Events.\n\n## Schnelle Einrichtung\n\nStarte `claude` im Repository und führe aus:\n\n```text\n/install-github-app\n```\n\nDas installiert die Claude GitHub App, legt das Authentifizierungs-Secret an und bereitet einen Pull Request mit den Workflow-Dateien vor. Voraussetzungen: Admin-Rechte am Repository, die GitHub CLI (angemeldet per `gh auth login`) und ein Repository auf github.com.\n\n## Manuelle Einrichtung\n\n1. Die Claude GitHub App im Repository installieren.\n2. Ein Secret anlegen: `ANTHROPIC_API_KEY` (API-Key aus der Claude Console) oder `CLAUDE_CODE_OAUTH_TOKEN` (per `claude setup-token`, für Abo-Nutzer).\n3. `examples/claude.yml` aus dem Action-Repository nach `.github/workflows/` kopieren.\n\nDer Kern des Workflows:\n\n```yaml\n      - uses: anthropics/claude-code-action@v1\n        with:\n          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}\n```\n\n## Zwei Modi\n\n- **Interaktiv:** Ohne `prompt` wartet Claude auf `@claude` in Kommentaren, Reviews oder neuen Issues und antwortet als Kommentar.\n- **Automatisierung:** Mit `prompt` (Text oder Skill-Aufruf wie `/skill-name`) läuft Claude ohne Erwähnung, etwa nach Zeitplan.\n\nWichtige Inputs: `prompt`, `claude_args` (CLI-Argumente wie `--max-turns`, `--model`, `--allowedTools`), `settings` und `trigger_phrase`.\n\n## Sicherheit und Kosten\n\n- API-Keys oder Tokens nie committen, immer als GitHub Secret referenzieren.\n- Bei Issue- und PR-Events braucht der Auslöser Schreibrechte; Bots werden abgelehnt, außer sie stehen in `allowed_bots`.\n- Jeder Lauf verbraucht GitHub-Actions-Minuten und API-Tokens. Begrenze mit `--max-turns`, Workflow-Timeouts und Concurrency-Regeln.\n- Eine knappe CLAUDE.md im Repo-Root hilft, denn Claude liest sie bei jedem Lauf.\n\n## Praxis für deine Projekte\n\nStarte mit dem interaktiven Workflow und präzisen Anfragen wie „@claude fix the TypeError in the user dashboard component“. Prüfe Claudes Änderungen vor dem Merge. Inputs und Versionen der Action können sich ändern – maßgeblich ist die verlinkte Dokumentation.",
+      "sources": [
+        {
+          "title": "Claude Code GitHub Actions",
+          "url": "https://code.claude.com/docs/en/github-actions"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "mcp-grundlagen",
+      "title": "Model Context Protocol (MCP): Die Grundlagen",
+      "topic": "mcp",
+      "difficulty": "einsteiger",
+      "summary": "MCP ist ein offenes Protokoll, das KI-Anwendungen mit externen Tools und Daten verbindet. Der Artikel erklärt Hosts, Clients und Server, die Primitive Tools, Resources und Prompts sowie die Transporte.",
+      "body": "## Was MCP ist\n\nDas Model Context Protocol ist laut Spezifikation ein offenes Protokoll, das LLM-Anwendungen nahtlos mit externen Datenquellen und Tools verbindet. Es orientiert sich am Language Server Protocol: So wie LSP Sprachunterstützung über Entwicklungswerkzeuge hinweg vereinheitlicht, standardisiert MCP, wie Kontext und Tools in KI-Anwendungen gelangen.\n\n## Rollen\n\n- **Host:** die LLM-Anwendung, die Verbindungen aufbaut – etwa Claude Code, VS Code mit Copilot oder Cursor\n- **Client:** ein Konnektor innerhalb des Hosts\n- **Server:** ein Dienst, der Kontext und Fähigkeiten bereitstellt\n\nDie Nachrichten folgen dem JSON-RPC-2.0-Format.\n\n## Was ein Server anbietet\n\n- **Tools:** Funktionen, die das KI-Modell ausführen kann\n- **Resources:** Kontext und Daten für Nutzer oder Modell\n- **Prompts:** vorgefertigte Nachrichten und Workflows für Nutzer\n\nAuch Clients können Funktionen anbieten, etwa **Elicitation**: Der Server fordert beim Nutzer zusätzliche Informationen an.\n\n## Transporte\n\nDie Spezifikation definiert zwei Standard-Transporte:\n\n- **stdio:** Der Client startet den Server als Unterprozess; JSON-RPC-Nachrichten laufen zeilenweise über stdin und stdout.\n- **Streamable HTTP:** Der Server läuft als eigenständiger Prozess und kann mehrere Clients bedienen; Kommunikation per HTTP POST und GET, optional mit Server-Sent Events. Er ersetzt den älteren HTTP+SSE-Transport.\n\nFür HTTP-Server verlangt die Spezifikation, den `Origin`-Header zu prüfen; lokal sollten sie nur an localhost (127.0.0.1) gebunden werden.\n\n## Sicherheit\n\nNutzer müssen Datenzugriffen und Aktionen ausdrücklich zustimmen können. Tools stehen für potenziell beliebige Codeausführung, und ihre Beschreibungen gelten als nicht vertrauenswürdig, solange der Server nicht vertrauenswürdig ist.\n\n## Versionen beachten\n\nDie Spezifikation erscheint in datierten Versionen, z. B. 2025-11-25 und 2026-07-28. Laut Changelog macht 2026-07-28 das Protokoll zustandslos (ohne `initialize`-Handshake) und markiert Sampling, Roots und Logging als veraltet. Prüfe daher, welche Version dein SDK und dein Host unterstützen.\n\n## Bedeutung für deine Projekte\n\nEin eigener MCP-Server ist der saubere Weg, Projektdaten – etwa Ideen oder Wissensartikel – für Claude Code und andere Hosts verfügbar zu machen: einmal bauen, in jedem kompatiblen Host nutzen.",
+      "sources": [
+        {
+          "title": "MCP Specification 2025-11-25: Overview",
+          "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2025-11-25/index.mdx"
+        },
+        {
+          "title": "MCP Specification 2025-11-25: Transports",
+          "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2025-11-25/basic/transports.mdx"
+        },
+        {
+          "title": "MCP Specification 2026-07-28: Overview",
+          "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2026-07-28/index.mdx"
+        },
+        {
+          "title": "MCP Specification 2026-07-28: Changelog",
+          "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2026-07-28/changelog.mdx"
+        },
+        {
+          "title": "MCP TypeScript SDK: Plug into a real host",
+          "url": "https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/get-started/real-host.md"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "mcp-server-in-claude-code-verbinden",
+      "title": "MCP-Server mit Claude Code verbinden",
+      "topic": "mcp",
+      "difficulty": "fortgeschritten",
+      "summary": "Mit claude mcp add bindest du lokale und entfernte MCP-Server an Claude Code. Der Artikel zeigt die Transporte, Verwaltungsbefehle, die drei Scopes und .mcp.json mit Umgebungsvariablen.",
+      "body": "## Wozu\n\nÜber MCP greift Claude Code auf externe Tools und Daten zu – etwa Issue-Tracker, Datenbanken oder eigene Werkzeuge.\n\n## Server hinzufügen\n\nRemote-Server per HTTP (für entfernte Server empfohlen):\n\n```bash\nclaude mcp add --transport http notion https://mcp.notion.com/mcp\n```\n\nLokaler Server als Prozess (stdio). Alles nach `--` wird unverändert als Startbefehl an den Server übergeben:\n\n```bash\nclaude mcp add --env AIRTABLE_API_KEY=YOUR_KEY --transport stdio airtable \\\n  -- npx -y airtable-mcp-server\n```\n\nDer SSE-Transport (`--transport sse`) ist veraltet; nutze HTTP, wo verfügbar. Kurzformen: `-t` (transport), `-e` (env), `-H` (header), `-s` (scope).\n\n## Verwalten\n\n```bash\nclaude mcp list\nclaude mcp get notion\nclaude mcp remove notion\n```\n\nIn der Session zeigt `/mcp` den Status, startet OAuth-Logins im Browser und kann Server neu verbinden.\n\n## Scopes\n\n- `local` (Standard): nur du, nur im aktuellen Projekt; gespeichert in `~/.claude.json`\n- `project`: für alle im Projekt über `.mcp.json` im Projekt-Root, versionierbar\n- `user`: nur du, in allen Projekten; gespeichert in `~/.claude.json`\n\n```bash\nclaude mcp add --transport http shared-server --scope project https://example.com/mcp\n```\n\nIst derselbe Server in mehreren Scopes definiert, verbindet Claude Code ihn einmal mit der Definition der höchsten Priorität (lokal vor Projekt vor Benutzer); Felder werden nicht gemischt. Vor der Nutzung von Servern aus `.mcp.json` fragt Claude Code in interaktiven Sessions nach Zustimmung.\n\n## .mcp.json mit Umgebungsvariablen\n\n```json\n{\n  \"mcpServers\": {\n    \"api-server\": {\n      \"type\": \"http\",\n      \"url\": \"${API_BASE_URL:-https://api.example.com}/mcp\",\n      \"headers\": {\n        \"Authorization\": \"Bearer ${API_KEY}\"\n      }\n    }\n  }\n}\n```\n\n`${VAR}` wird zum Wert der Variable, `${VAR:-default}` nutzt einen Standardwert, falls sie fehlt. So landen keine Secrets im Repository.\n\n## Sicherheit\n\nVerbinde nur Server, denen du vertraust. Server, die externe Inhalte abrufen, können dich Prompt-Injection-Risiken aussetzen.\n\n## Praxis für deine Projekte\n\nGemeinsame Server wie einen eigenen Projekt-Server per `--scope project` in `.mcp.json` ablegen und persönliche Tokens über Umgebungsvariablen einbinden. Befehle und Scopes können sich mit neuen Versionen ändern – maßgeblich ist die verlinkte Seite.",
+      "sources": [
+        {
+          "title": "Connect Claude Code to tools via MCP",
+          "url": "https://code.claude.com/docs/en/mcp"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "mcp-server-mit-typescript-sdk",
+      "title": "Einen eigenen MCP-Server mit dem TypeScript-SDK bauen",
+      "topic": "mcp",
+      "difficulty": "experte",
+      "summary": "Mit dem offiziellen TypeScript-SDK (v2) baust du einen MCP-Server mit eigenen Tools, testest ihn im MCP Inspector und bindest ihn in Claude Code ein. Alles nach den offiziellen Beispielen.",
+      "body": "## Welches SDK?\n\nDas offizielle TypeScript-SDK liegt auf GitHub unter modelcontextprotocol/typescript-sdk. Laut README ist der `main`-Branch v2, die stabile Release-Linie mit den Paketen `@modelcontextprotocol/server` und `@modelcontextprotocol/client`; sie setzt die Spezifikation 2026-07-28 um. v1 (`@modelcontextprotocol/sdk`) liegt im Branch `v1.x` und bekommt noch mindestens sechs Monate nach dem v2-Release Fehler- und Sicherheitsupdates. Das SDK läuft auf Node.js, Bun und Deno.\n\n## Projekt anlegen\n\nDas offizielle Tutorial setzt Node.js 20 oder neuer voraus:\n\n```sh\nmkdir weather && cd weather\nnpm init -y\nnpm pkg set type=module\nnpm install @modelcontextprotocol/server zod tsx\nmkdir src\n```\n\n`type=module` ist nötig, weil das SDK nur ES-Module ausliefert; `tsx` führt TypeScript ohne Build-Schritt aus.\n\n## Minimaler Server\n\nDas Beispiel aus dem README registriert ein Tool und spricht stdio:\n\n```typescript\nimport { McpServer } from '@modelcontextprotocol/server';\nimport { StdioServerTransport } from '@modelcontextprotocol/server/stdio';\nimport * as z from 'zod/v4';\n\nconst server = new McpServer({ name: 'greeting-server', version: '1.0.0' });\n\nserver.registerTool(\n    'greet',\n    {\n        description: 'Greet someone by name',\n        inputSchema: z.object({ name: z.string() })\n    },\n    async ({ name }) => ({\n        content: [{ type: 'text', text: `Hello, ${name}!` }]\n    })\n);\n\nasync function main() {\n    const transport = new StdioServerTransport();\n    await server.connect(transport);\n}\n\nmain();\n```\n\nDas Tutorial nutzt alternativ `serveStdio(createServer)` mit einer Factory-Funktion. Wichtig: `inputSchema` ist das einzige Schema, das du schreibst. Daraus leitet das SDK das JSON Schema für das Modell ab, validiert Argumente vor deinem Handler und inferiert die Typen. Mit `isError: true` markierst du ein fehlgeschlagenes Ergebnis, auf das das Modell reagieren kann.\n\n## Goldene Regel für stdio\n\nstdout ist der Protokollkanal. Logge mit `console.error` – ein einziges `console.log` beschädigt den JSON-RPC-Stream.\n\n## Testen und einbinden\n\nMit dem MCP Inspector rufst du Tools ohne Host auf (aus dem Tutorial):\n\n```sh\nnpx @modelcontextprotocol/inspector npx tsx src/index.ts\n```\n\nIn Claude Code registrierst du den Server im Projekt-Root; alles nach `--` ist der Startbefehl:\n\n```sh\nclaude mcp add weather -- npx tsx src/index.ts\n```\n\nDanach zeigt `/mcp` den Server als verbunden. Sieht der Host keine Tools, führe den Startbefehl von Hand aus: Stürzt der Prozess ab oder landet etwas anderes als JSON-RPC auf stdout, liegt dort der Fehler.\n\nSDK-APIs ändern sich zwischen Hauptversionen – halte dich an die Doku der Version, die du installierst.",
+      "sources": [
+        {
+          "title": "MCP TypeScript SDK (README)",
+          "url": "https://github.com/modelcontextprotocol/typescript-sdk"
+        },
+        {
+          "title": "MCP TypeScript SDK: Build your first server",
+          "url": "https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/get-started/first-server.md"
+        },
+        {
+          "title": "MCP TypeScript SDK: Plug into a real host",
+          "url": "https://github.com/modelcontextprotocol/typescript-sdk/blob/main/docs/get-started/real-host.md"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "claude-api-grundlagen",
+      "title": "Claude API: Messages API, Modelle und System-Prompt",
+      "topic": "api",
+      "difficulty": "einsteiger",
+      "summary": "Die Messages API ist die Basis jeder Claude-Integration. Der Artikel zeigt den ersten Aufruf, den zustandslosen Gesprächsverlauf, den System-Prompt und worauf du bei der Modellwahl achtest.",
+      "body": "## Zugang\n\nDu brauchst ein Konto in der Claude Console und einen API-Key. SDKs und CLI lesen den Key aus einer Umgebungsvariable:\n\n```bash\nexport ANTHROPIC_API_KEY=\"your-api-key-here\"\n```\n\nDas TypeScript-SDK installierst du mit `npm install @anthropic-ai/sdk`, das Python-SDK mit `pip install anthropic`.\n\n## Die Messages API\n\nAnfragen gehen per `POST` an `https://api.anthropic.com/v1/messages`. Im Kern stehen `model`, `max_tokens` und `messages`, eine Liste aus `user`- und `assistant`-Nachrichten. Die cURL-Beispiele der Doku senden dazu die Header `x-api-key`, `anthropic-version` und `content-type`.\n\n```typescript\nimport Anthropic from \"@anthropic-ai/sdk\";\n\nconst client = new Anthropic();\n\nconst message = await client.messages.create({\n  model: \"claude-opus-5-5\",\n  max_tokens: 1000,\n  messages: [\n    {\n      role: \"user\",\n      content: \"What should I search for to find the latest developments in renewable energy?\"\n    }\n  ]\n});\n```\n\nDie Antwort enthält u. a. `content` (eine Liste von Blöcken, z. B. vom Typ `text`), `stop_reason` (etwa `end_turn`) und `usage` mit Ein- und Ausgabe-Tokens.\n\n## Zustandslos: Verlauf mitschicken\n\nDie Messages API ist zustandslos – du sendest immer den gesamten bisherigen Verlauf mit. Frühere `assistant`-Nachrichten müssen nicht von Claude stammen; du kannst sie auch synthetisch vorgeben.\n\n## System-Prompt\n\nÜber das Top-Level-Feld `system` gibst du Rolle und Rahmen vor. Laut Prompting-Leitfaden macht schon ein Satz einen Unterschied, z. B. `\"system\": \"You are a helpful coding assistant specializing in Python.\"`\n\n## Modell wählen\n\nDie Modellübersicht empfiehlt bei Unsicherheit, mit Claude Opus 5.5 (`claude-opus-5-5`) zu starten. Sonnet gilt dort als beste Kombination aus Tempo und Intelligenz, Haiku als Wahl für hohe Volumen und niedrige Latenz, Fable 5.1 für besonders anspruchsvolles Reasoning. Jede Modell-ID ist ein fester Snapshot. Über die Models API lassen sich Fähigkeiten und Token-Limits auch programmatisch abfragen. Modellpalette, Preise und Limits ändern sich regelmäßig – prüfe die Übersicht vor jedem neuen Projekt.\n\n## Achtung bei neueren Modellen\n\n- `temperature`, `top_p` und `top_k` werden ab Claude 4.7 (und mit API-Version `2026-10-21` generell) nicht unterstützt: Nicht-Standardwerte führen zu einem 400-Fehler, ab `2026-10-21` jeder Wert. Lass sie weg und steuere stattdessen per Prompt.\n- Prefill, also eine vorausgefüllte letzte `assistant`-Nachricht, wird ab Claude 4.6 nicht unterstützt. Nutze Structured Outputs oder Anweisungen im System-Prompt.\n\n## Praxis für deine Projekte\n\nHalte den API-Key ausschließlich serverseitig als Umgebungsvariable und konfiguriere die Modell-ID zentral, damit ein Modellwechsel eine einzige Änderung ist.",
+      "sources": [
+        {
+          "title": "Get started with Claude",
+          "url": "https://platform.claude.com/docs/en/get-started"
+        },
+        {
+          "title": "Using the Messages API",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+        },
+        {
+          "title": "Models overview",
+          "url": "https://platform.claude.com/docs/en/about-claude/models/overview"
+        },
+        {
+          "title": "Prompting best practices",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "tool-use-mit-claude",
+      "title": "Tool Use: Claude eigene Funktionen aufrufen lassen",
+      "topic": "api",
+      "difficulty": "fortgeschritten",
+      "summary": "Mit Tool Use ruft Claude Funktionen auf, die du definierst oder Anthropic bereitstellt. Der Artikel erklärt Client- und Server-Tools, den tool_use/tool_result-Ablauf und die Steuerung per tool_choice.",
+      "body": "## Prinzip\n\nTool Use (auch Function Calling) lässt Claude Funktionen aufrufen, die du definierst oder die Anthropic bereitstellt. Claude entscheidet anhand der Anfrage und der Tool-Beschreibung, wann ein Tool passt, und liefert einen strukturierten Aufruf zurück.\n\n## Client-Tools und Server-Tools\n\n- **Client-Tools** laufen in deiner Anwendung – deine eigenen Tools, aber auch solche mit von Anthropic definiertem Schema wie `bash` oder `text_editor`.\n- **Server-Tools** wie `web_search`, `web_fetch` oder `code_execution` laufen auf Anthropics Infrastruktur; du erhältst die Ergebnisse direkt.\n\n## Ablauf bei eigenen Tools\n\n1. Tool mit `name`, `description` und `input_schema` (JSON Schema) im `tools`-Array definieren.\n2. Claude antwortet mit `stop_reason: \"tool_use\"` und einem `tool_use`-Block mit `id`, `name` und `input`.\n3. Deine Anwendung führt die Funktion aus.\n4. Du schickst das Ergebnis als `tool_result`-Block mit der passenden `tool_use_id` in einer `user`-Nachricht zurück.\n5. Claude formuliert daraus die Antwort.\n\nDie Tool-Definition aus dem offiziellen Beispiel:\n\n```json\n{\n  \"name\": \"get_weather\",\n  \"description\": \"Get the current weather for a given location.\",\n  \"input_schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"location\": {\n        \"type\": \"string\",\n        \"description\": \"City and state, e.g. San Francisco, CA\"\n      }\n    },\n    \"required\": [\"location\"]\n  }\n}\n```\n\nWer den Hin- und Rückweg nicht selbst schreiben will, nutzt den Tool Runner der SDKs: Er führt die Tools aus und sendet die Ergebnisse automatisch zurück.\n\n## Steuern\n\n- Standard ist `tool_choice: {\"type\": \"auto\"}` – Claude entscheidet selbst. Weitere Werte sind `any`, `tool` und `none`.\n- Per System-Prompt lässt sich die Nutzung verstärken („Use the tools to investigate before responding.“) oder zurückhaltender machen.\n- `disable_parallel_tool_use: true` begrenzt auf höchstens einen Tool-Aufruf pro Zug.\n- `strict: true` in einer eigenen Tool-Definition stellt sicher, dass Claudes Aufrufe exakt dem Schema entsprechen.\n\n## Kosten\n\nTool-Definitionen sowie `tool_use`- und `tool_result`-Blöcke zählen als Tokens. Zusätzlich fügt die API einen eigenen System-Prompt für Tool Use hinzu. Server-Tools wie die Websuche können nutzungsabhängig extra kosten.\n\n## Praxis für deine Projekte\n\nPräzise Namen, Beschreibungen und Schemas sind entscheidend, denn daran wählt Claude das Tool. Fehlen Pflichtparameter, rät gerade Sonnet laut Doku manchmal Werte – validiere Eingaben deshalb serverseitig. Für entfernte MCP-Server bietet die API einen MCP-Connector. Tool-Versionen und Preise ändern sich; prüfe die Tool-Referenz.",
+      "sources": [
+        {
+          "title": "Tool use with Claude",
+          "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "structured-outputs",
+      "title": "Structured Outputs: Garantiert gültiges JSON",
+      "topic": "api",
+      "difficulty": "fortgeschritten",
+      "summary": "Structured Outputs zwingen Claudes Antwort in ein JSON-Schema oder machen Tool-Aufrufe schema-genau. Hier stehen Parameter, SDK-Helfer und die Grenzen der Schema-Unterstützung.",
+      "body": "## Was es bringt\n\nStructured Outputs zwingen Claudes Antworten in ein vorgegebenes Schema und liefern so zuverlässig parsebare Ausgaben für die Weiterverarbeitung. Es gibt zwei sich ergänzende Funktionen, einzeln oder kombiniert nutzbar:\n\n- **JSON-Ausgaben** über `output_config.format`\n- **Strict Tool Use** über `strict: true` in Tool-Definitionen\n\n## JSON-Ausgaben\n\nDas Schema steckt in `output_config.format` mit `type: \"json_schema\"`. Der Request-Body aus dem offiziellen Beispiel (ohne Header):\n\n```json\n{\n  \"model\": \"claude-opus-5-5\",\n  \"max_tokens\": 1024,\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Extract the key information from this email: John Smith (john@example.com) is interested in our Enterprise plan and wants to schedule a demo for next Tuesday at 2pm.\"\n    }\n  ],\n  \"output_config\": {\n    \"format\": {\n      \"type\": \"json_schema\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"name\": {\"type\": \"string\"},\n          \"email\": {\"type\": \"string\"},\n          \"plan_interest\": {\"type\": \"string\"},\n          \"demo_requested\": {\"type\": \"boolean\"}\n        },\n        \"required\": [\"name\", \"email\", \"plan_interest\", \"demo_requested\"],\n        \"additionalProperties\": false\n      }\n    }\n  }\n}\n```\n\nEin Beta-Header ist nicht mehr nötig. Der ältere Parameter `output_format` ist veraltet.\n\n## SDK-Helfer\n\n- **TypeScript:** ein Zod-Schema mit `zodOutputFormat()` umschließen und an `client.messages.parse()` als `output_config.format` übergeben; ohne Zod gibt es `jsonSchemaOutputFormat()`.\n- **Python:** ein Pydantic-Modell als `output_format` an `client.messages.parse()` übergeben; das validierte Ergebnis steht in `parsed_output`.\n\n## Grenzen des JSON Schemas\n\nUnterstützt sind u. a. alle Grundtypen, `enum` mit einfachen Werten, `const`, `anyOf`, `allOf` (ohne `$ref`) und `required`. `additionalProperties` muss bei Objekten `false` sein.\n\nNicht unterstützt sind rekursive Schemas, externe `$ref`, numerische Grenzen wie `minimum` und `maximum`, String-Längen wie `minLength` und `maxLength` sowie Array-Grenzen jenseits von `minItems` 0 oder 1. Nicht unterstützte Features führen zu einem 400-Fehler – Wertebereiche prüfst du also nach dem Parsen selbst.\n\n## Ersatz für Prefill\n\nAuf neueren Modellen ist Prefill nicht mehr möglich; die Doku nennt Structured Outputs als Alternative.\n\n## Praxis für deine Projekte\n\nIdeal für Extraktion und Klassifizierung, etwa um freie Notizen in Datensätze mit festen Feldern zu verwandeln. Halte das Schema an einer Stelle, damit API-Anfrage und eigene Validierung übereinstimmen. Unterstützte Modelle und Schema-Features können sich ändern.",
+      "sources": [
+        {
+          "title": "Structured outputs",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+        },
+        {
+          "title": "Using the Messages API",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/working-with-messages"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "prompt-caching",
+      "title": "Prompt Caching: Kosten und Latenz senken",
+      "topic": "api",
+      "difficulty": "experte",
+      "summary": "Prompt Caching lässt die API wiederkehrende Prompt-Präfixe wiederverwenden. Der Artikel erklärt automatisches und explizites Caching, Lebensdauer, Invalidierung und wie du den Erfolg misst.",
+      "body": "## Was es ist\n\nMit Prompt Caching setzt die API bei bestimmten Präfixen deines Prompts wieder auf, statt sie jedes Mal neu zu verarbeiten. Bei wiederkehrenden Inhalten spart das laut Doku deutlich Zeit und Kosten.\n\n## Zwei Wege\n\n- **Automatisches Caching:** ein einzelnes `cache_control`-Feld auf oberster Ebene der Anfrage. Der Breakpoint landet automatisch auf dem letzten cachebaren Block und wandert mit, wenn die Unterhaltung wächst.\n- **Explizite Breakpoints:** `cache_control` direkt an einzelnen Content-Blöcken; bis zu 4 Breakpoints sind möglich.\n\nBeispiel mit explizitem Breakpoint am System-Prompt:\n\n```json\n{\n  \"model\": \"claude-opus-5-5\",\n  \"max_tokens\": 1024,\n  \"system\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"You are a helpful assistant.\",\n      \"cache_control\": { \"type\": \"ephemeral\" }\n    }\n  ],\n  \"messages\": [{ \"role\": \"user\", \"content\": \"What are the key terms?\" }]\n}\n```\n\n## Reihenfolge und Invalidierung\n\nPräfixe entstehen in der Reihenfolge `tools`, `system`, `messages`. Eine Änderung auf einer Ebene macht diese und alle folgenden ungültig – wer Tool-Definitionen ändert, invalidiert den gesamten Cache. Stabiles gehört deshalb an den Anfang, Wechselndes ans Ende.\n\n## Lebensdauer\n\nStandardmäßig lebt ein Cache-Eintrag 5 Minuten und wird bei jeder Nutzung ohne Zusatzkosten aufgefrischt. Für längere Pausen gibt es eine Stunde:\n\n```json\n\"cache_control\": {\n  \"type\": \"ephemeral\",\n  \"ttl\": \"1h\"\n}\n```\n\n## Mindestlänge\n\nZu kurze Prompts werden nicht gecacht, auch nicht mit `cache_control` – und zwar ohne Fehlermeldung. Die Mindestlänge hängt vom Modell ab; die Doku nennt z. B. 512 Tokens für Opus 5.5, Sonnet 5.5 und Haiku 5.5.\n\n## Erfolg messen\n\nIm `usage`-Objekt der Antwort:\n\n- `cache_creation_input_tokens` – neu in den Cache geschrieben\n- `cache_read_input_tokens` – aus dem Cache gelesen\n- `input_tokens` – Tokens nach dem letzten Breakpoint\n\nDie gesamte Eingabe ist die Summe aller drei Werte.\n\n## Best Practices\n\n- Bei Mehrrunden-Chats mit automatischem Caching beginnen.\n- Explizite Breakpoints nutzen, wenn Abschnitte unterschiedlich oft wechseln.\n- Den Breakpoint auf den letzten Block setzen, der über Anfragen hinweg identisch bleibt.\n- Die Trefferquote regelmäßig auswerten.\n\n## Praxis für deine Projekte\n\nLange System-Prompts, Auszüge aus der Wissensbasis und Tool-Definitionen cachen, die Nutzerfrage ans Ende stellen. Preise, Mindestlängen und Regeln ändern sich – prüfe die Doku vor dem Einsatz.",
+      "sources": [
+        {
+          "title": "Prompt caching",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "prompt-engineering-best-practices",
+      "title": "Prompt-Engineering: Die wichtigsten Techniken",
+      "topic": "prompting",
+      "difficulty": "einsteiger",
+      "summary": "Klare Anweisungen, Begründungen, Beispiele, XML-Tags, eine Rolle im System-Prompt und gezieltes Denken: die zentralen Techniken aus Anthropics offiziellem Prompting-Leitfaden.",
+      "body": "## Klar und direkt sein\n\nClaude reagiert gut auf klare, explizite Anweisungen. Die Doku empfiehlt, Claude wie eine brillante, aber neue Kollegin zu behandeln, die deine Normen und Abläufe nicht kennt. Testfrage: Würde jemand mit wenig Kontext deinen Prompt verstehen? Nenne Format und Grenzen konkret und nutze nummerierte Schritte, wenn Reihenfolge oder Vollständigkeit zählen. Willst du mehr als das Minimum, sag es ausdrücklich.\n\n## Begründung mitgeben\n\nErkläre, warum etwas wichtig ist – Claude verallgemeinert aus der Begründung. Statt „NEVER use ellipses“ besser: „Your response will be read aloud by a text-to-speech engine, so never use ellipses since the text-to-speech engine will not know how to pronounce them.“\n\n## Beispiele (Few-Shot)\n\nBeispiele gehören zu den zuverlässigsten Mitteln, um Format, Ton und Struktur zu steuern. Sie sollten relevant, vielfältig (inklusive Randfällen) und in `<example>`-Tags verpackt sein, mehrere in `<examples>`. Empfohlen werden 3 bis 5 Beispiele.\n\n## XML-Tags für Struktur\n\nMischt ein Prompt Anweisungen, Kontext, Beispiele und Eingaben, trenne sie mit Tags wie `<instructions>`, `<context>` und `<input>`. Verwende konsistente, sprechende Namen und verschachtele bei natürlicher Hierarchie, etwa `<documents>` mit `<document index=\"n\">`.\n\n## Rolle im System-Prompt\n\nSchon ein Satz im `system`-Feld fokussiert Verhalten und Ton, z. B. „You are a helpful coding assistant specializing in Python.“\n\n## Lange Dokumente\n\nAb etwa 20k Tokens: lange Daten oben, Frage und Anweisungen ans Ende. Laut Doku kann das die Antwortqualität in Tests um bis zu 30 Prozent verbessern, besonders bei mehreren Dokumenten. Jedes Dokument in `<document>` mit `<source>` und `<document_content>` einbetten.\n\n## Format steuern\n\nSag, was Claude tun soll, statt was es lassen soll: statt „Do not use markdown in your response“ lieber „Your response should be composed of smoothly flowing prose paragraphs.“ Der Stil deines Prompts färbt auf die Antwort ab.\n\n## Claude denken lassen\n\nAktuelle Modelle nutzen adaptives Denken: Claude entscheidet selbst, wann und wie viel es nachdenkt, gesteuert über den `effort`-Parameter und die Komplexität der Aufgabe. Du kannst das Denken lenken, etwa indem du Claude bittest, nach Tool-Ergebnissen deren Qualität zu reflektieren und den nächsten Schritt zu planen. Für nachvollziehbare Pipelines bleibt Prompt-Chaining sinnvoll: Entwurf, Review gegen Kriterien, Überarbeitung – jeweils als eigener API-Aufruf.\n\n## Hinweis\n\nDie Empfehlungen gelten laut Doku für die aktuellen Modelle und werden mit neuen Modellgenerationen angepasst.",
+      "sources": [
+        {
+          "title": "Prompting best practices",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    },
+    {
+      "slug": "claude-projekte-und-artifacts",
+      "title": "Claude-Apps: Projekte und Artifacts",
+      "topic": "claude-apps",
+      "difficulty": "einsteiger",
+      "summary": "Projekte bündeln Chats, Projektwissen und Anweisungen in einem Arbeitsbereich, Artifacts sind teilbare Ergebnisse wie Dokumente, Dashboards oder kleine Tools. So setzt du beides in claude.ai ein.",
+      "body": "## Projekte\n\nProjekte sind in sich geschlossene Arbeitsbereiche mit eigenem Chatverlauf und eigener Wissensbasis. Sie stehen allen Nutzern offen, auch mit kostenlosem Konto (dort maximal fünf Projekte).\n\n- **Projektwissen:** Du lädst relevante Dokumente, Texte, Code oder andere Dateien hoch. Claude nutzt sie als Kontext in allen Chats des Projekts. Wichtig: Kontext wird zwischen Chats eines Projekts nicht geteilt, außer er steht in der Wissensbasis.\n- **Projektanweisungen:** Über „Set project instructions“ legst du fest, wie Claude sich in allen Chats des Projekts verhalten soll, etwa Ton oder fachliche Perspektive.\n- **Anlegen:** In der Seitenleiste „Projects“ öffnen, „+ New Project“ wählen, Name und Beschreibung vergeben (beides sieht Claude nicht) und über „+“ Inhalte hinzufügen.\n- **Große Wissensbasen:** Auf bezahlten Plänen schaltet Claude nahe am Kontextlimit in einen RAG-Modus, der die Kapazität um bis zu das Zehnfache erweitert.\n- **Teilen:** Auf Team- und Enterprise-Plänen lassen sich Projekte mit Lese- oder Bearbeitungsrechten teilen.\n\nEine neue Version von Projekten ist in Beta und wird schrittweise ausgerollt, beginnend mit Claude Code.\n\n## Artifacts\n\nEin Artifact ist alles, was Claude für dich erstellt und das du jemandem zeigen würdest: Dokumente, Designs, Präsentationen, Dashboards oder kleine interaktive Tools. Es öffnet sich neben der Unterhaltung.\n\n- **Erstellen:** in jedem Chat danach fragen, auch in Claude Code, oder im Artifacts-Tab mit einer Vorlage starten (Docs, Slides, Design; Dashboards und Motion in Beta).\n- **Voraussetzung:** „Cloud code execution and file creation“ unter Settings > Capabilities aktivieren.\n- **Wiederfinden:** Alles liegt im Artifacts-Tab der Seitenleiste.\n- **Bearbeiten:** Änderungen im Chat anfordern; in Docs Text markieren und „Edit with Claude“ nutzen.\n- **Teilen:** Artifacts sind zunächst privat.\n- **Export:** Docs z. B. als Word, PDF, Markdown oder Google Docs, Decks als PowerPoint, PDF oder Google Slides.\n- **Daten und Apps:** Auf Pro, Max, Ultra, Team und Enterprise können Artifacts Daten speichern (nur Text, bis 20 MB pro Artifact) und verbundene Apps nutzen.\n\n## Praxis für deine Projekte\n\nLege pro größerem Vorhaben ein Projekt an, lade Spezifikationen und Architekturnotizen als Projektwissen hoch und halte Konventionen in den Projektanweisungen fest. Artifacts eignen sich für Spezifikationen, Dashboards und Prototypen, die du teilen oder weiterverwenden willst. Funktionen und Planverfügbarkeit ändern sich häufig – maßgeblich sind die verlinkten Hilfeartikel.",
+      "sources": [
+        {
+          "title": "What are projects?",
+          "url": "https://support.claude.com/en/articles/9517075-what-are-projects"
+        },
+        {
+          "title": "How can I create and manage projects?",
+          "url": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
+        },
+        {
+          "title": "What are artifacts and how do I use them?",
+          "url": "https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them"
+        }
+      ],
+      "verification": "verified",
+      "verifiedAt": "2026-11-06"
+    }
+  ]
+}
