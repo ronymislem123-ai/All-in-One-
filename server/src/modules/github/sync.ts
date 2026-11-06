@@ -81,15 +81,20 @@ export async function syncRepository(ctx: Ctx, repoId: string, opts: { analyze?:
     const renamed = repo.github_id === meta.id && repo.full_name !== meta.full_name;
     const clash = ctx.db.get<{ id: string }>('SELECT id FROM repositories WHERE github_id = ? AND id <> ?', [meta.id, repoId]);
     if (clash) throw badRequest(`GitHub-ID ${meta.id} ist bereits einem anderen Eintrag zugeordnet (${clash.id}).`);
+    const branch = repo.tracked_branch || meta.default_branch;
     const [languages, branches, commits] = await Promise.all([
       gh.get<Record<string, number>>(`/repos/${meta.full_name}/languages`, { cache: true }).then((r) => r.data).catch(() => ({})),
       gh.paginate<GhBranch>(`/repos/${meta.full_name}/branches`, 3).catch(() => [] as GhBranch[]),
-      gh.get<GhCommit[]>(`/repos/${meta.full_name}/commits?sha=${encodeURIComponent(meta.default_branch)}&per_page=30`, { cache: true }).then((r) => r.data).catch(() => [] as GhCommit[]),
+      gh.get<GhCommit[]>(`/repos/${meta.full_name}/commits?sha=${encodeURIComponent(branch)}&per_page=30`, { cache: true }).then((r) => r.data).catch(() => [] as GhCommit[]),
     ]);
-    const head = branches.find((b) => b.name === meta.default_branch)?.commit.sha ?? commits[0]?.sha ?? null;
+    if (repo.tracked_branch && branches.length && !branches.some((b) => b.name === repo.tracked_branch)) {
+      throw badRequest(`Branch „${repo.tracked_branch}“ existiert in ${meta.full_name} nicht (mehr).`);
+    }
+    const head = branches.find((b) => b.name === branch)?.commit.sha ?? commits[0]?.sha ?? null;
     const headChanged = Boolean(head && head !== repo.head_sha);
     let tree: GhTree | null = null;
     if (head && (headChanged || opts.force || !repo.file_count)) {
+      if (headChanged && repo.head_sha) ctx.db.run('DELETE FROM repo_commits WHERE repo_id = ?', [repoId]);
       tree = (await gh.get<GhTree>(`/repos/${meta.full_name}/git/trees/${head}?recursive=1`)).data;
     }
     const knownShas = new Set(ctx.db.all<{ sha: string }>('SELECT sha FROM repo_commits WHERE repo_id = ?', [repoId]).map((r) => r.sha));

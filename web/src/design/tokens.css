@@ -1,0 +1,186 @@
+/*
+ * OMEGA Infinity – Design Tokens
+ * Identity: "Mission Control at night" – deep ink surfaces, an iris accent for interaction,
+ * ion teal for data, restrained depth. Status colours are reserved for status only (§19.4).
+ * All component styles consume these tokens; change the look here, centrally.
+ */
+:root {
+  /* typography */
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --fs-2xs: 0.6875rem; /* 11 */
+  --fs-xs: 0.75rem; /* 12 */
+  --fs-sm: 0.8125rem; /* 13 */
+  --fs-md: 0.875rem; /* 14 */
+  --fs-lg: 1rem; /* 16 */
+  --fs-xl: 1.125rem; /* 18 */
+  --fs-2xl: 1.375rem; /* 22 */
+  --fs-3xl: 1.75rem; /* 28 */
+  --fs-4xl: 2.25rem; /* 36 */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --lh-tight: 1.2;
+  --lh-normal: 1.5;
+  --tracking-tight: -0.015em;
+  --tracking-wide: 0.06em;
+
+  /* spacing (4px grid) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* radii */
+  --r-xs: 6px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-full: 999px;
+
+  /* sizes */
+  --sidebar-w: 248px;
+  --sidebar-w-collapsed: 72px;
+  --topbar-h: 60px;
+  --content-max: 1440px;
+  --control-h: 38px;
+  --control-h-sm: 30px;
+  --touch: 44px;
+
+  /* layers */
+  --z-sticky: 20;
+  --z-nav: 30;
+  --z-overlay: 60;
+  --z-dialog: 70;
+  --z-palette: 80;
+  --z-toast: 90;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --dur-4: 520ms;
+
+  /* breakpoints (reference – used in media queries) : sm 640, md 900, lg 1200, xl 1600 */
+
+  color-scheme: dark;
+  --bg: #090a0f;
+  --bg-aurora-1: rgba(124, 131, 255, 0.10);
+  --bg-aurora-2: rgba(69, 211, 199, 0.06);
+  --surface-0: #0d0f16;
+  --surface-1: #12141c;
+  --surface-2: #171a24;
+  --surface-3: #1e2230;
+  --surface-glass: rgba(18, 20, 28, 0.72);
+  --overlay: rgba(4, 5, 10, 0.66);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --divider: rgba(255, 255, 255, 0.05);
+  --text: #e9ebf3;
+  --text-muted: #a2a8ba;
+  --text-subtle: #737a8e;
+  --text-inverse: #0b0c12;
+  --accent: #8d95ff;
+  --accent-hover: #a3a9ff;
+  --accent-strong: #b9beff;
+  --accent-soft: rgba(141, 149, 255, 0.14);
+  --accent-softer: rgba(141, 149, 255, 0.07);
+  --accent-contrast: #0b0c12;
+  --ion: #4fd4c8;
+  --ion-soft: rgba(79, 212, 200, 0.13);
+  --ok: #43c48b;
+  --ok-soft: rgba(67, 196, 139, 0.14);
+  --warn: #e8b84a;
+  --warn-soft: rgba(232, 184, 74, 0.14);
+  --crit: #f26b6b;
+  --crit-soft: rgba(242, 107, 107, 0.14);
+  --unknown: #858c9f;
+  --unknown-soft: rgba(133, 140, 159, 0.14);
+  --focus: #b9beff;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 8px 24px -8px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-3: 0 24px 64px -16px rgba(0, 0, 0, 0.7), 0 6px 16px rgba(0, 0, 0, 0.35);
+  --highlight: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  --glow-accent: 0 0 0 1px rgba(141, 149, 255, 0.35), 0 8px 30px -10px rgba(141, 149, 255, 0.45);
+  --grid-dot: rgba(255, 255, 255, 0.035);
+  --code-bg: #0c0e14;
+}
+
+/* Light mode – designed separately, not inverted */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f4f5fa;
+  --bg-aurora-1: rgba(90, 95, 224, 0.08);
+  --bg-aurora-2: rgba(16, 160, 148, 0.05);
+  --surface-0: #eef0f6;
+  --surface-1: #ffffff;
+  --surface-2: #f6f7fb;
+  --surface-3: #eceef5;
+  --surface-glass: rgba(255, 255, 255, 0.78);
+  --overlay: rgba(20, 23, 37, 0.38);
+  --border: rgba(20, 24, 45, 0.09);
+  --border-strong: rgba(20, 24, 45, 0.16);
+  --divider: rgba(20, 24, 45, 0.06);
+  --text: #141726;
+  --text-muted: #4b5266;
+  --text-subtle: #6f768b;
+  --text-inverse: #ffffff;
+  --accent: #5157db;
+  --accent-hover: #444ac8;
+  --accent-strong: #3a3fb3;
+  --accent-soft: rgba(81, 87, 219, 0.1);
+  --accent-softer: rgba(81, 87, 219, 0.05);
+  --accent-contrast: #ffffff;
+  --ion: #0f8f85;
+  --ion-soft: rgba(15, 143, 133, 0.1);
+  --ok: #1a8a5a;
+  --ok-soft: rgba(26, 138, 90, 0.1);
+  --warn: #9a6b00;
+  --warn-soft: rgba(184, 132, 0, 0.12);
+  --crit: #c93535;
+  --crit-soft: rgba(201, 53, 53, 0.09);
+  --unknown: #687087;
+  --unknown-soft: rgba(104, 112, 135, 0.1);
+  --focus: #5157db;
+  --shadow-1: 0 1px 2px rgba(20, 24, 45, 0.06);
+  --shadow-2: 0 8px 24px -10px rgba(20, 24, 45, 0.18), 0 2px 6px rgba(20, 24, 45, 0.06);
+  --shadow-3: 0 24px 60px -16px rgba(20, 24, 45, 0.28), 0 6px 16px rgba(20, 24, 45, 0.08);
+  --highlight: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --glow-accent: 0 0 0 1px rgba(81, 87, 219, 0.3), 0 8px 26px -10px rgba(81, 87, 219, 0.35);
+  --grid-dot: rgba(20, 24, 45, 0.05);
+  --code-bg: #f7f8fc;
+}
+
+:root[data-density='compact'] {
+  --control-h: 32px;
+  --control-h-sm: 26px;
+  --sp-4: 12px;
+  --sp-5: 16px;
+  --sp-6: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:not([data-motion='full']) {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+  }
+}
+:root[data-motion='reduced'] {
+  --dur-1: 0ms;
+  --dur-2: 0ms;
+  --dur-3: 0ms;
+  --dur-4: 0ms;
+}

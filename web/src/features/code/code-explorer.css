@@ -1,0 +1,56 @@
+.explorer { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: var(--sp-4); align-items: start; }
+.explorer-canvas { position: relative; height: calc(100vh - 230px); min-height: 520px; border-radius: var(--r-lg); border: 1px solid var(--border); background: var(--surface-0); overflow: hidden; box-shadow: var(--highlight); }
+.explorer-panel { position: sticky; top: 76px; max-height: calc(100vh - 96px); overflow-y: auto; }
+@media (max-width: 1200px) { .explorer { grid-template-columns: minmax(0, 1fr); } .explorer-panel { position: static; max-height: none; } .explorer-canvas { height: 62vh; } }
+@media (max-width: 640px) { .explorer-canvas { height: 56vh; min-height: 380px; } }
+
+.explorer-toolbar { position: absolute; top: 12px; left: 12px; right: 12px; z-index: 5; display: flex; gap: 8px; flex-wrap: wrap; pointer-events: none; }
+.explorer-toolbar > * { pointer-events: auto; }
+.explorer-toolbar .input { background: var(--surface-glass); backdrop-filter: blur(10px); }
+.legend { position: absolute; right: 12px; bottom: 12px; z-index: 5; display: flex; flex-direction: column; gap: 4px; padding: 8px 10px; border-radius: var(--r-sm); background: var(--surface-glass); backdrop-filter: blur(10px); border: 1px solid var(--border); font-size: var(--fs-2xs); color: var(--text-muted); }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend i { display: inline-block; width: 22px; height: 0; border-top: 2px solid var(--border-strong); }
+.legend i.dep { border-top: 2px dashed var(--accent); }
+
+/* graph nodes */
+.cx-node { min-width: 170px; max-width: 220px; padding: 10px 12px; border-radius: 12px; background: var(--surface-1); border: 1px solid var(--border-strong); box-shadow: var(--shadow-1), var(--highlight); color: var(--text); font-size: 12px; transition: box-shadow var(--dur-2), opacity var(--dur-2), transform var(--dur-2) var(--ease-out); cursor: pointer; }
+.cx-node:hover { box-shadow: var(--shadow-2), var(--highlight); }
+.cx-node.selected { box-shadow: var(--glow-accent); border-color: var(--accent); }
+.cx-node.dim { opacity: 0.28; }
+.cx-node.tour { box-shadow: 0 0 0 3px var(--ion), 0 10px 30px -10px var(--ion); transform: scale(1.04); }
+.cx-node .cx-head { display: flex; align-items: center; gap: 8px; }
+.cx-node .cx-ico { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; flex: none; color: #fff; }
+.cx-node .cx-ico svg { width: 14px; height: 14px; }
+.cx-node .cx-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cx-node .cx-meta { margin-top: 6px; display: flex; gap: 6px; align-items: center; color: var(--text-subtle); font-size: 11px; flex-wrap: wrap; }
+.cx-node .cx-role { padding: 1px 6px; border-radius: 999px; font-size: 10px; font-weight: 600; }
+.cx-node .cx-toggle { margin-left: auto; width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--surface-2); display: grid; place-items: center; color: var(--text-muted); cursor: pointer; flex: none; }
+.cx-node .cx-toggle:hover { color: var(--text); border-color: var(--accent); }
+.cx-node.root { background: linear-gradient(140deg, var(--accent-soft), var(--surface-1)); min-width: 200px; }
+.cx-node.protected { border-style: dashed; }
+.react-flow__handle { opacity: 0; width: 6px; height: 6px; }
+.react-flow { --xy-background-color: transparent; --xy-minimap-background-color: var(--surface-1); --xy-controls-button-background-color: var(--surface-2); --xy-controls-button-color: var(--text); --xy-controls-button-border-color: var(--border); --xy-controls-button-background-color-hover: var(--surface-3); --xy-edge-label-background-color: var(--surface-2); --xy-edge-label-color: var(--text-muted); }
+.react-flow__attribution { display: none; }
+.react-flow__minimap { border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+.react-flow__controls { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-2); }
+
+/* robot companion */
+.robot { position: absolute; left: 14px; bottom: 14px; z-index: 6; display: flex; align-items: flex-end; gap: 10px; max-width: min(520px, calc(100% - 28px)); pointer-events: none; }
+.robot > * { pointer-events: auto; }
+.robot-figure { width: 74px; height: 86px; flex: none; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35)); cursor: pointer; }
+.robot-bubble { position: relative; padding: 12px 14px; border-radius: 14px 14px 14px 4px; background: var(--surface-1); border: 1px solid var(--border-strong); box-shadow: var(--shadow-3); font-size: var(--fs-sm); line-height: 1.5; animation: pop-in var(--dur-3) var(--ease-spring); transform-origin: bottom left; }
+.robot-bubble .rb-title { font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.robot-bubble .rb-actions { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.robot-bubble.min { padding: 8px 12px; }
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion='reduced']) .robot-figure .r-body { animation: robot-float 4.2s var(--ease-in-out) infinite; transform-origin: center; }
+  :root:not([data-motion='reduced']) .robot-figure .r-eye { animation: robot-blink 5s infinite; transform-origin: center; transform-box: fill-box; }
+  :root:not([data-motion='reduced']) .robot-figure .r-antenna-tip { animation: robot-glow 2.4s var(--ease-in-out) infinite; }
+  :root:not([data-motion='reduced']) .robot-figure.talking .r-mouth { animation: robot-talk 0.36s steps(2) infinite; transform-origin: center; transform-box: fill-box; }
+}
+:root[data-motion='full'] .robot-figure .r-body { animation: robot-float 4.2s var(--ease-in-out) infinite; }
+@keyframes robot-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes robot-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+@keyframes robot-glow { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+@keyframes robot-talk { 0% { transform: scaleY(1); } 100% { transform: scaleY(2.2); } }
+@media (max-width: 640px) { .robot-figure { width: 54px; height: 64px; } .robot { max-width: calc(100% - 20px); } .legend { display: none; } }

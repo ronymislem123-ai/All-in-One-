@@ -11,6 +11,7 @@ import { ensureRepository, confirmLink, generateLinkSuggestions, listLinkSuggest
 import { analyzeRepository, discoverRepositories, rateLimit as ghRate, syncAll, syncRepository } from '../modules/github/sync';
 import { architecture, fileContent, pathDetail, repoGraph, repoOverview, treeChildren } from '../modules/github/explorer';
 import { handleWebhook } from '../modules/github/webhook';
+import { askAboutCode } from '../modules/github/code-ai';
 import { githubSettings, githubToken, githubWebhookSecret, secretInfo, setSecret, setSetting } from '../modules/settings';
 import { logActivity } from '../modules/activity';
 import { applyRetention, backupStatus, createBackup, listBackups, projectsInBackup, restoreFull, restoreLog, restoreProject, verifyBackup } from '../modules/backup';
@@ -102,12 +103,20 @@ export function registerSync(app: App, ctx: Ctx) {
   });
   app.get('/api/repos/:id', (c) => c.json(repoOverview(ctx, c.req.param('id'))));
   app.patch('/api/repos/:id', async (c) => {
-    const b = await body(c, z.object({ tracked: z.boolean() }));
+    const b = await body(c, z.object({ tracked: z.boolean().optional(), trackedBranch: z.string().trim().max(250).regex(/^[^\s~^:?*[\\]+$/, 'Ungültiger Branchname').nullable().optional() }));
     const repo = requireRepo(ctx, c.req.param('id'));
     ctx.db.write(() => {
-      ctx.db.run('UPDATE repositories SET tracked = ? WHERE id = ?', [b.tracked ? 1 : 0, repo.id]);
-      logActivity(ctx, USER, { action: 'repo.tracking', summary: `${repo.full_name}: Beobachtung ${b.tracked ? 'aktiviert' : 'pausiert'} (Daten bleiben erhalten)`, entityType: 'repository', entityId: repo.id });
+      if (b.tracked !== undefined) {
+        ctx.db.run('UPDATE repositories SET tracked = ? WHERE id = ?', [b.tracked ? 1 : 0, repo.id]);
+        logActivity(ctx, USER, { action: 'repo.tracking', summary: `${repo.full_name}: Beobachtung ${b.tracked ? 'aktiviert' : 'pausiert'} (Daten bleiben erhalten)`, entityType: 'repository', entityId: repo.id });
+      }
+      if (b.trackedBranch !== undefined) {
+        // force a fresh tree/analysis on the next sync
+        ctx.db.run('UPDATE repositories SET tracked_branch = ?, head_sha = NULL, file_count = NULL WHERE id = ?', [b.trackedBranch || null, repo.id]);
+        logActivity(ctx, USER, { action: 'repo.branch', summary: `${repo.full_name}: folgt jetzt ${b.trackedBranch ? `Branch „${b.trackedBranch}“` : 'dem Standardbranch'}`, entityType: 'repository', entityId: repo.id });
+      }
     });
+    if (b.trackedBranch !== undefined) await syncRepository(ctx, repo.id, { analyze: true, force: true }).catch(() => undefined);
     return c.json(serializeRepo(requireRepo(ctx, repo.id)));
   });
   app.post('/api/repos/:id/sync', async (c) => c.json(await syncRepository(ctx, c.req.param('id'), { force: c.req.query('force') === '1', analyze: true })));
@@ -117,6 +126,12 @@ export function registerSync(app: App, ctx: Ctx) {
   app.get('/api/repos/:id/architecture', (c) => c.json(architecture(ctx, c.req.param('id'))));
   app.get('/api/repos/:id/path', (c) => c.json(pathDetail(ctx, c.req.param('id'), c.req.query('path') ?? '')));
   app.get('/api/repos/:id/file', async (c) => c.json(await fileContent(ctx, c.req.param('id'), c.req.query('path') ?? '')));
+
+  app.post('/api/repos/:id/ask', async (c) => {
+    rateLimit(ctx, `ask:${c.get('user')!.id}`, 20, 10);
+    const b = await body(c, z.object({ path: z.string().max(1000).default(''), question: z.string().max(1000) }));
+    return c.json(await askAboutCode(ctx, c.req.param('id'), b.path, b.question));
+  });
 
   app.get('/api/link-suggestions', (c) => c.json(listLinkSuggestions(ctx)));
   app.post('/api/nodes/:id/repos', async (c) => {

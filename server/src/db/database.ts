@@ -2,6 +2,7 @@ import BetterSqlite3 from 'better-sqlite3';
 import { sha256 } from '../lib/crypto';
 import { nowIso } from '../lib/time';
 import * as m001 from './migrations/001_init';
+import * as m002 from './migrations/002_tracked_branch';
 
 export type SqlParams = Record<string, unknown> | unknown[] | undefined;
 
@@ -12,7 +13,10 @@ export interface Migration {
 }
 
 /** All migrations in order. Never edit an applied migration – add a new one. */
-export const MIGRATIONS: Migration[] = [{ id: 1, name: '001_init', sql: m001.sql }];
+export const MIGRATIONS: Migration[] = [
+  { id: 1, name: '001_init', sql: m001.sql },
+  { id: 2, name: '002_tracked_branch', sql: m002.sql },
+];
 export const SCHEMA_VERSION = MIGRATIONS[MIGRATIONS.length - 1].id;
 
 function openRaw(path: string, readonly = false): BetterSqlite3.Database {

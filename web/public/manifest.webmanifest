@@ -1,0 +1,1 @@
+{ "name": "OMEGA Infinity", "short_name": "OMEGA", "start_url": "/", "display": "standalone", "background_color": "#090a0f", "theme_color": "#090a0f", "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }] }

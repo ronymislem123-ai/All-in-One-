@@ -13,7 +13,7 @@ export interface RepoRow {
   html_url: string | null; default_branch: string | null; private: number; fork: number; archived: number;
   primary_language: string | null; languages: string; topics: string; size_kb: number | null; stars: number | null;
   open_issues: number | null; pushed_at: string | null; gh_created_at: string | null; gh_updated_at: string | null;
-  head_sha: string | null; tree_truncated: number; file_count: number | null; tracked: number; status: string;
+  head_sha: string | null; tracked_branch: string | null; tree_truncated: number; file_count: number | null; tracked: number; status: string;
   status_detail: string | null; last_synced_at: string | null; last_checked_at: string | null; added_via: string;
   created_at: string; updated_at: string;
 }
@@ -23,7 +23,7 @@ export const FULL_NAME_RE = /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/;
 export function serializeRepo(r: RepoRow) {
   return {
     id: r.id, githubId: r.github_id, owner: r.owner, name: r.name, fullName: r.full_name, description: r.description,
-    htmlUrl: r.html_url, defaultBranch: r.default_branch, private: Boolean(r.private), fork: Boolean(r.fork), archived: Boolean(r.archived),
+    htmlUrl: r.html_url, defaultBranch: r.default_branch, trackedBranch: r.tracked_branch, branch: r.tracked_branch ?? r.default_branch, private: Boolean(r.private), fork: Boolean(r.fork), archived: Boolean(r.archived),
     primaryLanguage: r.primary_language, languages: parseJson<Record<string, number>>(r.languages, {}), topics: parseJson<string[]>(r.topics, []),
     sizeKb: r.size_kb, stars: r.stars, openIssues: r.open_issues, pushedAt: r.pushed_at, headSha: r.head_sha,
     treeTruncated: Boolean(r.tree_truncated), fileCount: r.file_count, tracked: Boolean(r.tracked), status: r.status,
