@@ -26,7 +26,8 @@ export async function signIn(page: Page) {
 
 /** WCAG 2.1 A/AA scan; fails on serious or critical violations. */
 export async function expectAccessible(page: Page, label: string) {
-  const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  // @axe-core/playwright ships its own playwright-core typings → cast
+  const results = await new AxeBuilder({ page: page as never }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
   const severe = results.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
   const summary = severe.map((v) => `${v.id} (${v.impact}): ${v.help} → ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
   expect(summary, `Barrierefreiheit auf ${label}`).toEqual([]);

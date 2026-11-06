@@ -1,24 +1,37 @@
 # PROJECT_STATE – OMEGA Infinity
 
-> Lebendes Statusdokument. Wird bei jedem größeren Schritt aktualisiert (zuletzt: Aufbau Server-Kern).
+> Lebendes Statusdokument. Zuletzt aktualisiert: 2026-11-06 (v0.1.0 – erste vollständige Ausbaustufe).
 
 ## Gesamtziel
 Persönliches digitales Betriebssystem: Projektzentrale, App Library, AI Idea Hub, Claude-Ingest (MCP/API/Datei),
 read-only GitHub-Integration mit Code Explorer, Konflikt-/Sync-Management, Backups & Wiederherstellung.
 
-## Stand (Work in Progress)
-- [x] Stack festgelegt (siehe docs/DECISIONS.md): Node 22 + Hono + SQLite (better-sqlite3) · React 19 + Vite · Zod · Vitest/Playwright
-- [x] Gemeinsames Domänenvokabular (`shared/src/domain.ts`) und Ingest-Schema `omega.ingest/v1` (`shared/src/ingest.ts`)
-- [x] DB-Schema + Migrationsrunner mit Prüfsummen (`server/src/db`)
-- [x] Module: nodes (Hierarchie, Papierkorb, Versionen), apps (Erreichbarkeitsprüfung), ideas (+ KI optional), knowledge,
-      categories, tags, activity, notifications, conflicts, ingest, settings, github/repos, github/client, search
-- [x] Inhalte: 144 kuratierte Ideen (36 Kategorien), 18 geprüfte Claude-Wissensartikel
-- [ ] GitHub-Sync, Code-Analyse, Webhook
-- [ ] Backup/Restore
-- [ ] Auth + HTTP-Routen + Scheduler
-- [ ] Web-UI
-- [ ] MCP-Server
-- [ ] Tests, visuelle Prüfung, Dokumentation
+## Stand
+**Funktionsfähig und getestet** – siehe [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md).
+
+- Server (Hono + SQLite), Web (React 19), MCP-Server: implementiert, gebaut, getestet
+- Datenbank-Schema Version 2 (`001_init`, `002_tracked_branch`)
+- Inhalte: 144 kuratierte Ideen / 36 Kategorien / 112 Kategorieeinträge inkl. Unterkategorien, 18 geprüfte Wissensartikel
+- Tests: 67 Server-Tests, 13 Browser-Tests – alle grün
+
+## Verbindliche Architekturentscheidungen
+Siehe [docs/DECISIONS.md](docs/DECISIONS.md). Kernpunkte: GitHub nur lesend · keine IDE · drei Statusachsen ·
+Feld-Herkunft statt Überschreiben · Ähnlichkeit erzeugt nur Vorschläge · Idempotenz über eventId/externalId ·
+Backups als verifizierte Dateien mit Sidecar · KI nur mit echter Anbindung.
+
+## Wichtige Dateien
+| Bereich | Dateien |
+|---|---|
+| Vokabular & Ingest-Format | `shared/src/domain.ts`, `shared/src/ingest.ts` |
+| Schema & Migrationen | `server/src/db/database.ts`, `server/src/db/migrations/*` |
+| Kernlogik | `server/src/modules/{nodes,ingest,conflicts,backup,ideas,apps,dashboard}.ts`, `server/src/modules/github/*` |
+| HTTP & Sicherheit | `server/src/app.ts`, `server/src/http/*`, `server/src/auth/auth.ts` |
+| Web | `web/src/App.tsx`, `web/src/design/*`, `web/src/features/*` |
+| MCP | `mcp/src/index.ts` |
+
+## Notwendige Konfiguration für den Produktivbetrieb
+`OMEGA_BACKUP_PASSPHRASE`, `OMEGA_BACKUP_EXTERNAL_DIR`, `OMEGA_SECRET_KEY`, ggf. `OMEGA_PUBLIC_URL` (https), `GITHUB_TOKEN`,
+optional `GITHUB_WEBHOOK_SECRET`, `ANTHROPIC_API_KEY`. Siehe `.env.example`.
 
 ## Nächster Schritt
-GitHub-Sync/Analyzer, danach Backup, Auth und HTTP-Schicht; dann Typecheck & Server-Tests.
+Siehe [HANDOFF.md](HANDOFF.md) und [TODO.md](TODO.md).
