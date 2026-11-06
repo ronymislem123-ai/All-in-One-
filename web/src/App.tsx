@@ -20,6 +20,7 @@ const ConflictsPage = lazy(() => import('./features/conflicts/ConflictsPage'));
 const CodeIndexPage = lazy(() => import('./features/code/CodeIndexPage'));
 const CodeExplorerPage = lazy(() => import('./features/code/CodeExplorerPage'));
 const ActivityPage = lazy(() => import('./features/activity/ActivityPage'));
+const LivePage = lazy(() => import('./features/live/LivePage'));
 const BackupPage = lazy(() => import('./features/backup/BackupPage'));
 const SettingsPage = lazy(() => import('./features/settings/SettingsPage'));
 
@@ -81,6 +82,8 @@ function Gate() {
         <Route path="apps" element={page(<AppStorePage />)} />
         <Route path="ideas" element={page(<IdeaHubPage />)} />
         <Route path="ideas/:id" element={page(<IdeaPage />)} />
+        <Route path="live" element={page(<LivePage />)} />
+        <Route path="live/:id" element={page(<LivePage />)} />
         <Route path="knowledge" element={page(<KnowledgePage />)} />
         <Route path="knowledge/:slug" element={page(<KnowledgePage />)} />
         <Route path="sync" element={page(<SyncCenterPage />)} />

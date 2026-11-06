@@ -24,7 +24,7 @@ Die CLI-Syntax für `claude mcp add` stammt aus der offiziellen Claude-Code-Doku
    ```
    Für ein ganzes Team-Repository alternativ `--scope project` (Eintrag in `.mcp.json`; Token über Umgebungsvariable einbinden, nie einchecken).
 
-**Werkzeuge:** `omega_status`, `omega_list` (bekannte externalIds), `omega_upsert_project`, `omega_upsert_module`, `omega_report_progress`, `omega_add_idea`, `omega_upsert_doc`, `omega_rename`, `omega_archive`, `omega_send_events` (bis 100 Ereignisse).
+**Werkzeuge:** `omega_status`, `omega_list` (bekannte externalIds), `omega_upsert_project`, `omega_upsert_module`, `omega_report_progress`, `omega_add_idea`, `omega_upsert_doc`, `omega_rename`, `omega_archive`, `omega_send_events` (bis 100 Ereignisse) sowie für die **Werkstatt** `omega_live_start`, `omega_live_log`, `omega_live_milestone`, `omega_live_task`, `omega_live_screenshot`, `omega_live_preview`, `omega_live_status` (siehe 1.5).
 
 Die eventId wird aus dem Inhalt abgeleitet: identische Übermittlungen sind No-ops. Fortschrittsmeldungen sind pro Tag eindeutig.
 
@@ -85,6 +85,38 @@ Statuswerte: `idea`, `planned`, `concept`, `in_development`, `claude_reported_do
 - **Markdown/Text ohne `omega: project`** wird als Idee erfasst.
 
 Vorschau (Dry-Run) ist Pflicht vor dem Import in der Oberfläche.
+
+### 1.5 Werkstatt – Live-Entwicklung mitverfolgen (`omega.live/v1`) <a id="live"></a>
+
+Die Werkstatt (`/live`) zeigt in Echtzeit, was Claude gerade baut. Claude streamt dazu Ereignisse; OMEGA stellt sie nur dar und verändert daraus **keine** Projektdaten.
+
+**Sitzung starten** – `POST /api/ingest/v1/live/sessions` (Bearer-Token mit Bereich `ingest`):
+```json
+{ "externalId": "mein-projekt/2026-11-06", "title": "Mein Projekt", "goal": "…", "state": "building", "phase": "Backend",
+  "milestones": [{ "key": "design", "label": "Design" }, { "key": "frontend", "label": "Frontend" }, { "key": "backend", "label": "Backend" }],
+  "tasks": [{ "key": "t1", "title": "Datenmodell", "status": "doing" }] }
+```
+Gleiche `externalId` = Aktualisierung (Meilensteine/Aufgaben werden zusammengeführt, nie entfernt).
+
+**Ereignisse senden** – `POST /api/ingest/v1/live/sessions/<externalId>/events` mit `{ "events": [ … ] }` (bis 100 je Aufruf, idempotent über `eventId`):
+
+| `kind` | Pflicht | Wirkung |
+|---|---|---|
+| `log`, `research`, `plan`, `decision`, `build`, `test`, `problem` | `title`, optional `body` | Protokolleintrag (Problem erzeugt zusätzlich eine Benachrichtigung) |
+| `milestone` | `milestone: { key, label?, progress?, status? }` | Meilenstein anlegen/aktualisieren (beim ersten Mal `label` nötig) |
+| `task` | `task: { key, title?, status?, detail?, order? }` | Aufgabe anlegen/aktualisieren (`todo`, `doing`, `done`, `blocked`) |
+| `screenshot` | `image: { mime, base64, caption? }` | Bild speichern (PNG/JPEG/WebP/GIF/SVG, max. 3 MB, dedupliziert) |
+| `preview` | `preview: { url, note? }` | Vorschau-Adresse setzen (`url: null` entfernt sie) |
+| `status` | `status: { state?, phase?, progress?, now? }` | Zustand (`planning`, `building`, `testing`, `done`, `paused`), Phase, Gesamtfortschritt, „Gerade in Arbeit“ |
+
+**Antwort:** `{ sessionId, summary: { applied, duplicate, rejected }, results: [{ index, eventId, status, message, issues }] }`.
+
+**Ohne MCP:** `scripts/omega-live.mjs` (nur Node, keine Abhängigkeiten) – `OMEGA_URL`, `OMEGA_TOKEN`, `OMEGA_LIVE_ID` setzen, dann z. B. `node scripts/omega-live.mjs log research "Codebasis gelesen" "…"`, `… shot ./bild.png "Startseite"`, `… milestone backend 70`, `… preview http://localhost:5173`, `… status --state done`.
+
+**Empfohlene Anweisung für Claude:**
+> Streame deinen Entwicklungsprozess in die OMEGA-Werkstatt: zu Beginn `omega_live_start` mit Ziel, Meilensteinen (design, frontend, backend, datenbank, funktionen, optimierung) und Aufgaben. Danach laufend kurze Protokolleinträge (Recherche, Plan, Entscheidung mit Begründung, Code, Test, Problem), Meilenstein- und Aufgaben-Updates, Screenshots nach jedem sichtbaren Zwischenstand, die Vorschau-Adresse sobald ein Dev-Server läuft und am Ende `omega_live_status` mit `state: done`.
+
+Die Live-Vorschau wird als iframe eingebettet; Server, die Einbettung verbieten (z. B. OMEGA selbst, `frame-ancestors 'none'`), öffnet man über „Öffnen“ in einem neuen Tab.
 
 ## 2. GitHub (nur lesend)
 

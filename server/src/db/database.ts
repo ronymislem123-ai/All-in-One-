@@ -3,6 +3,7 @@ import { sha256 } from '../lib/crypto';
 import { nowIso } from '../lib/time';
 import * as m001 from './migrations/001_init';
 import * as m002 from './migrations/002_tracked_branch';
+import * as m003 from './migrations/003_dev_live';
 
 export type SqlParams = Record<string, unknown> | unknown[] | undefined;
 
@@ -16,6 +17,7 @@ export interface Migration {
 export const MIGRATIONS: Migration[] = [
   { id: 1, name: '001_init', sql: m001.sql },
   { id: 2, name: '002_tracked_branch', sql: m002.sql },
+  { id: 3, name: '003_dev_live', sql: m003.sql },
 ];
 export const SCHEMA_VERSION = MIGRATIONS[MIGRATIONS.length - 1].id;
 

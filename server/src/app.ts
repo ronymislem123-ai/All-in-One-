@@ -11,9 +11,10 @@ import type { Env } from './http/kit';
 import { registerCore } from './http/routes-core';
 import { registerDomain } from './http/routes-domain';
 import { registerSync } from './http/routes-sync';
+import { registerLive } from './http/routes-live';
 
 /** Endpoints reachable without an owner session. Everything else under /api is default-deny. */
-const PUBLIC = new Set(['/api/system/health', '/api/auth/state', '/api/auth/setup', '/api/auth/login', '/api/auth/logout', '/api/webhooks/github', '/api/ingest/v1/schema']);
+const PUBLIC = new Set(['/api/system/health', '/api/auth/state', '/api/auth/setup', '/api/auth/login', '/api/auth/logout', '/api/webhooks/github', '/api/ingest/v1/schema', '/api/ingest/v1/live/schema']);
 const TOKEN_PREFIX = '/api/ingest/';
 const UNSAFE = new Set(['POST', 'PUT', 'PATCH', 'DELETE']);
 
@@ -35,7 +36,7 @@ export function createApp(ctx: Ctx) {
     if (!c.res.headers.get('Content-Security-Policy')) {
       c.header(
         'Content-Security-Policy',
-        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; frame-src 'self' https: http://localhost:* http://127.0.0.1:*; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
       );
     }
     if (ctx.config.cookieSecure) c.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
@@ -86,6 +87,7 @@ export function createApp(ctx: Ctx) {
   registerCore(app, ctx);
   registerDomain(app, ctx);
   registerSync(app, ctx);
+  registerLive(app, ctx);
 
   app.all('/api/*', (c) => c.json({ error: { code: 'not_found', message: 'Unbekannter Endpunkt.' } }, 404));
 

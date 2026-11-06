@@ -10,6 +10,8 @@ Priorisiert nach Nutzen. Nichts davon ist für den aktuellen Funktionsumfang erf
 - [ ] Deployment-Anleitung (systemd/Docker + Reverse-Proxy) – Deployment selbst nur nach ausdrücklicher Freigabe
 
 ## Mittel
+- [ ] Werkstatt: ältere Sitzungen automatisch bereinigen (Aufbewahrungsfrist für `dev_*`), Export einer Sitzung als Markdown-Bericht
+- [ ] Werkstatt: Vorschau-Server im Dev-Modus (`npm run dev`) automatisch als Vorschau-Adresse melden
 - [ ] 2-Faktor-Authentifizierung (TOTP) und Passkeys
 - [ ] Bereinigungsfunktion für alte Versionen/Aktivitäten (Aufbewahrungsfristen, DSGVO-Löschung inkl. Historie)
 - [ ] Projektbeziehungen zwischen Projekten (z. B. „nutzt“, „ersetzt“) als eigene Kanten + Visualisierung
