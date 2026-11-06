@@ -52,6 +52,7 @@ export const nodeUpsertData = z.object({
   progress: z.number().int().min(0).max(100).optional(),
   nature: z.enum(NODE_NATURES).optional(),
   codePath: shortText(500).optional(),
+  category: slugish.optional(),
   tags: z.array(shortText(40).min(1)).max(20).optional(),
 });
 

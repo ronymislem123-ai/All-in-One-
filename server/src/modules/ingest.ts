@@ -233,20 +233,21 @@ interface HandlerResult {
 
 function handleNodeLike(ctx: Ctx, ev: Extract<IngestEvent, { type: 'project.upsert' | 'node.upsert' }>): HandlerResult {
   const d = ev.data;
+  const repository = ev.type === 'project.upsert' ? ev.data.repository : undefined;
   let node = liveNodeByIdentity(ctx, d.externalId);
   let via = '';
   // Rank 3 (§11.1): a confirmed repository link may identify an existing project.
-  if (!node && ev.type === 'project.upsert' && d.repository) {
+  if (!node && repository) {
     const linked = ctx.db.all<{ id: string }>(
       `SELECT n.id FROM project_repository_links l JOIN repositories r ON r.id = l.repository_id JOIN nodes n ON n.id = l.node_id
        WHERE r.full_name = ? AND l.status = 'confirmed' AND n.deleted_at IS NULL
        AND NOT EXISTS (SELECT 1 FROM external_identities x WHERE x.entity_type = 'node' AND x.entity_id = n.id AND x.source = 'claude')`,
-      [d.repository],
+      [repository],
     );
     if (linked.length === 1) {
       node = getNode(ctx, linked[0].id)!;
       bindIdentity(ctx, 'node', node.id, d.externalId, ev.eventId, d);
-      via = ` (Zuordnung über bestätigtes Repository ${d.repository})`;
+      via = ` (Zuordnung über bestätigtes Repository ${repository})`;
       resolveWaiting(ctx, `claude:node:${d.externalId}`, node.id);
     }
   }
@@ -274,9 +275,9 @@ function handleNodeLike(ctx: Ctx, ev: Extract<IngestEvent, { type: 'project.upse
     conflicts = r.conflicts;
     message = `„${node.name}“ neu angelegt${r.notes.length ? ` · ${r.notes.join(' · ')}` : ''}`;
   }
-  if (ev.type === 'project.upsert' && d.repository) {
-    const repo = ensureRepository(ctx, d.repository, 'claude-hint');
-    suggestLink(ctx, node.id, repo.id, 'claude-hint', null, `Von Claude genannt (${d.repository}) – bitte bestätigen`);
+  if (repository) {
+    const repo = ensureRepository(ctx, repository, 'claude-hint');
+    suggestLink(ctx, node.id, repo.id, 'claude-hint', null, `Von Claude genannt (${repository}) – bitte bestätigen`);
   }
   return { status: conflicts.length ? 'conflict' : 'applied', message, entityType: 'node', entityId: node.id, conflictIds: conflicts };
 }

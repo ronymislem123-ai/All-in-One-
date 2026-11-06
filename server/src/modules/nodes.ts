@@ -203,8 +203,9 @@ export function codeStatus(ctx: Ctx, node: NodeRow): { status: CodeStatus; repoI
     );
     if (!link) continue;
     const base = { repoId: link.repository_id, repoName: link.full_name };
-    if (link.status === 'pending' || !link.head_sha) return { status: 'pending', ...base };
+    if (link.status === 'pending') return { status: 'pending', ...base };
     if (link.status !== 'ok') return { status: 'unreachable', ...base, detail: link.status };
+    if (!link.head_sha) return { status: 'pending', ...base };
     if (node.code_path) {
       const p = node.code_path.replace(/^\/+|\/+$/g, '');
       const hit = ctx.db.get('SELECT 1 FROM repo_tree WHERE repo_id = ? AND path = ?', [link.repository_id, p]);

@@ -13,8 +13,4 @@ await build({
   alias: { '@shared': './shared/src' },
   banner: { js: "import { createRequire as __cr } from 'node:module'; const require = __cr(import.meta.url);" },
 });
-mkdirSync('dist/server/migrations', { recursive: true });
-cpSync('server/src/db/migrations', 'dist/server/migrations', { recursive: true });
-mkdirSync('dist/server/seed', { recursive: true });
-cpSync('server/src/seed', 'dist/server/seed', { recursive: true });
 console.log('server built → dist/server');
