@@ -30,6 +30,12 @@
 - Optional verschlüsselt (AES-256-GCM, Schlüsselableitung scrypt), Dateirechte 0600, Prüfsumme je Sicherung, Integritätsprüfung vor jeder Wiederherstellung, Sicherung des Ist-Stands vor jeder Wiederherstellung und jedem Import.
 - **Grenze:** OMEGA sichert nur, was ihm übermittelt wurde. Nicht übermittelte Claude-Unterhaltungen sind nicht enthalten.
 
+## Betrieb im Container
+- Image läuft als UID 1000 ohne Capabilities (`cap_drop: ALL`, `no-new-privileges`), Dateisystem schreibgeschützt; beschreibbar nur `/data`, `/backups`, `/tmp` (tmpfs).
+- App-Port nur an `127.0.0.1` gebunden; von außen nur über Caddy mit TLS. Caddy ersetzt von Clients gesendete `X-Forwarded-For`-Werte (geprüft), daher ist `OMEGA_TRUST_PROXY=true` dort sicher.
+- `.env` gelangt nicht ins Image (`.dockerignore`); Werte sind aber für alle mit Docker-Zugriff per `docker inspect` sichtbar.
+- Details und Prüfprotokoll: [DEPLOYMENT.md](DEPLOYMENT.md).
+
 ## Datenschutz (DSGVO-orientiert)
 - Datenminimierung: nur Daten, die für die Funktion nötig sind (keine Telemetrie, keine externen Schriften/CDNs, keine Drittanbieter-Aufrufe ohne Konfiguration).
 - Export aller Verwaltungsdaten (Art. 20), Löschung über Papierkorb → endgültiges Löschen (Versionshistorie bleibt bis zur Datenbank-Bereinigung; siehe TODO).

@@ -79,7 +79,7 @@ const wrap = <A>(fn: (a: A) => Promise<{ content: { type: 'text'; text: string }
   }
 };
 
-const server = new McpServer({ name: 'omega-infinity', version: '0.1.0' });
+const server = new McpServer({ name: 'omega-infinity', version: '0.1.1' });
 
 const ID_HINT = 'Verwende stabile, wiederverwendbare externalIds (z. B. "mein-projekt" und "mein-projekt/modulname"). Nutze omega_list, um bestehende IDs zu finden. Gleiche externalId = Aktualisierung, niemals Duplikat.';
 

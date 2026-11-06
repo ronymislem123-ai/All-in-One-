@@ -2,7 +2,8 @@ import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { loggedIn, makeEnv, type TestEnv } from './helpers/context';
-import { applyRetention, backupStatus, createBackup, listBackups, projectsInBackup, restoreFull, restoreProject, scheduledSnapshot, verifyBackup } from '../src/modules/backup';
+import { applyRetention, backupStatus, createBackup, listBackups, offlineRestore, projectsInBackup, restoreFull, restoreProject, scheduledSnapshot, verifyBackup } from '../src/modules/backup';
+import { Db } from '../src/db/database';
 import { createNode, getNode, trashNode, updateNode } from '../src/modules/nodes';
 import { isEncryptedBackup } from '../src/lib/crypto';
 
@@ -20,6 +21,20 @@ describe('backups', () => {
     expect(meta.sha256).toMatch(/^[0-9a-f]{64}$/);
     expect(existsSync(join(env.ctx.config.backupDir, `${meta.name}.json`))).toBe(true);
     expect(listBackups(env.ctx)[0].name).toBe(meta.name);
+  });
+
+  it('leaves no temporary SQLite files (-wal/-shm) behind in the backup directory', async () => {
+    const variants: Record<string, string>[] = [{}, { OMEGA_BACKUP_PASSPHRASE: 'a very long test passphrase' }];
+    for (const extra of variants) {
+      env = await makeEnv({}, extra);
+      createNode(env.ctx, U, { kind: 'project', name: 'Clean dir' });
+      const meta = await createBackup(env.ctx, 'manual');
+      expect((await verifyBackup(env.ctx, meta.name)).verified?.ok).toBe(true);
+      await projectsInBackup(env.ctx, meta.name);
+      const files = readdirSync(env.ctx.config.backupDir).sort();
+      expect(files).toEqual([meta.name, `${meta.name}.json`].sort());
+      env.cleanup();
+    }
   });
 
   it('only snapshots when data changed (no redundant copies)', async () => {
@@ -126,5 +141,20 @@ describe('backups', () => {
     expect(removed.length).toBe(2); // fresh one kept (24 h window) + one weekly representative of the old ones
     expect(listBackups(env.ctx)).toHaveLength(2);
     expect(backupStatus(env.ctx).count).toBe(2);
+  });
+
+  it('offline emergency restore keeps the previous database aside and works with encrypted backups', async () => {
+    env = await makeEnv({}, { OMEGA_BACKUP_PASSPHRASE: 'emergency passphrase for tests' });
+    const p = createNode(env.ctx, U, { kind: 'project', name: 'Vor dem Unglück' });
+    const meta = await createBackup(env.ctx, 'manual');
+    updateNode(env.ctx, U, p.id, { name: 'Kaputt' });
+    env.ctx.db.close(); // server stopped
+    const r = await offlineRestore(env.ctx.config, meta.name);
+    expect(r.previous).toMatch(/vor-wiederherstellung/);
+    expect(existsSync(r.previous!)).toBe(true);
+    const db = new Db(env.ctx.config.dbPath);
+    expect(db.get<{ name: string }>('SELECT name FROM nodes WHERE id = ?', [p.id])!.name).toBe('Vor dem Unglück');
+    db.close();
+    await expect(offlineRestore(env.ctx.config, '../etc/passwd')).rejects.toThrow();
   });
 });

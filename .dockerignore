@@ -1,0 +1,17 @@
+# Nur Quellcode ins Build-Kontext – keine Daten, Geheimnisse oder Build-Artefakte
+.git
+node_modules
+dist
+data
+backups
+.env
+.env.*
+!.env.example
+e2e/.artifacts
+test-results
+playwright-report
+coverage
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+deploy/env.docker

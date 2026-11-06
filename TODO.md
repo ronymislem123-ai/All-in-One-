@@ -6,8 +6,10 @@ Priorisiert nach Nutzen. Nichts davon ist für den aktuellen Funktionsumfang erf
 - [ ] KI-Pfade live verifizieren, sobald `ANTHROPIC_API_KEY` gesetzt ist (Ideengenerierung, Fragen an OMI) und Ergebnisse dokumentieren
 - [ ] MCP-Server in einer echten Claude-Code-Sitzung einrichten und den Ablauf „Projekt → Module → Fortschritt“ einmal real durchspielen
 - [ ] GitHub-Webhook mit öffentlicher URL (Reverse-Proxy mit https) einrichten und Zustellung prüfen
-- [ ] Externes Backup-Ziel auf einem anderen Datenträger/Cloud-Mount produktiv einrichten und eine Wiederherstellung daraus testen
-- [ ] Deployment-Anleitung (systemd/Docker + Reverse-Proxy) – Deployment selbst nur nach ausdrücklicher Freigabe
+- [ ] Externes Backup-Ziel auf einem anderen Datenträger/Cloud-Mount produktiv einrichten und eine Wiederherstellung daraus testen (Docker-Override `deploy/docker-compose.external-backup.yml` vorhanden und lokal getestet)
+- [x] Deployment-Anleitung Docker + Caddy (`docs/DEPLOYMENT.md`) – das produktive Deployment selbst nur nach ausdrücklicher Freigabe
+- [ ] Let's-Encrypt-Zertifikat mit echter Domain und Docker-Image auf arm64-Hardware prüfen
+- [ ] Optional: systemd-Anleitung ohne Docker
 
 ## Mittel
 - [ ] 2-Faktor-Authentifizierung (TOTP) und Passkeys

@@ -1,0 +1,12 @@
+# Zusätzliche, UNABHÄNGIGE Kopie jeder Sicherung auf einem anderen Datenträger
+# (z. B. NAS-Freigabe, USB-Platte, eingebundener Cloud-Speicher).
+#
+#   docker compose -f docker-compose.yml -f deploy/docker-compose.external-backup.yml up -d
+#
+# Der Ordner muss für UID 1000 beschreibbar sein:  sudo chown 1000:1000 <Pfad>
+services:
+  omega:
+    environment:
+      OMEGA_BACKUP_EXTERNAL_DIR: /backups-external
+    volumes:
+      - ${OMEGA_EXTERNAL_BACKUP_PATH:?OMEGA_EXTERNAL_BACKUP_PATH in .env setzen}:/backups-external

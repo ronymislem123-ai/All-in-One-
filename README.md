@@ -19,6 +19,16 @@ npm start                # http://127.0.0.1:4317
 Beim ersten Start steht im Server-Log ein **Einrichtungscode** („Ersteinrichtung: Einrichtungscode …“).
 Mit ihm legst du im Browser dein Konto an – so kann niemand anderes eine frisch gestartete Instanz übernehmen.
 
+**Mit Docker** (empfohlen für den Dauerbetrieb, inkl. HTTPS über Caddy und Backups auf einem zweiten Datenträger):
+
+```bash
+cp deploy/env.docker.example .env && chmod 600 .env   # Geheimnisse eintragen
+docker compose up -d --build                          # http://127.0.0.1:4317
+docker compose logs omega | grep Einrichtungscode
+```
+
+Schritt für Schritt – Domain, Heimnetz/NAS, Sicherung, Wiederherstellung, Updates: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+
 Entwicklung mit Hot Reload: `npm run dev` (Server auf :4317, Web-App auf :5173 mit API-Proxy).
 Optional Beispieldaten (OMEGA beschreibt sich selbst): `npm run seed:demo`.
 
@@ -60,14 +70,16 @@ Das Token erzeugst du unter **Einstellungen → Integrationen**. Details: [docs/
 |---|---|
 | `npm run dev` | Entwicklungsserver (API + Web) |
 | `npm run build` / `npm start` | Produktions-Build / -Start |
-| `npm test` | 67 Server-Tests (Vitest) |
+| `npm test` | 69 Server-Tests (Vitest) |
 | `npm run build:web && npm run test:e2e` | 13 Browser-Tests (Playwright, inkl. axe WCAG 2.1 AA) |
 | `npm run typecheck` | TypeScript-Prüfung des gesamten Projekts |
 | `npm run backup` | Manuelle Sicherung von der Kommandozeile |
+| `npm run restore:offline -- <name> --server-gestoppt` | Notfall-Wiederherstellung bei gestopptem Server (nach `npm run build`) |
 
 ## Dokumentation
 
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) – Bedienungsanleitung
+- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) – Betrieb mit Docker: HTTPS, Backups, Wiederherstellung, Updates
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) – Architektur, Datenmodell, Quellenwahrheit, Abläufe
 - [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md) – Claude (MCP/API/Datei), GitHub, Ingest-Format `omega.ingest/v1`
 - [docs/SECURITY.md](docs/SECURITY.md) – Sicherheits- und Datenschutzkonzept

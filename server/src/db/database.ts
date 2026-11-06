@@ -105,9 +105,18 @@ export class Db {
     this.run('INSERT INTO meta(key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value', [key, value]);
   }
 
-  /** Consistent online backup to a file (uses SQLite's backup API). */
+  /**
+   * Consistent online backup to a file (uses SQLite's backup API). The copy is switched to rollback-journal
+   * mode so it is a single self-contained file: opening it read-only later leaves no -wal/-shm files behind.
+   */
   async backupTo(file: string): Promise<void> {
     await this.conn.backup(file);
+    const copy = new BetterSqlite3(file, { fileMustExist: true });
+    try {
+      copy.pragma('journal_mode = DELETE');
+    } finally {
+      copy.close();
+    }
   }
 
   checkpoint(): void {

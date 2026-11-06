@@ -1,5 +1,6 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
+import type { AppConfig } from '../config';
 import type { Ctx, WriteMeta } from '../context';
 import { decryptBuffer, encryptBuffer, isEncryptedBackup, sha256 } from '../lib/crypto';
 import { badRequest, notFound } from '../lib/errors';
@@ -56,6 +57,11 @@ function writeAtomic(file: string, data: string | Buffer) {
   renameSync(tmp, file);
 }
 
+/** Removes an SQLite file together with possible -wal/-shm/-journal companions. */
+function removeSqliteFile(path: string): void {
+  for (const ext of ['', '-wal', '-shm', '-journal']) rmSync(path + ext, { force: true });
+}
+
 /** Opens a backup copy for inspection (decrypts to a temp file if needed). Caller must cleanup(). */
 async function materialize(ctx: Ctx, name: string): Promise<{ path: string; cleanup: () => void }> {
   const file = join(ctx.config.backupDir, name);
@@ -66,7 +72,7 @@ async function materialize(ctx: Ctx, name: string): Promise<{ path: string; clea
   const plain = await decryptBuffer(ctx.config.backupPassphrase, readFileSync(file));
   const tmp = join(ctx.config.backupDir, `.inspect-${newId('tmp')}.sqlite`);
   writeFileSync(tmp, plain, { mode: 0o600 });
-  return { path: tmp, cleanup: () => rmSync(tmp, { force: true }) };
+  return { path: tmp, cleanup: () => removeSqliteFile(tmp) };
 }
 
 function inspectSqlite(path: string): { ok: boolean; detail: string; counts: Record<string, number>; schemaVersion: number } {
@@ -103,9 +109,10 @@ export async function createBackup(ctx: Ctx, kind: BackupKind, note?: string): P
     const final = join(dir, name);
     if (encrypted) {
       writeAtomic(final, await encryptBuffer(ctx.config.backupPassphrase!, readFileSync(tmp)));
-      rmSync(tmp, { force: true });
+      removeSqliteFile(tmp);
     } else {
       renameSync(tmp, final);
+      removeSqliteFile(tmp);
     }
     const buf = readFileSync(final);
     const meta: BackupMeta = {
@@ -133,7 +140,7 @@ export async function createBackup(ctx: Ctx, kind: BackupKind, note?: string): P
     applyRetention(ctx);
     return meta;
   } catch (e) {
-    rmSync(tmp, { force: true });
+    removeSqliteFile(tmp);
     ctx.db.setMeta('last_backup_error', `${nowIso()} ${(e as Error).message}`);
     notify(ctx, { level: 'error', title: 'Datensicherung fehlgeschlagen', body: (e as Error).message, link: '/backups', dedupeKey: 'backup-failed' });
     ctx.log.error('backup failed', { error: (e as Error).message });
@@ -447,4 +454,29 @@ export function backupStatus(ctx: Ctx) {
     lastRestore,
     directory: ctx.config.backupDir,
   };
+}
+
+/**
+ * Emergency restore for a STOPPED server (e.g. the live database no longer opens).
+ * Verifies the backup, moves the current database files aside – they are never deleted – and puts the backup in place.
+ * Account data is taken from the backup in this mode (the live database may be unusable).
+ */
+export async function offlineRestore(config: AppConfig, name: string): Promise<{ restored: string; previous: string | null; counts: Record<string, number> }> {
+  const m = await materialize({ config } as Ctx, name);
+  try {
+    const check = inspectSqlite(m.path);
+    if (!check.ok) throw new Error(`Sicherung ist beschädigt: ${check.detail}`);
+    if (check.schemaVersion > SCHEMA_VERSION) throw new Error('Sicherung stammt aus einer neueren Programmversion.');
+    const db = config.dbPath;
+    let previous: string | null = null;
+    if (existsSync(db)) {
+      previous = `${db}.vor-wiederherstellung-${fileStamp()}`;
+      renameSync(db, previous);
+      for (const ext of ['-wal', '-shm']) if (existsSync(db + ext)) renameSync(db + ext, previous + ext);
+    }
+    copyFileSync(m.path, db);
+    return { restored: name, previous, counts: check.counts };
+  } finally {
+    m.cleanup();
+  }
 }

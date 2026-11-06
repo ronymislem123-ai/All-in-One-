@@ -5,7 +5,8 @@
 
 ## Was abgeschlossen ist – NICHT erneut umsetzen
 - Vollständige Plattform v0.1.0: Server, Web-UI (alle 11 Bereiche), MCP-Server, Backup/Restore, GitHub-Integration, Ingest-Pipeline, Idea Hub mit 144 Ideen, Knowledge Hub mit 18 Artikeln.
-- Tests: 67 Vitest (`npm test`), 13 Playwright (`npm run build:web && npm run test:e2e`) – alle grün am 2026-11-06.
+- Tests: 69 Vitest (`npm test`), 13 Playwright (`npm run build:web && npm run test:e2e`) – alle grün am 2026-11-06.
+- Docker-Deployment (v0.1.1): `Dockerfile`, `docker-compose.yml`, `deploy/*`, Anleitung `docs/DEPLOYMENT.md`; Notfall-Wiederherstellung `cli.js restore-offline`. Im Container getestet (siehe Tabelle am Ende von `docs/DEPLOYMENT.md`).
 - Sichtprüfung Desktop/Tablet/Smartphone, Dark/Light; axe ohne schwere Verstöße.
 
 ## Verbindliche Regeln (nicht ändern ohne neue ADR)
@@ -16,7 +17,7 @@
 - Neue Schemaänderungen nur als neue Migration (`server/src/db/migrations/00X_*.ts` + Eintrag in `MIGRATIONS`), nie bestehende ändern (Prüfsummen!).
 
 ## Zuletzt geänderte Dateien
-`web/src/features/code/CodeExplorerPage.tsx` (Suche/Zentrierung), `web/src/design/tokens.css` (Kontraste), `e2e/*`, `docs/*`, Statusdokumente.
+`Dockerfile`, `docker-compose.yml`, `deploy/*`, `docs/DEPLOYMENT.md`, `server/src/cli.ts`, `server/src/modules/backup.ts` (Offline-Restore, keine -wal/-shm-Reste), `server/src/db/database.ts` (`backupTo` erzeugt eigenständige Datei), `package.json` (Web-Pakete als devDependencies), Statusdokumente.
 
 ## Bekannte Grenzen / offene Punkte
 Siehe `IMPLEMENTATION_STATUS.md` → „Nicht ausführbar / ungeprüft“ und `TODO.md` (Abschnitt „Hoch“).
@@ -24,7 +25,9 @@ Siehe `IMPLEMENTATION_STATUS.md` → „Nicht ausführbar / ungeprüft“ und `T
 ## Exakter nächster Arbeitsschritt
 1. Mit gesetztem `ANTHROPIC_API_KEY` die KI-Generierung (`POST /api/ideas/generate`) und OMI-Fragen (`POST /api/repos/:id/ask`) live testen; Ergebnisse in `IMPLEMENTATION_STATUS.md` eintragen.
 2. Danach den MCP-Server in einer realen Claude-Code-Sitzung verbinden (Befehl unter Einstellungen → Integrationen) und den Ablauf dokumentieren.
-3. Anschließend TODO „Hoch“ abarbeiten (Webhook mit öffentlicher URL, externes Backup-Ziel, Deployment-Anleitung).
+3. Anschließend TODO „Hoch“ abarbeiten (Webhook mit öffentlicher URL, externes Backup-Ziel produktiv, Let's Encrypt/arm64 prüfen).
+
+Docker-Hinweis für Sandbox-Umgebungen mit Pflicht-Proxy: `docker build --network host` mit `--build-arg HTTPS_PROXY=…` und `--secret id=ca,src=<CA-Datei>` bauen.
 
 ## Lokale Entwicklung
 ```bash
