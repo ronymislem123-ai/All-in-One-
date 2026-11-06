@@ -1,6 +1,6 @@
 # PROJECT_STATE – OMEGA Infinity
 
-> Lebendes Statusdokument. Zuletzt aktualisiert: 2026-11-06 (v0.1.0 – erste vollständige Ausbaustufe).
+> Lebendes Statusdokument. Zuletzt aktualisiert: 2026-11-06 (v0.1.1 – Docker-Deployment).
 
 ## Gesamtziel
 Persönliches digitales Betriebssystem: Projektzentrale, App Library, AI Idea Hub, Claude-Ingest (MCP/API/Datei),
@@ -12,7 +12,8 @@ read-only GitHub-Integration mit Code Explorer, Konflikt-/Sync-Management, Backu
 - Server (Hono + SQLite), Web (React 19), MCP-Server: implementiert, gebaut, getestet
 - Datenbank-Schema Version 2 (`001_init`, `002_tracked_branch`)
 - Inhalte: 144 kuratierte Ideen / 36 Kategorien / 112 Kategorieeinträge inkl. Unterkategorien, 18 geprüfte Wissensartikel
-- Tests: 67 Server-Tests, 13 Browser-Tests – alle grün
+- Tests: 69 Server-Tests, 13 Browser-Tests – alle grün
+- Docker: Image, Compose (lokal + HTTPS-Profil mit Caddy), externe Backup-Kopie, Notfall-Wiederherstellung – in der Entwicklungsumgebung gebaut und durchgespielt ([docs/DEPLOYMENT.md](docs/DEPLOYMENT.md))
 
 ## Verbindliche Architekturentscheidungen
 Siehe [docs/DECISIONS.md](docs/DECISIONS.md). Kernpunkte: GitHub nur lesend · keine IDE · drei Statusachsen ·
@@ -28,10 +29,11 @@ Backups als verifizierte Dateien mit Sidecar · KI nur mit echter Anbindung.
 | HTTP & Sicherheit | `server/src/app.ts`, `server/src/http/*`, `server/src/auth/auth.ts` |
 | Web | `web/src/App.tsx`, `web/src/design/*`, `web/src/features/*` |
 | MCP | `mcp/src/index.ts` |
+| Deployment | `Dockerfile`, `docker-compose.yml`, `deploy/*`, `docs/DEPLOYMENT.md`, `server/src/cli.ts` |
 
 ## Notwendige Konfiguration für den Produktivbetrieb
 `OMEGA_BACKUP_PASSPHRASE`, `OMEGA_BACKUP_EXTERNAL_DIR`, `OMEGA_SECRET_KEY`, ggf. `OMEGA_PUBLIC_URL` (https), `GITHUB_TOKEN`,
-optional `GITHUB_WEBHOOK_SECRET`, `ANTHROPIC_API_KEY`. Siehe `.env.example`.
+optional `GITHUB_WEBHOOK_SECRET`, `ANTHROPIC_API_KEY`. Siehe `.env.example` bzw. für Docker `deploy/env.docker.example`.
 
 ## Nächster Schritt
 Siehe [HANDOFF.md](HANDOFF.md) und [TODO.md](TODO.md).

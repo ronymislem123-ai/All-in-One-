@@ -1,0 +1,57 @@
+# OMEGA Infinity – Docker Compose
+#
+#   Lokal (nur dieser Rechner):   docker compose up -d --build                → http://127.0.0.1:4317
+#   Mit HTTPS (Domain/Heimnetz):  docker compose --profile https up -d --build → https://<OMEGA_DOMAIN>
+#
+# Einstellungen und Geheimnisse stehen in .env (Vorlage: deploy/env.docker.example). Details: docs/DEPLOYMENT.md
+name: omega
+
+services:
+  omega:
+    build: .
+    image: omega-infinity:latest
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      # Nur lokal erreichbar. Von außen ausschließlich über den HTTPS-Proxy (Profil "https").
+      - "127.0.0.1:${OMEGA_LOCAL_PORT:-4317}:4317"
+    volumes:
+      - omega-data:/data
+      - omega-backups:/backups
+    # Zeit für die Sicherung beim Herunterfahren
+    stop_grace_period: 60s
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["https"]
+    restart: unless-stopped
+    depends_on:
+      omega:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      OMEGA_DOMAIN: ${OMEGA_DOMAIN:-localhost}
+      # E-Mail-Adresse → Let's-Encrypt-Zertifikat · "internal" → eigene Caddy-CA (Heimnetz)
+      CADDY_TLS: ${CADDY_TLS:-internal}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  omega-data:
+  omega-backups:
+  caddy-data:
+  caddy-config:

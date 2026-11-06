@@ -31,6 +31,7 @@ Bewertung nach §31.1. Jede Einstufung beruht auf Implementierung **und** ausgef
 | Performance | **ERFÜLLT** | 600 Projekte + 3000 Module: Liste 7 ms, Suche 2 ms, Baum 12 ms, Dashboard 8 ms |
 | Accessibility | **ERFÜLLT** (automatisiert) | axe WCAG 2.1 A/AA ohne schwere oder kritische Verstöße auf 13 Ansichten (dunkel) und den Einstellungen (hell), Tastatur, Skip-Link, Fokusfalle. Nicht ausgeführt: manueller Screenreader-Test |
 | Wartbarkeit | **ERFÜLLT** | TypeScript strict ohne Fehler, Module, ADRs, Tests |
+| Deployment (Docker) | **ERFÜLLT** (lokal + HTTPS mit interner CA) · Let's Encrypt **WEGEN FEHLENDER VORAUSSETZUNGEN NICHT ÜBERPRÜFBAR** | Image-Build, Compose, Healthcheck, Schreibschutz, Neustart mit Sicherung, Caddy-HTTPS, externe Backup-Kopie, Notfall-Wiederherstellung und MCP über `docker compose exec` im Container durchgespielt (`docs/DEPLOYMENT.md` → „Geprüft“). Keine öffentliche Domain verfügbar; ein produktives Deployment wurde nicht durchgeführt |
 | Kontextkontinuität | **ERFÜLLT** | `PROJECT_STATE.md`, `HANDOFF.md`, `TODO.md`, `CHANGELOG.md`, regelmäßige Commits |
 
 ## Testergebnisse (tatsächlich ausgeführt)
@@ -38,16 +39,18 @@ Bewertung nach §31.1. Jede Einstufung beruht auf Implementierung **und** ausgef
 | Suite | Ergebnis |
 |---|---|
 | `npm run typecheck` | 0 Fehler |
-| `npm test` (Vitest) | **67/67 bestanden** in 7 Dateien: Hierarchie (10), Ingest (12), GitHub inkl. Redaktion (13), Backup/Restore (9), HTTP/Sicherheit/Apps/Export (8), Idea Hub + Performance (7), MCP-stdio-E2E + Migrationen (8) |
+| `npm test` (Vitest) | **69/69 bestanden** in 7 Dateien: Hierarchie (10), Ingest (12), GitHub inkl. Redaktion (13), Backup/Restore inkl. Offline-Restore und Aufräumen temporärer Dateien (11), HTTP/Sicherheit/Apps/Export (8), Idea Hub + Performance (7), MCP-stdio-E2E + Migrationen (8) |
 | `npm run test:e2e` (Playwright, Produktions-Build) | **13/13 bestanden**: Dashboard, Projekt/Modul/Notizen/Favorit/Palette, Versionen, Idea Hub → Projekt, App-Prüfung, Markdown-Import ohne Duplikate, Duplikat-Konflikt lösen, Backup + Vollwiederherstellung, axe auf allen Hauptseiten, Light-Mode, Tastatur/Fokusfalle, Mobil ohne Überlauf, Reduced Motion |
 | Produktions-Bundle | `npm run build` + `node dist/server/index.js`: Health ok, Web-App ausgeliefert |
+| Docker (Image + Compose) | Build ok; `up -d` healthy; Setup, Sicherung, `verify`, Neustart (Sicherung beim Herunterfahren, Daten erhalten), HTTPS über Caddy (`internal`), Login per Chromium, CSRF/Origin über HTTPS, externe Kopie, `restore-offline`, MCP über `docker compose exec`, keine Geheimnisse im Log |
 | Sichtprüfung | Screenshots Desktop dunkel/hell, Tablet, Smartphone; gefundene Probleme behoben (Roboter verdeckte Graph, Menüsymbol auf Desktop, Ringgröße, Überlauf Konfliktseite, Kontraste) |
 
-**Fehlgeschlagene Tests:** keine im finalen Lauf. Während der Entwicklung gefundene Fehler wurden behoben (z. B. RESTRICT-Reihenfolge, Import-ID-Zuordnung über natürliche Schlüssel, Navigationsreihenfolge nach dem Anlegen, Kontrastwerte).
+**Fehlgeschlagene Tests:** keine im finalen Lauf. Während der Entwicklung gefundene Fehler wurden behoben (z. B. RESTRICT-Reihenfolge, Import-ID-Zuordnung über natürliche Schlüssel, Navigationsreihenfolge nach dem Anlegen, Kontrastwerte; beim Docker-Test: `-wal`/`-shm`-Reste im Backup-Ordner).
 
 **Nicht ausführbar / ungeprüft:**
 - Claude-API-Funktionen (kein API-Schlüssel in dieser Umgebung)
 - Webhook-Zustellung von github.com (keine öffentliche URL)
 - Manueller Screenreader-Test, echte Geräte
-- Produktives Deployment (nicht beauftragt/autorisiert)
+- Produktives Deployment (nicht beauftragt/autorisiert); Docker-Stack nur in der Entwicklungsumgebung betrieben
+- Let's-Encrypt-Zertifikat mit echter Domain, Docker auf arm64-Hardware, Build mit `INSTALL_BUILD_TOOLS=true`
 - Externe Cloud-Backup-Ziele (nur lokales Zielverzeichnis getestet)

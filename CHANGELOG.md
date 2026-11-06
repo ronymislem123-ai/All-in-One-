@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.1 – 2026-11-06
+Docker-Deployment.
+
+### Hinzugefügt
+- **Docker:** zweistufiges `Dockerfile` (unprivilegierter Benutzer, Healthcheck, ohne Compiler baubar), `docker-compose.yml` mit schreibgeschütztem Dateisystem, `cap_drop: ALL`, Port nur lokal
+- **HTTPS:** Profil `https` mit Caddy (Let's Encrypt per E-Mail oder eigene CA für Heimnetz/NAS), `deploy/Caddyfile`
+- **Backups:** Override `deploy/docker-compose.external-backup.yml` für eine unabhängige Kopie auf einem zweiten Datenträger
+- **Notfall-Wiederherstellung:** `node dist/server/cli.js restore-offline <name> --server-gestoppt` (bisherige Datenbank bleibt erhalten)
+- **Dokumentation:** `docs/DEPLOYMENT.md` mit Prüfprotokoll; Vorlage `deploy/env.docker.example`
+
+### Behoben
+- Sicherungen hinterließen `-wal`/`-shm`-Dateien im Backup-Ordner (temporäre Dateien und unverschlüsselte Sicherungen). Sicherungen sind jetzt eigenständige SQLite-Dateien; Regressionstest ergänzt
+- Kommandozeile gibt Fehler als verständliche Meldung mit Exit-Code 1 aus statt als Stacktrace
+
+### Geändert
+- Reine Web-Pakete (React, Router, xyflow …) sind jetzt `devDependencies` – das Laufzeit-Image enthält nur Serverpakete
+
 ## 0.1.0 – 2026-11-06
 Erste vollständige Ausbaustufe.
 

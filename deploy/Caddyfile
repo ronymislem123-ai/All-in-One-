@@ -1,0 +1,9 @@
+# Reverse-Proxy mit automatischem HTTPS vor OMEGA.
+#  - Öffentliche Domain: CADDY_TLS=<deine E-Mail> → Zertifikat von Let's Encrypt (Ports 80/443 müssen erreichbar sein).
+#  - Heimnetz/NAS ohne öffentliche Domain: CADDY_TLS=internal (Standard) → eigene Caddy-CA.
+{$OMEGA_DOMAIN} {
+	tls {$CADDY_TLS}
+	encode zstd gzip
+	reverse_proxy omega:4317
+	header -Server
+}
