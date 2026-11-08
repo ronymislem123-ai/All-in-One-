@@ -4,7 +4,8 @@ Bewertung nach §31.1. Jede Einstufung beruht auf Implementierung **und** ausgef
 
 | Bereich | Bewertung | Nachweis |
 |---|---|---|
-| Produktkonzept | **ERFÜLLT** | Klare Systemgrenzen Claude/GitHub/Website, Informationsarchitektur mit 11 Hauptbereichen (`docs/ARCHITECTURE.md`) |
+| Produktkonzept | **ERFÜLLT** | Klare Systemgrenzen Claude/GitHub/Website, Informationsarchitektur mit 12 Hauptbereichen (`docs/ARCHITECTURE.md`) |
+| Werkstatt (Live-Entwicklung) | **ERFÜLLT** | Sitzung, Meilensteine, Aufgaben, Protokoll, Screenshots, Vorschau; SSE-Aktualisierung im Browser getestet (E2E), Idempotenz/Sicherheit/MCP-Werkzeuge (Vitest), Sichtprüfung Desktop dunkel/hell + Smartphone. Nicht ausgeführt: Einbettung eines fremden Dev-Servers in der Vorschau (nur Link/URL geprüft) |
 | Architektur | **ERFÜLLT** | Modulare Server-Module, gemeinsames Domänenvokabular, ADRs (`docs/DECISIONS.md`) |
 | Design | **ERFÜLLT** | Eigenes Token-Designsystem, Dark + eigenständiger Light-Mode; Sichtprüfung aller Seiten per Screenshot |
 | Navigation | **ERFÜLLT** | Sidebar (einklappbar), Topbar, Brotkrumen, Command Palette (⌘K), mobile Bottom-Navigation + Drawer; E2E getestet |
@@ -38,8 +39,8 @@ Bewertung nach §31.1. Jede Einstufung beruht auf Implementierung **und** ausgef
 | Suite | Ergebnis |
 |---|---|
 | `npm run typecheck` | 0 Fehler |
-| `npm test` (Vitest) | **67/67 bestanden** in 7 Dateien: Hierarchie (10), Ingest (12), GitHub inkl. Redaktion (13), Backup/Restore (9), HTTP/Sicherheit/Apps/Export (8), Idea Hub + Performance (7), MCP-stdio-E2E + Migrationen (8) |
-| `npm run test:e2e` (Playwright, Produktions-Build) | **13/13 bestanden**: Dashboard, Projekt/Modul/Notizen/Favorit/Palette, Versionen, Idea Hub → Projekt, App-Prüfung, Markdown-Import ohne Duplikate, Duplikat-Konflikt lösen, Backup + Vollwiederherstellung, axe auf allen Hauptseiten, Light-Mode, Tastatur/Fokusfalle, Mobil ohne Überlauf, Reduced Motion |
+| `npm test` (Vitest) | **72/72 bestanden** in 8 Dateien: Hierarchie (10), Ingest (12), GitHub inkl. Redaktion (13), Backup/Restore (9), HTTP/Sicherheit/Apps/Export (8), Idea Hub + Performance (7), MCP-stdio-E2E + Migrationen (9), Werkstatt (4) |
+| `npm run test:e2e` (Playwright, Produktions-Build) | **15/15 bestanden**: Werkstatt leer + gestreamte Sitzung (SSE-Aktualisierung, Filter, Lightbox, Abschließen, axe), Dashboard, Projekt/Modul/Notizen/Favorit/Palette, Versionen, Idea Hub → Projekt, App-Prüfung, Markdown-Import ohne Duplikate, Duplikat-Konflikt lösen, Backup + Vollwiederherstellung, axe auf allen Hauptseiten, Light-Mode, Tastatur/Fokusfalle, Mobil ohne Überlauf, Reduced Motion |
 | Produktions-Bundle | `npm run build` + `node dist/server/index.js`: Health ok, Web-App ausgeliefert |
 | Sichtprüfung | Screenshots Desktop dunkel/hell, Tablet, Smartphone; gefundene Probleme behoben (Roboter verdeckte Graph, Menüsymbol auf Desktop, Ringgröße, Überlauf Konfliktseite, Kontraste) |
 

@@ -21,6 +21,15 @@ Die Statusleiste zeigt drei getrennte Angaben: *Lebenszyklus* · *Code-Status au
 - **Aus Claude.ai-Chats:** Lass Claude eine Markdown-Datei mit Kopfbereich `omega: project` erzeugen (Format in [INTEGRATIONS.md](INTEGRATIONS.md)) und füge sie unter **Sync Center → Import** ein → Vorschau → Importieren. Wiederholte Importe erzeugen keine Duplikate.
 - Im **Sync Center → Protokoll** siehst du jedes empfangene Ereignis und kannst fehlgeschlagene wiederholen.
 
+## Claude live beim Bauen zusehen (Werkstatt)
+- **Arbeiten → Werkstatt** zeigt die aktuelle Entwicklungssitzung: Gesamtfortschritt, Phase, „Gerade in Arbeit“, Meilensteine (z. B. Design, Frontend, Backend), Aufgaben, das Protokoll (Recherche, Planung, Entscheidungen, Code, Tests, Probleme) und Screenshots der Zwischenstände.
+- Solange eine Sitzung läuft, trägt der Menüpunkt ein grünes **LIVE**-Abzeichen; die Seite aktualisiert sich von selbst („live verbunden“).
+- **Live-Vorschau:** Meldet Claude eine Adresse (z. B. den Dev-Server), erscheint sie eingebettet, umschaltbar zwischen Desktop- und Smartphone-Breite; „Öffnen“ zeigt sie in einem neuen Tab.
+- **Screenshots:** Klick auf ein Bild vergrößert es; die Miniaturen zeigen die Reihenfolge der Zwischenstände.
+- **Protokoll filtern:** Chips wie „Entscheidung“ oder „Problem“ zeigen nur diese Einträge.
+- Mehrere Sitzungen wählst du oben rechts aus. „Abschließen“ markiert eine Sitzung als fertig, der Papierkorb löscht Protokoll und Bilder (Projekte bleiben unberührt).
+- Voraussetzung: Claude ist über MCP oder das Skript `scripts/omega-live.mjs` angebunden (siehe [INTEGRATIONS.md](INTEGRATIONS.md#live)). Die leere Werkstatt zeigt die Schritte an.
+
 ## Ein GitHub-Repository verknüpfen
 1. **Sync Center → GitHub**: `owner/repo` eingeben → *Hinzufügen & abgleichen*. Mit Token (Einstellungen → Integrationen) erkennt *Automatisch erkennen* alle autorisierten Repositories.
 2. Verknüpfen: im Projekt **Code & Apps → Verknüpfen** oder einen **Zuordnungsvorschlag bestätigen**. Ohne Bestätigung wird nie verknüpft.

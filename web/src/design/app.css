@@ -206,6 +206,7 @@ a.card { color: inherit; display: block; }
 .badge.unknown { background: var(--unknown-soft); color: var(--unknown); }
 .badge.outline { background: transparent; border-color: var(--border-strong); }
 .badge.count { min-width: 20px; justify-content: center; padding: 0 6px; background: var(--accent); color: var(--accent-contrast); }
+.badge.count.live { background: var(--ok); color: var(--text-inverse); text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
 .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--unknown); }
 .dot.ok { background: var(--ok); box-shadow: 0 0 0 3px var(--ok-soft); }
 .dot.attention { background: var(--warn); box-shadow: 0 0 0 3px var(--warn-soft); }

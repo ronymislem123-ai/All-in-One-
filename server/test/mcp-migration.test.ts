@@ -65,6 +65,25 @@ describe('MCP server → OMEGA (end-to-end over stdio)', () => {
     expect(list).toContain('externalId "mcp-demo/api"');
   });
 
+  it('streams a live development session into the Werkstatt', async () => {
+    const start = text(await mcp.callTool({ name: 'omega_live_start', arguments: { externalId: 'mcp-demo/live', title: 'Live-Demo', state: 'building', milestones: [{ key: 'backend', label: 'Backend' }, { key: 'ui', label: 'Oberfläche' }], tasks: [{ key: 't1', title: 'Routen' }] } }));
+    expect(start).toMatch(/gestartet/);
+    expect(text(await mcp.callTool({ name: 'omega_live_log', arguments: { sessionId: 'mcp-demo/live', kind: 'decision', title: 'SSE statt WebSocket', body: 'weniger Abhängigkeiten' } }))).toMatch(/1 übernommen/);
+    expect(text(await mcp.callTool({ name: 'omega_live_log', arguments: { sessionId: 'mcp-demo/live', kind: 'decision', title: 'SSE statt WebSocket', body: 'weniger Abhängigkeiten' } }))).toMatch(/1 bereits vorhanden/);
+    expect(text(await mcp.callTool({ name: 'omega_live_milestone', arguments: { sessionId: 'mcp-demo/live', key: 'backend', progress: 100 } }))).toMatch(/1 übernommen/);
+    expect(text(await mcp.callTool({ name: 'omega_live_task', arguments: { sessionId: 'mcp-demo/live', key: 't1', status: 'done' } }))).toMatch(/1 übernommen/);
+    expect(text(await mcp.callTool({ name: 'omega_live_preview', arguments: { sessionId: 'mcp-demo/live', url: 'http://localhost:5173/live' } }))).toMatch(/1 übernommen/);
+    const png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+    expect(text(await mcp.callTool({ name: 'omega_live_screenshot', arguments: { sessionId: 'mcp-demo/live', title: 'Startseite', base64: png, mime: 'image/png' } }))).toMatch(/1 übernommen/);
+    expect(text(await mcp.callTool({ name: 'omega_live_status', arguments: { sessionId: 'mcp-demo/live', state: 'done', progress: 100 } }))).toMatch(/1 übernommen/);
+    const s = env.ctx.db.get<{ state: string; progress: number; preview_url: string }>(`SELECT state, progress, preview_url FROM dev_sessions WHERE external_id = 'mcp-demo/live'`)!;
+    expect(s).toEqual({ state: 'done', progress: 100, preview_url: 'http://localhost:5173/live' });
+    expect(env.ctx.db.get<{ n: number }>(`SELECT COUNT(*) n FROM dev_events WHERE session_id = (SELECT id FROM dev_sessions WHERE external_id = 'mcp-demo/live')`)!.n).toBe(6);
+    expect(env.ctx.db.get<{ n: number }>(`SELECT COUNT(*) n FROM dev_media`)!.n).toBe(1);
+    const unknown = await mcp.callTool({ name: 'omega_live_log', arguments: { sessionId: 'does-not-exist', kind: 'log', title: 'x' } });
+    expect((unknown as { isError?: boolean }).isError).toBe(true);
+  });
+
   it('reports validation problems back to Claude instead of storing bad data', async () => {
     const r = await mcp.callTool({ name: 'omega_send_events', arguments: { events: [{ type: 'project.upsert', data: { externalId: 'x y z', name: '' } }] } });
     expect(text(r)).toMatch(/abgelehnt/);

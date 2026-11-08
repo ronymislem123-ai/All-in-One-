@@ -3,7 +3,7 @@
 Eine zentrale Plattform für deine gesamte digitale Projektlandschaft: **Projektbibliothek**, **persönlicher App Store**,
 **AI Idea Hub** (144 kuratierte Ideen in 36 Kategorien), **Claude Knowledge Hub**, **Claude-Anbindung über MCP**,
 **read-only GitHub-Integration** mit interaktivem **Code Explorer**, **Konflikt- und Sync-Management** sowie
-**verifizierte Backups mit Wiederherstellung**.
+**verifizierte Backups mit Wiederherstellung** – und der **Werkstatt**, in der du Claude in Echtzeit beim Bauen zusiehst (Fortschritt, Aufgaben, Protokoll, Screenshots, Live-Vorschau).
 
 > Claude bleibt deine Entwicklungsumgebung, GitHub die Quelle der Codebasis – OMEGA ist das Kontrollzentrum.
 > OMEGA ist bewusst **keine IDE**: Code wird angezeigt und erklärt, aber nie bearbeitet.
@@ -60,8 +60,9 @@ Das Token erzeugst du unter **Einstellungen → Integrationen**. Details: [docs/
 |---|---|
 | `npm run dev` | Entwicklungsserver (API + Web) |
 | `npm run build` / `npm start` | Produktions-Build / -Start |
-| `npm test` | 67 Server-Tests (Vitest) |
-| `npm run build:web && npm run test:e2e` | 13 Browser-Tests (Playwright, inkl. axe WCAG 2.1 AA) |
+| `npm test` | 72 Server-Tests (Vitest) |
+| `npm run build:web && npm run test:e2e` | 15 Browser-Tests (Playwright, inkl. axe WCAG 2.1 AA) |
+| `node scripts/omega-live.mjs …` | Entwicklungsprozess aus jeder Shell in die Werkstatt streamen (siehe `docs/INTEGRATIONS.md`) |
 | `npm run typecheck` | TypeScript-Prüfung des gesamten Projekts |
 | `npm run backup` | Manuelle Sicherung von der Kommandozeile |
 
@@ -69,7 +70,7 @@ Das Token erzeugst du unter **Einstellungen → Integrationen**. Details: [docs/
 
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) – Bedienungsanleitung
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) – Architektur, Datenmodell, Quellenwahrheit, Abläufe
-- [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md) – Claude (MCP/API/Datei), GitHub, Ingest-Format `omega.ingest/v1`
+- [docs/INTEGRATIONS.md](docs/INTEGRATIONS.md) – Claude (MCP/API/Datei), GitHub, Ingest-Format `omega.ingest/v1`, Werkstatt-Format `omega.live/v1`
 - [docs/SECURITY.md](docs/SECURITY.md) – Sicherheits- und Datenschutzkonzept
 - [docs/DECISIONS.md](docs/DECISIONS.md) – Architekturentscheidungen
 - [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) – Abnahme-Matrix und Testergebnisse

@@ -12,8 +12,8 @@
 ## Eingaben & Ausgaben
 - Serverseitige Validierung aller Eingaben mit Zod; parametrisierte SQL-Abfragen (kein String-Zusammenbau mit Nutzereingaben).
 - **XSS:** React-Escaping; Markdown ohne HTML-Rendering, nur sichere Link-Schemata; App-Startpunkte lehnen `javascript:`/`data:` ab; Code-Highlighting über escapte highlight.js-Ausgabe.
-- **CSP:** `default-src 'self'; script-src 'self'` (keine Inline-Skripte), `frame-ancestors 'none'`, `object-src 'none'`; weitere Header: `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, HSTS bei https; API-Antworten `Cache-Control: no-store`.
-- **Uploads:** nur PNG/JPEG/WebP/GIF ≤ 2 MB, Magic-Bytes-Prüfung, Auslieferung mit eigener restriktiver CSP.
+- **CSP:** `default-src 'self'; script-src 'self'` (keine Inline-Skripte), `frame-ancestors 'none'`, `object-src 'none'`, `frame-src 'self' https: http://localhost:* http://127.0.0.1:*` (nur für die eingebettete Live-Vorschau in der Werkstatt; das iframe läuft in einer `sandbox`); weitere Header: `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`, HSTS bei https; API-Antworten `Cache-Control: no-store`.
+- **Uploads:** nur PNG/JPEG/WebP/GIF ≤ 2 MB, Magic-Bytes-Prüfung, Auslieferung mit eigener restriktiver CSP. Werkstatt-Bilder (Base64 über die Ingest-API): nur PNG/JPEG/WebP/GIF/SVG ≤ 3 MB, Auslieferung mit `nosniff` ausschließlich an die Owner-Session; Protokolltexte werden nie als HTML gerendert.
 - **SSRF:** Verfügbarkeitsprüfungen von Apps blockieren Metadaten-/Link-Local-/Multicast-Adressen, prüfen jede Weiterleitung neu und lesen nur Header.
 
 ## Geheimnisse

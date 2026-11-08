@@ -5,7 +5,8 @@
 
 ## Was abgeschlossen ist – NICHT erneut umsetzen
 - Vollständige Plattform v0.1.0: Server, Web-UI (alle 11 Bereiche), MCP-Server, Backup/Restore, GitHub-Integration, Ingest-Pipeline, Idea Hub mit 144 Ideen, Knowledge Hub mit 18 Artikeln.
-- Tests: 67 Vitest (`npm test`), 13 Playwright (`npm run build:web && npm run test:e2e`) – alle grün am 2026-11-06.
+- v0.2.0: **Werkstatt** (`/live`) – Live-Entwicklung mitverfolgen (Migration 003, Modul `devlive`, Routen `routes-live.ts`, 7 MCP-Werkzeuge `omega_live_*`, CLI `scripts/omega-live.mjs`, Seite `web/src/features/live/*`, Tests).
+- Tests: 72 Vitest (`npm test`), 15 Playwright (`npm run build:web && npm run test:e2e`) – alle grün am 2026-11-06.
 - Sichtprüfung Desktop/Tablet/Smartphone, Dark/Light; axe ohne schwere Verstöße.
 
 ## Verbindliche Regeln (nicht ändern ohne neue ADR)
@@ -14,9 +15,11 @@
 - Ähnliche Namen führen nie zu Zusammenführungen. Idempotenz über eventId, Identität über externalId.
 - KI nur mit echter Anbindung; ohne Schlüssel „nicht eingerichtet“ anzeigen.
 - Neue Schemaänderungen nur als neue Migration (`server/src/db/migrations/00X_*.ts` + Eintrag in `MIGRATIONS`), nie bestehende ändern (Prüfsummen!).
+- Werkstatt-Daten (`dev_*`) sind nur Darstellung: niemals daraus Projektfelder, Fortschritt oder Statusachsen ableiten (ADR-014).
+- Beim Entwickeln an OMEGA den eigenen Prozess in die Werkstatt streamen (`omega_live_*` oder `scripts/omega-live.mjs`) – der Besitzer möchte live zusehen.
 
 ## Zuletzt geänderte Dateien
-`web/src/features/code/CodeExplorerPage.tsx` (Suche/Zentrierung), `web/src/design/tokens.css` (Kontraste), `e2e/*`, `docs/*`, Statusdokumente.
+`shared/src/devlive.ts`, `server/src/db/migrations/003_dev_live.ts`, `server/src/modules/devlive.ts`, `server/src/http/routes-live.ts`, `server/src/app.ts` (CSP `frame-src`), `mcp/src/index.ts`, `scripts/omega-live.mjs`, `web/src/features/live/*`, `web/src/components/layout/Shell.tsx`, `web/src/App.tsx`, `server/test/devlive.test.ts`, `server/test/mcp-migration.test.ts`, `e2e/live.spec.ts`, Doku.
 
 ## Bekannte Grenzen / offene Punkte
 Siehe `IMPLEMENTATION_STATUS.md` → „Nicht ausführbar / ungeprüft“ und `TODO.md` (Abschnitt „Hoch“).

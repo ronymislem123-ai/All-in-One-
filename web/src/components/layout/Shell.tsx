@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
-  Activity, AppWindow, Bell, BookOpen, Boxes, ChevronsLeft, ChevronsRight, CodeXml, GitMerge, HardDriveDownload, LayoutDashboard, Lightbulb,
+  Activity, AppWindow, Bell, BookOpen, Boxes, ChevronsLeft, ChevronsRight, CodeXml, GitMerge, Hammer, HardDriveDownload, LayoutDashboard, Lightbulb,
   LogOut, Menu as MenuIcon, Moon, RefreshCw, Search, Settings, Sun, User, X, CheckCheck,
 } from 'lucide-react';
 import { api } from '../../api/client';
@@ -12,13 +12,14 @@ import { Button, Menu } from '../ui';
 import { Logo } from './Logo';
 import { CommandPalette } from './CommandPalette';
 
-interface NavItem { to: string; label: string; icon: ReactNode; badgeKey?: 'conflicts' }
+interface NavItem { to: string; label: string; icon: ReactNode; badgeKey?: 'conflicts' | 'live' }
 export const NAV: { label: string; items: NavItem[] }[] = [
   { label: 'Übersicht', items: [{ to: '/', label: 'Dashboard', icon: <LayoutDashboard /> }] },
   {
     label: 'Arbeiten',
     items: [
       { to: '/projects', label: 'Projekte', icon: <Boxes /> },
+      { to: '/live', label: 'Werkstatt', icon: <Hammer />, badgeKey: 'live' },
       { to: '/apps', label: 'App Store', icon: <AppWindow /> },
       { to: '/ideas', label: 'AI Idea Hub', icon: <Lightbulb /> },
       { to: '/knowledge', label: 'Claude Wissen', icon: <BookOpen /> },
@@ -44,7 +45,8 @@ export const NAV: { label: string; items: NavItem[] }[] = [
 
 function useBadges() {
   const conflicts = useQuery({ queryKey: ['conflicts', 'open'], queryFn: () => api.get<unknown[]>('/api/conflicts?status=open'), refetchInterval: 60_000 });
-  return { conflicts: conflicts.data?.length ?? 0 };
+  const live = useQuery({ queryKey: ['live', 'sessions'], queryFn: () => api.get<{ state: string }[]>('/api/live/sessions'), refetchInterval: 30_000 });
+  return { conflicts: conflicts.data?.length ?? 0, live: live.data?.filter((s) => ['planning', 'building', 'testing'].includes(s.state)).length ?? 0 };
 }
 
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
@@ -58,7 +60,7 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
             <NavLink key={item.to} to={item.to} end={item.to === '/'} className="nav-link" onClick={onNavigate} data-tip-pos="right">
               {item.icon}
               <span className="nav-text">{item.label}</span>
-              {item.badgeKey && badges[item.badgeKey] > 0 && <span className="badge count" aria-label={`${badges[item.badgeKey]} offen`}>{badges[item.badgeKey]}</span>}
+              {item.badgeKey && badges[item.badgeKey] > 0 && <span className={`badge count${item.badgeKey === 'live' ? ' live' : ''}`} aria-label={item.badgeKey === 'live' ? `${badges.live} aktiv` : `${badges[item.badgeKey]} offen`}>{item.badgeKey === 'live' ? 'live' : badges[item.badgeKey]}</span>}
             </NavLink>
           ))}
         </div>

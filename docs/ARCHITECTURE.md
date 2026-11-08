@@ -20,12 +20,12 @@ Begründungen siehe [DECISIONS.md](DECISIONS.md).
 ## 3. Verzeichnisstruktur
 
 ```
-shared/src/        Gemeinsames Vokabular: Objekttypen, drei Statusachsen, Konflikttypen, Ingest-Schema omega.ingest/v1
+shared/src/        Gemeinsames Vokabular: Objekttypen, drei Statusachsen, Konflikttypen, Ingest-Schema omega.ingest/v1, Live-Schema omega.live/v1
 server/src/
   config.ts        Umgebungsvariablen → typisierte Konfiguration
   bootstrap.ts     DB öffnen → Migration (mit Sicherung vorab) → Seeds → Suchindex
   app.ts           HTTP: Sicherheitsheader, Identität, CSRF, Default-Deny, Fehlerbehandlung, statische Web-App
-  http/            Routen (core, domain, sync) + Hilfen
+  http/            Routen (core, domain, sync, live) + Hilfen
   auth/            Konto, Sitzungen, API-Tokens, Rate-Limits
   db/              Verbindung (austauschbar für Restore), Migrationen mit Prüfsummen
   modules/         Fachlogik (siehe 4.)
@@ -35,7 +35,7 @@ server/src/
 web/src/
   design/          Tokens (Dark/Light/Dichte/Bewegung) + Komponenten-CSS
   components/      UI-Bausteine, Layout (Shell, Command Palette, Logo)
-  features/        Seiten je Bereich (dashboard, projects, apps, ideas, knowledge, sync, conflicts, code, activity, backup, settings, auth)
+  features/        Seiten je Bereich (dashboard, projects, live, apps, ideas, knowledge, sync, conflicts, code, activity, backup, settings, auth)
 mcp/src/           MCP-Server für Claude Code / Claude Desktop
 e2e/               Playwright-Tests
 ```
@@ -55,19 +55,21 @@ e2e/               Playwright-Tests
 | `backup` | Sicherung, Verifikation, Verschlüsselung, externe Kopie, Aufbewahrung, Voll-/Projektwiederherstellung |
 | `transfer` | Export/Import der Verwaltungsdaten, Datei-Import (JSON/Markdown/Text) |
 | `dashboard` | Kennzahlen, Projektgesundheit, Datenqualität, Integrationsstatus, Empfehlungen |
+| `devlive` | **Werkstatt**: Live-Entwicklungssitzungen (`omega.live/v1`) – Sitzung, Meilensteine, Aufgaben, Ereignisprotokoll, Screenshots, Vorschau-Adresse; Änderungsfeed für Server-Sent-Events. Nur darstellend, verändert keine Projektdaten (ADR-014) |
 | `activity`, `notifications`, `search`, `settings`, `sync-log` | Querschnittsfunktionen |
 
 Module rufen sich über klar benannte Funktionen auf; es gibt keinen globalen Zustand außer dem Kontextobjekt `Ctx` (Konfiguration, DB, Logger, Hooks).
 
 ## 5. Datenmodell (SQLite)
 
-Zentrale Tabellen (Migration `001_init`, `002_tracked_branch`):
+Zentrale Tabellen (Migration `001_init`, `002_tracked_branch`, `003_dev_live`):
 
 - `nodes` – alle Projekt-Objekte (Adjazenzliste `parent_id`, `ON DELETE RESTRICT`, `CHECK parent_id <> id`), drei Statusachsen, `nature` (organisatorisch/technisch), `code_path`, `field_sources` (JSON: welches Feld zuletzt von Website/Claude kam), `review_state`, `version` (optimistische Sperre), `archived_at`, `deleted_at`.
 - `applications`, `ideas`, `knowledge_articles`, `categories`, `tags`/`entity_tags`, `attachments` (Bilder als BLOB → Teil jedes Backups).
 - `external_identities` – `(source, entity_type, external_id)` eindeutig → stabile Zuordnung externer IDs (Claude) zu internen IDs.
 - GitHub-Spiegel: `repositories` (stabile `github_id`), `repo_branches`, `repo_commits`, `repo_tree`, `code_files` (Imports/Exporte/Rolle, **keine Inhalte**), `code_analyses`, `repo_dependencies`.
 - `project_repository_links` – `confirmed` | `suggested` | `rejected`.
+- Werkstatt: `dev_sessions` (stabile `external_id`, Zustand, Phase, Vorschau-URL, optional `project_id`), `dev_milestones`, `dev_tasks`, `dev_events` (eindeutig `(session_id, event_id)` → Idempotenz), `dev_media` (Bilder als BLOB, `(session_id, sha256)` eindeutig).
 - Protokolle: `sync_runs`, `sync_events` (eindeutig `(source, event_id)` → Idempotenz), `conflicts`, `activity`, `entity_versions` (vollständiger Schnappschuss je Version), `notifications`.
 - System: `users`, `sessions` (nur Token-Hash), `api_tokens` (Hash), `preferences`, `settings`, `secrets` (AES-256-GCM), `http_cache` (ETags), `meta`.
 - Suche: FTS5 `search_index` (Diakritika-unabhängig, Präfixindex).
@@ -103,6 +105,23 @@ Umschlag validieren → je Ereignis:
 ```
 
 Wird ein wartendes Elternobjekt später übermittelt, ordnet OMEGA die wartenden Einträge **über die externe ID** (nicht über Namen) automatisch zu. Fehlgeschlagene/abgelehnte Ereignisse lassen sich im Sync Center wiederholen.
+
+## 7a. Werkstatt-Ablauf (omega.live/v1)
+
+```
+Claude: omega_live_start ─► POST /api/ingest/v1/live/sessions (Upsert über externalId; Meilensteine/Aufgaben werden zusammengeführt)
+Claude: omega_live_log / _milestone / _task / _screenshot / _preview / _status
+        ─► POST /api/ingest/v1/live/sessions/:externalId/events  (Batch; je Ereignis: Schema prüfen → Idempotenz (eventId) → anwenden)
+             milestone/task  ► Upsert in dev_milestones / dev_tasks
+             screenshot      ► Bild (Base64) prüfen, SHA-256, in dev_media speichern, Ereignis verweist darauf
+             preview/status  ► Felder der Sitzung aktualisieren
+             alle            ► Zeile in dev_events; In-Prozess-Feed benachrichtigt offene SSE-Streams
+Web:    GET /api/live/sessions/:id (Sitzung, Meilensteine, Aufgaben, Bildindex) · /events?after= (vorwärts) bzw. ?before= (rückwärts)
+        GET /api/live/sessions/:id/stream (SSE: hello, event, session, deleted, ping) – bei Fehlern Polling alle 5 s
+        GET /api/live/media/:id (Bild)
+```
+
+Gesamtfortschritt = explizit gemeldeter Wert oder Durchschnitt der Meilensteine. Ein Ereignis `problem` erzeugt eine Benachrichtigung (dedupliziert je Sitzung).
 
 ## 8. GitHub-Ablauf
 
