@@ -1,0 +1,25 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${CLAUDE_PROJECT_DIR:-.}/.claude/skills/werkstatt/REMINDER.md\" 2>/dev/null || true",
+            "statusMessage": "Werkstatt wird vorbereitet"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${CLAUDE_PROJECT_DIR:-.}/.claude/skills/werkstatt/REMINDER.md\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}

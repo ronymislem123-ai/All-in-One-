@@ -7,7 +7,7 @@ Bewertung nach §31.1. Jede Einstufung beruht auf Implementierung **und** ausgef
 | Produktkonzept | **ERFÜLLT** | Klare Systemgrenzen Claude/GitHub/Website, Informationsarchitektur mit 12 Hauptbereichen (`docs/ARCHITECTURE.md`) |
 | Werkstatt (Live-Entwicklung) | **ERFÜLLT** | Sitzung, Meilensteine, Aufgaben, Protokoll, Screenshots, Vorschau; SSE-Aktualisierung im Browser getestet (E2E), Idempotenz/Sicherheit/MCP-Werkzeuge (Vitest), Sichtprüfung Desktop dunkel/hell + Smartphone. Nicht ausgeführt: Einbettung eines fremden Dev-Servers in der Vorschau (nur Link/URL geprüft) |
 | Architektur | **ERFÜLLT** | Modulare Server-Module, gemeinsames Domänenvokabular, ADRs (`docs/DECISIONS.md`) |
-| Design | **ERFÜLLT** | Eigenes Token-Designsystem, Dark + eigenständiger Light-Mode; Sichtprüfung aller Seiten per Screenshot |
+| Design | **ERFÜLLT** | Designsystem „Dark Luxury × Digital Precision × Architectural Minimalism“ (ADR-015): Obsidian/Graphite/Ivory/Lime, Geist + Inter + Geist Mono, Hairlines statt Schatten; Ivory als eigenständiges helles Thema; Sichtprüfung aller 13 Bereiche (Desktop dunkel/hell, Smartphone) per Screenshot, axe ohne Kontrastverstöße |
 | Navigation | **ERFÜLLT** | Sidebar (einklappbar), Topbar, Brotkrumen, Command Palette (⌘K), mobile Bottom-Navigation + Drawer; E2E getestet |
 | Responsive Design | **ERFÜLLT** | Desktop 1440 px, Tablet (iPad Mini), Smartphone (Pixel 7, 390 px): kein horizontaler Überlauf auf allen Seiten (E2E + Skript) |
 | Animationen | **ERFÜLLT** | Seiten-, Dialog-, Toast-, Karten-, Roboter-Animationen; `prefers-reduced-motion` + Einstellung; E2E prüft Reduced Motion |

@@ -22,7 +22,8 @@
 @media (max-width: 1200px) { .live-cols { grid-template-columns: minmax(0, 1fr); } }
 .live-cols > .stack { min-width: 0; }
 
-.live-preview-frame { width: 100%; aspect-ratio: 16 / 10; max-width: 100%; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-0); display: block; }
+.live-preview-frame { width: 100%; aspect-ratio: 16 / 10; max-width: 100%; border: 1px solid var(--border); border-radius: var(--r-md); background: var(--surface-0); color-scheme: dark; display: block; }
+:root[data-theme='light'] .live-preview-frame { color-scheme: light; }
 .live-preview-frame[data-device='phone'] { width: 390px; max-width: 100%; aspect-ratio: 390 / 760; margin: 0 auto; }
 .live-url { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-muted); overflow-wrap: anywhere; }
 

@@ -134,7 +134,7 @@ export function NodeFormDialog({ open, onClose, node, tags, parentId, defaultKin
           </select>
         )}</Field>
         <Field label="Farbe">{(id) => (
-          <div className="row"><input id={id} type="color" value={f.color || '#8d95ff'} onChange={(e) => set('color')(e.target.value)} style={{ width: 44, height: 38, border: 0, background: 'none' }} /><Icon name={f.icon || 'orbit'} /><Button size="sm" variant="ghost" onClick={() => set('color')('')}>Automatisch</Button></div>
+          <div className="row"><input id={id} type="color" value={f.color || '#a3e635'} onChange={(e) => set('color')(e.target.value)} style={{ width: 44, height: 38, border: 0, background: 'none' }} /><Icon name={f.icon || 'orbit'} /><Button size="sm" variant="ghost" onClick={() => set('color')('')}>Automatisch</Button></div>
         )}</Field>
         <Field label="Website/Projekt-URL">{(id) => <input id={id} className="input" type="url" value={f.url} onChange={(e) => set('url')(e.target.value)} placeholder="https://…" />}</Field>
         <Field label="Claude-Projekt (Referenz)" hint="Nur ein Link – OMEGA hat keinen Zugriff auf Claude.ai-Inhalte.">{(id) => <input id={id} className="input" type="url" value={f.claudeProjectUrl} onChange={(e) => set('claudeProjectUrl')(e.target.value)} placeholder="https://claude.ai/project/…" />}</Field>

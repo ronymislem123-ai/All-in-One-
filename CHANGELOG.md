@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 – 2026-11-26
+### Geändert
+- **Design komplett ersetzt** (ADR-015): Richtung „Dark Luxury × Digital Precision × Architectural Minimalism“ – Obsidian/Graphite/Ivory/Lime-Palette, Geist + Inter + Geist Mono, Hairline-Flächen statt Schatten, Radien 2–6 px, großzügige Freiräume, editoriale Seitenköpfe, Mono-Versalien für Metadaten, Lime nur für CTA und Highlights
+- Neues Ω-Zeichen und Favicon, Icon-Kacheln als Graphit-Flächen, gedämpfte Rollenfarben im Code Explorer, ivory-geführte Syntaxfarben
+- Motion: Seiten-Reveal, scroll-driven Reveal (nur Transform), animierter Tab-Unterstrich, ruhige Hover-Zustände – alle Animationen folgen `prefers-reduced-motion`
+- Ivory-Thema als eigenständiges helles Thema neu gestaltet; Dashboard-Begrüßung ohne Container als editorialer Kopf
+- Werkstatt: Vorschau-Rahmen folgt dem Farbschema; Kartenköpfe brechen auf schmalen Bildschirmen um
+
+### Hinzugefügt
+- Claude-Code-Skill `werkstatt` (`.claude/skills/werkstatt/`) mit SessionStart-/UserPromptSubmit-Hooks: öffnet das Live-Board in jeder Sitzung automatisch und streamt den Arbeitsprozess; `scripts/install-werkstatt-skill.sh` installiert beides benutzerweit
+
 ## 0.2.0 – 2026-11-06
 ### Hinzugefügt
 - **Werkstatt (`/live`):** Live-Entwicklung mitverfolgen – Gesamtfortschritt, Phase, „Gerade in Arbeit“, Meilensteine, Aufgaben, Protokoll (Recherche, Planung, Entscheidung, Code, Test, Problem) mit Filter, Screenshot-Galerie mit Lightbox, eingebettete Live-Vorschau (Desktop/Smartphone), Aktualisierung per Server-Sent-Events mit Polling-Fallback, LIVE-Abzeichen in der Navigation, Benachrichtigung bei Sitzungsstart und gemeldeten Problemen
