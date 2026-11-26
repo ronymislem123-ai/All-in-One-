@@ -23,7 +23,8 @@ export function Icon({ name, fallback = 'orbit', ...props }: { name?: string | n
 }
 
 /** Deterministic colour for entities without an explicit colour. */
-const PALETTE = ['#8d95ff', '#4fd4c8', '#f2b84b', '#f07aa8', '#6aa7ff', '#5cc98f', '#c792ea', '#ff9d5c', '#55c2b8', '#e57399'];
+/* Restrained, slightly desaturated hues – an entity's colour is a signature line, never a filled tile. */
+const PALETTE = ['#a3e635', '#9cc5bd', '#d9b55a', '#c9ccc6', '#9db5e6', '#b9a7d9', '#e0a97a', '#8cbfa0', '#d98c8c', '#a5aaa8'];
 export function colorFor(seed: string, explicit?: string | null): string {
   if (explicit) return explicit;
   let h = 0;
@@ -34,7 +35,7 @@ export function colorFor(seed: string, explicit?: string | null): string {
 export function TileIcon({ name, color, seed, size = 'md', label }: { name?: string | null; color?: string | null; seed: string; size?: 'sm' | 'md' | 'lg'; label?: string }) {
   const c = colorFor(seed, color);
   return (
-    <span className={`tile-icon ${size === 'md' ? '' : size}`} style={{ background: `linear-gradient(140deg, ${c}, color-mix(in srgb, ${c} 55%, #0b0c12))`, color: c }} aria-label={label} role={label ? 'img' : undefined}>
+    <span className={`tile-icon ${size === 'md' ? '' : size}`} style={{ color: c }} aria-label={label} role={label ? 'img' : undefined}>
       <Icon name={name} aria-hidden />
     </span>
   );

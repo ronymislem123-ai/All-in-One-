@@ -28,7 +28,7 @@ export default function CodeIndexPage() {
               <div className="row" style={{ gap: 4, height: 6, borderRadius: 4, overflow: 'hidden' }}>
                 {Object.entries(r.languages).slice(0, 6).map(([lang, bytes], i, arr) => {
                   const total = arr.reduce((s, [, b]) => s + b, 0);
-                  return <span key={lang} title={lang} style={{ flex: bytes / total, height: 6, background: ['#8d95ff', '#4fd4c8', '#f2b84b', '#f07aa8', '#6aa7ff', '#5cc98f'][i] }} />;
+                  return <span key={lang} title={lang} style={{ flex: bytes / total, height: 6, background: ['#a3e635', '#9cc5bd', '#d9b55a', '#c9ccc6', '#9db5e6', '#b9a7d9'][i] }} />;
                 })}
               </div>
             </Link>

@@ -1,6 +1,6 @@
 # PROJECT_STATE – OMEGA Infinity
 
-> Lebendes Statusdokument. Zuletzt aktualisiert: 2026-11-06 (v0.2.0 – Werkstatt / Live-Entwicklung).
+> Lebendes Statusdokument. Zuletzt aktualisiert: 2026-11-26 (v0.3.0 – neues Designsystem, ADR-015).
 
 ## Gesamtziel
 Persönliches digitales Betriebssystem: Projektzentrale, App Library, AI Idea Hub, Claude-Ingest (MCP/API/Datei),

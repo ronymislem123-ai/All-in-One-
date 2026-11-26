@@ -49,7 +49,7 @@ function AppForm({ open, onClose, app, projectId }: { open: boolean; onClose: ()
         )}</Field>
         <Field label="Kategorie">{(id) => <CategorySelect id={id} value={f.categoryId} onChange={set('categoryId')} />}</Field>
         <Field label="Icon">{(id) => <select id={id} className="select" value={f.icon} onChange={(e) => set('icon')(e.target.value)}><option value="">Automatisch</option>{ICON_NAMES.map((n) => <option key={n}>{n}</option>)}</select>}</Field>
-        <Field label="Farbe">{(id) => <input id={id} type="color" value={f.color || '#8d95ff'} onChange={(e) => set('color')(e.target.value)} style={{ width: 44, height: 38, border: 0, background: 'none' }} />}</Field>
+        <Field label="Farbe">{(id) => <input id={id} type="color" value={f.color || '#a3e635'} onChange={(e) => set('color')(e.target.value)} style={{ width: 44, height: 38, border: 0, background: 'none' }} />}</Field>
         {err && <div className="full callout crit">{err}</div>}
         <button type="submit" hidden />
       </form>

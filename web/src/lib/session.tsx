@@ -28,7 +28,7 @@ function applyPrefs(p: Preferences) {
   root.dataset.theme = dark ? 'dark' : 'light';
   root.dataset.density = p.density;
   if (p.motion === 'system') delete root.dataset.motion; else root.dataset.motion = p.motion;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#090a0f' : '#f4f5fa');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', dark ? '#0b0d0e' : '#e8e8e2');
   try { localStorage.setItem('omega.prefs', JSON.stringify({ theme: p.theme, density: p.density, motion: p.motion })); } catch { /* ignore */ }
 }
 

@@ -63,6 +63,7 @@ Das Token erzeugst du unter **Einstellungen → Integrationen**. Details: [docs/
 | `npm test` | 72 Server-Tests (Vitest) |
 | `npm run build:web && npm run test:e2e` | 15 Browser-Tests (Playwright, inkl. axe WCAG 2.1 AA) |
 | `node scripts/omega-live.mjs …` | Entwicklungsprozess aus jeder Shell in die Werkstatt streamen (siehe `docs/INTEGRATIONS.md`) |
+| `bash scripts/install-werkstatt-skill.sh` | Skill + Hooks installieren, damit die Werkstatt in jedem Claude-Code-Chat automatisch mitläuft |
 | `npm run typecheck` | TypeScript-Prüfung des gesamten Projekts |
 | `npm run backup` | Manuelle Sicherung von der Kommandozeile |
 

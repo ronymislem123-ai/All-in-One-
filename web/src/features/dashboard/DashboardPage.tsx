@@ -61,12 +61,12 @@ export default function DashboardPage() {
 
   const widgets: Record<string, ReactNode> = {
     welcome: (
-      <section className="card" style={{ background: 'linear-gradient(135deg, var(--accent-softer), transparent 60%), var(--surface-1)' }}>
+      <section className="dash-hero">
         <div className="row-between">
           <div>
-            <div className="subtle xsmall" style={{ letterSpacing: '.06em', textTransform: 'uppercase' }}>My Digital World</div>
-            <h1 style={{ marginTop: 6 }}>{greeting()}, {auth?.user?.displayName?.split(' ')[0]}.</h1>
-            <p className="muted" style={{ marginTop: 6 }}>
+            <div className="eyebrow">My Digital World</div>
+            <h1>{greeting()}, {auth?.user?.displayName?.split(' ')[0]}.</h1>
+            <p className="muted">
               {d ? <>{num(d.counts.projects)} Projekte · {num(d.counts.active)} in Entwicklung · {num(d.counts.appsAvailable)} nutzbare Apps · {num(d.ideas.total)} Ideen</> : <Skeleton h={16} w={320} />}
             </p>
           </div>

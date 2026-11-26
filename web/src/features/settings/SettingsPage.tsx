@@ -144,7 +144,7 @@ function Categories() {
   const [name, setName] = useState('');
   const [parent, setParent] = useState('');
   const [icon, setIcon] = useState('tag');
-  const [color, setColor] = useState('#8d95ff');
+  const [color, setColor] = useState('#a3e635');
   const create = useMutation({ mutationFn: () => api.post('/api/categories', { name, parentId: parent || null, icon, color }), onSuccess: () => { qc.invalidateQueries({ queryKey: ['categories'] }); setName(''); toast({ kind: 'success', title: 'Kategorie angelegt' }); }, onError: (e: ApiError) => toast({ kind: 'error', title: 'Nicht angelegt', body: e.message }) });
   const del = useMutation({ mutationFn: (id: string) => api.del(`/api/categories/${id}`), onSuccess: () => qc.invalidateQueries({ queryKey: ['categories'] }), onError: (e: ApiError) => toast({ kind: 'warning', title: 'Nicht gelöscht', body: e.message }) });
   return (

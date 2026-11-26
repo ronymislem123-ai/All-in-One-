@@ -118,6 +118,16 @@ Gleiche `externalId` = Aktualisierung (Meilensteine/Aufgaben werden zusammengef�
 
 Die Live-Vorschau wird als iframe eingebettet; Server, die Einbettung verbieten (z. B. OMEGA selbst, `frame-ancestors 'none'`), öffnet man über „Öffnen“ in einem neuen Tab.
 
+### 1.6 Werkstatt in jedem Chat automatisch öffnen (Skill + Hooks)
+
+Im Repository liegt der Claude-Code-Skill `.claude/skills/werkstatt/` mit zwei Hooks in `.claude/settings.json` (`SessionStart`, `UserPromptSubmit`). Sie erinnern Claude bei jeder Sitzung und jeder Eingabe daran, das Live-Board zu öffnen und den gesamten Arbeitsprozess hineinzustreamen – unabhängig davon, was gerade gebaut oder geschrieben wird. Für **alle** Repositories und Chats einmalig auf dem eigenen Rechner ausführen:
+
+```bash
+bash scripts/install-werkstatt-skill.sh
+```
+
+Das kopiert den Skill nach `~/.claude/skills/werkstatt` und trägt die Hooks in `~/.claude/settings.json` ein (bestehende Einstellungen bleiben erhalten). Danach in Claude Code `/hooks` öffnen oder neu starten. Manuell auslösen: `/werkstatt`.
+
 ## 2. GitHub (nur lesend)
 
 - **Berechtigungen:** Fine-grained Personal Access Token mit **Metadata: Read** und **Contents: Read** für die gewünschten Repositories. Ohne Token funktionieren öffentliche Repositories (60 Anfragen/Stunde).

@@ -53,7 +53,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 
 function PageFallback() {
   return (
-    <div className="stack" aria-busy="true" aria-label="Seite wird geladen">
+    <div className="stack" role="status" aria-busy="true" aria-label="Seite wird geladen">
       <Skeleton h={34} w={280} />
       <Skeleton h={18} w={420} />
       <div className="grid-4"><Skeleton h={110} r={16} /><Skeleton h={110} r={16} /><Skeleton h={110} r={16} /><Skeleton h={110} r={16} /></div>

@@ -15,6 +15,7 @@
 - Ähnliche Namen führen nie zu Zusammenführungen. Idempotenz über eventId, Identität über externalId.
 - KI nur mit echter Anbindung; ohne Schlüssel „nicht eingerichtet“ anzeigen.
 - Neue Schemaänderungen nur als neue Migration (`server/src/db/migrations/00X_*.ts` + Eintrag in `MIGRATIONS`), nie bestehende ändern (Prüfsummen!).
+- Design: nur Tokens aus `web/src/design/tokens.css` verwenden (ADR-015). Lime ausschließlich für den primären CTA und gezielte Highlights; keine Schatten, keine Verläufe, keine neuen Farben.
 - Werkstatt-Daten (`dev_*`) sind nur Darstellung: niemals daraus Projektfelder, Fortschritt oder Statusachsen ableiten (ADR-014).
 - Beim Entwickeln an OMEGA den eigenen Prozess in die Werkstatt streamen (`omega_live_*` oder `scripts/omega-live.mjs`) – der Besitzer möchte live zusehen.
 

@@ -147,7 +147,7 @@ test('light mode is a full theme, not an inversion', async () => {
   await page.getByRole('button', { name: 'Hell', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
-  expect(bg).toBe('rgb(244, 245, 250)');
+  expect(bg).toBe('rgb(232, 232, 226)');
   await expectAccessible(page, 'Einstellungen (hell)');
   await page.getByRole('button', { name: 'Dunkel', exact: true }).click();
 });
